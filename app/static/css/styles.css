@@ -1,0 +1,371 @@
+/* 
+   Stylesheet for SpiritSchool web application
+   Author: Timothy A. Holmes
+   Version: 2.5
+   Date: 10/21/2023
+   Description: This CSS file contains styles for the application's layout and elements.
+*/
+
+/* Reset some default styles and set the background color */
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("wavebg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    filter: brightness(80%);
+    z-index: -1;
+}
+
+/* Header styles */
+h1 {
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+/* Footer Styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #A6A5A8;
+    padding: 0px;
+    font-size: 16px; /* Adjust the font size as desired */
+    text-align: center;
+}
+
+.footer-text-12 {
+    font-size: 12px; /* Adjust the font size as desired */
+}
+
+.footer-text-16 {
+    font-size: 16px; /* Adjust the font size as desired */
+}
+
+/* Button Styles */
+.button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 24px; /* Adjusted font size for buttons */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Navigation Buttons */
+.button-container {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+}
+
+/* New Styles for Button Groups */
+.button-group {
+    border: 3px solid #0b1879;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Add space between button groups */
+    padding: 10px;
+}
+
+.button-group h3 {
+    margin-top: 0; /* Remove default margin for h3 */
+    padding-top: 10px; /* Add space between heading and buttons */
+    border-bottom: 3px solid #0b1879; /* Add border line at the bottom of the heading */
+}
+
+.button-group.center {
+    border: 3px solid #0b1879;
+    border-radius: 5px;
+    margin: 0 40px; /* Add margin on left and right sides */
+    padding: 10px;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.nav-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF; /* Change the color to your preferred button color */
+    color: #FFF;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow for a 3D effect */
+}
+
+.nav-button:hover {
+    background-color: #0056b3; /* Change the hover color as desired */
+}
+
+/* Navigation Bar Styles */
+.nav-bar {
+    background-color: #007BFF;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Student List Table Styles */
+.student-table {
+    width: 90%;
+    margin: 20px auto;
+    /* Other table styles as needed */
+}
+
+/* New Button Class */
+.small-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    height: 10px; /* Set the height to your desired value */
+}
+
+.small-button:hover {
+    background-color: #0056b3;
+}
+
+/* Form Styles */
+form {
+    width: 50%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-narrow {
+    width: 50%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 2px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-wide {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Divider Styles*/
+.divider {
+    border-top: 2px solid #000; /* Adjust the color and thickness as needed */
+    margin: 20px 0;
+}
+
+
+/* Label Styles */
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Input Styles */
+input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+
+/* Submit Button Styles */
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline;
+    margin-right: 5px; /* Adjust the spacing between page numbers */
+}
+
+.pagination a {
+    text-decoration: none;
+    background-color: #f1f1f1; /* Background color of pagination links */
+    padding: 5px 10px; /* Adjust the padding to control the size of the links */
+    color: #333; /* Text color */
+    border: 1px solid #ccc; /* Border around the links */
+}
+
+.pagination a:hover {
+    background-color: #333; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
+.pagination .active a {
+    background-color: #333; /* Background color for the current page */
+    color: #fff; /* Text color for the current page */
+}
+
+/* Input Container Styles for Layout */
+
+
+.input-container-10 {
+    display: inline-block;
+    width: 10%;
+    margin-right: 2%;
+}
+
+.input-container-15 {
+    display: inline-block;
+    width: 15%;
+    margin-right: 2%;
+}
+
+.input-container-20 {
+    display: inline-block;
+    width: 20%;
+    margin-right: 2%;
+}
+.input-container-25 {
+    display: inline-block;
+    width: 25%;
+    margin-right: 2%;
+}
+
+.input-container-30 {
+    display: inline-block;
+    width: 30%;
+    margin-right: 2%;
+}
+
+.input-container-40 {
+    display: inline-block;
+    width: 40%;
+    margin-right: 2%;
+}
+
+.input-container-50 {
+    display: inline-block;
+    width: 50%;
+    margin-right: 2%;
+}
+
+.select-box {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="date"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="password"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="email"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+.select-field {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+
+/* Table Styles */
+table {
+    width: 50%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 16px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+table.full-width {
+    width: 75%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 16px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Table Header Styles */
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+
+/* Table Cell Styles */
+td {
+    padding: 3px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+}
+
+/* Alternate Row Background Colors for Better Readability */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Alternate Row Background Colors for Better Readability (Odd Rows) */
+tr:nth-child(odd) {
+    background-color: #aaaaaa;
+}
