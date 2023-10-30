@@ -9,4 +9,9 @@ db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 bootstrap = Bootstrap(app)
 
+from app.students import students_bp  # Import the students blueprint
+
+app.register_blueprint(students_bp, url_prefix='/students')
+
 from app import routes
+
