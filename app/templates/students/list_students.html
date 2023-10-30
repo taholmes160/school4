@@ -14,8 +14,7 @@
   <thead>
     <tr>
       <th><a href="{{ url_for('students.list_students', sort='student_id') }}">ID</a></th>
-      <th><a href="{{ url_for('students.list_students', sort='student_fname') }}">First Name</a></th>
-      <th><a href="{{ url_for('students.list_students', sort='student_lname') }}">Last Name</a></th>
+      <th><a href="{{ url_for('students.list_students', sort='student_fname') }}">First Name</a> <a href="{{ url_for('students.list_students', sort='student_lname') }}">Last Name</a></th>
       <th>Gender</th>
       <th>Level</th>
       <th>Age</th>
@@ -25,8 +24,7 @@
     {% for student in students.items %}
     <tr>
       <td>{{ student.student_id }}</td>
-      <td>{{ student.student_fname }}</td>
-      <td>{{ student.student_lname }}</td>
+      <td>{{ student.student_fname }} {{ student.student_lname }}</td>
       <td>{{ student.student_gender_id }}</td>
       <td>{{ student.student_level_id }}</td>
       <td>{{ student.student_age }}</td>
