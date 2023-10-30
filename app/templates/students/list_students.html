@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <h1>List of Students</h1>
+
+<!-- Add search form -->
+<form action="{{ url_for('students.list_students') }}" method="GET">
+  <input type="text" name="search" value="{{ search_query }}" placeholder="Search...">
+  <button type="submit">Search</button>
+</form>
+
 <table>
   <thead>
     <tr>
-      <th>ID</th>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th><a href="{{ url_for('students.list_students', sort='student_id') }}">ID</a></th>
+      <th><a href="{{ url_for('students.list_students', sort='student_fname') }}">First Name</a></th>
+      <th><a href="{{ url_for('students.list_students', sort='student_lname') }}">Last Name</a></th>
       <th>Gender</th>
       <th>Level</th>
       <th>Age</th>
@@ -30,23 +38,22 @@
 <!-- Add pagination links -->
 <div class="pagination">
   {% if students.has_prev %}
-    <a href="{{ url_for('students.list_students', page=students.prev_num) }}">Previous</a>
+    <a href="{{ url_for('students.list_students', page=students.prev_num, search=search_query, sort=sort_by) }}">Previous</a>
   {% endif %}
-  
   {% for num in students.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
     {% if num %}
       {% if students.page == num %}
         <strong>{{ num }}</strong>
       {% else %}
-        <a href="{{ url_for('students.list_students', page=num) }}">{{ num }}</a>
+        <a href="{{ url_for('students.list_students', page=num, search=search_query, sort=sort_by) }}">{{ num }}</a>
       {% endif %}
     {% else %}
       ...
     {% endif %}
   {% endfor %}
-  
   {% if students.has_next %}
-    <a href="{{ url_for('students.list_students', page=students.next_num) }}">Next</a>
+    <a href="{{ url_for('students.list_students', page=students.next_num, search=search_query, sort=sort_by) }}">Next</a>
   {% endif %}
 </div>
+
 {% endblock %}
