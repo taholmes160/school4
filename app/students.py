@@ -1,12 +1,13 @@
-from flask import Blueprint, render_template
-from app.models import Student  # Import the Student model
+from flask import Blueprint, render_template, request
+from app.models import Student
 
 students_bp = Blueprint('students', __name__)
 
-# Define your student-related routes and views here
 @students_bp.route('/students', methods=['GET'])
 def list_students():
-    students = Student.query.all()
-    return render_template('students/list_students.html', students=students)
+    page = request.args.get('page', 1, type=int)
+    per_page = 25  # Number of students per page
 
-# Add more student-related routes as needed
+    students = Student.query.paginate(page=page, per_page=per_page)
+
+    return render_template('students/list_students.html', students=students)

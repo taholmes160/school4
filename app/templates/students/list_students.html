@@ -14,7 +14,7 @@
     </tr>
   </thead>
   <tbody>
-    {% for student in students %}
+    {% for student in students.items %}
     <tr>
       <td>{{ student.student_id }}</td>
       <td>{{ student.student_fname }}</td>
@@ -26,5 +26,27 @@
     {% endfor %}
   </tbody>
 </table>
-{% endblock %}
 
+<!-- Add pagination links -->
+<div class="pagination">
+  {% if students.has_prev %}
+    <a href="{{ url_for('students.list_students', page=students.prev_num) }}">Previous</a>
+  {% endif %}
+  
+  {% for num in students.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if num %}
+      {% if students.page == num %}
+        <strong>{{ num }}</strong>
+      {% else %}
+        <a href="{{ url_for('students.list_students', page=num) }}">{{ num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+  
+  {% if students.has_next %}
+    <a href="{{ url_for('students.list_students', page=students.next_num) }}">Next</a>
+  {% endif %}
+</div>
+{% endblock %}
