@@ -1,5 +1,16 @@
 from app import db
 
+class Gender(db.Model):
+    __tablename__ = 'tbl_gender'
+    gender_id = db.Column(db.Integer, primary_key=True)
+    gender_name = db.Column(db.String(45), nullable=False)
+    
+class Level(db.Model):
+    __tablename__ = 'tbl_levels'
+    level_id = db.Column(db.Integer, primary_key=True)
+    level_name = db.Column(db.String(45), nullable=False)
+    level_abbrev = db.Column(db.String(45), nullable=False)
+
 class Student(db.Model):
     __tablename__= 'tbl_student'
     student_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -26,3 +37,9 @@ class Student(db.Model):
     student_ethnicity_id = db.Column(db.Integer, nullable=True)
 
     # Define any additional relationships, methods, or constraints for the Student model here
+    student_gender_id = db.Column(db.Integer, db.ForeignKey('tbl_gender.gender_id'), nullable=True)
+    gender = db.relationship('Gender', backref='students')
+
+    student_level_id = db.Column(db.Integer, db.ForeignKey('tbl_levels.level_id'), nullable=True)
+    level = db.relationship('Level', backref='students')
+    

@@ -25,8 +25,8 @@
     <tr>
       <td>{{ student.student_id }}</td>
       <td>{{ student.student_fname }} {{ student.student_lname }}</td>
-      <td>{{ student.student_gender_id }}</td>
-      <td>{{ student.student_level_id }}</td>
+      <td>{{ student.gender.gender_name }}</td>
+      <td>{{ student.level.level_name }}</td>
       <td>{{ student.student_age }}</td>
     </tr>
     {% endfor %}
