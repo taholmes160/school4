@@ -1,6 +1,7 @@
 from app import db
 
 class Student(db.Model):
+    __tablename__= 'tbl_student'
     student_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     student_fname = db.Column(db.String(45), nullable=True)
     student_mname = db.Column(db.String(45), nullable=True)
