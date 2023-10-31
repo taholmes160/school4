@@ -5,6 +5,7 @@ from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://server2:T3t0npack@localhost/school4'  # Replace with your MariaDB connection details
+app.config['SECRET_KEY'] = 'DEVELOPMENT_SECRET_KEY'
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app)
 bootstrap = Bootstrap(app)

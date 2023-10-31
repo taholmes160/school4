@@ -29,6 +29,8 @@
       <td>{{ student.gender.gender_name }}</td>
       <td>{{ student.level.level_name }}</td>
       <td>{{ student.student_age }}</td>
+      <td><a href="{{ url_for('students.edit_student', student_id=student.student_id) }}" class="btn btn-primary">Edit</a></td>
+    
     </tr>
     {% endfor %}
   </tbody>
