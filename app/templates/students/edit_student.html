@@ -6,58 +6,66 @@
 <div class="container">
     <h1>Edit Student</h1>
     <form class="form-wide" method="POST" action="{{ url_for('students.edit_student', student_id=student.student_id) }}">
+        
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <div class="form-row">
-            <div class="form-group col-md-3">
+            <div class="form-group input-container-15">
                 <label for="fname">First Name</label>
                 <input type="text" class="form-control" id="fname" name="fname" value="{{ student.student_fname }}" required>
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group input-container-15">
                 <label for="mname">Middle Name</label>
                 <input type="text" class="form-control" id="mname" name="mname" value="{{ student.student_mname }}" required>
             </div>
 
-            <div class="form-group col-md-3">
+            <div class="form-group input-container-15">
                 <label for="lname">Last Name</label>
                 <input type="text" class="form-control" id="lname" name="lname" value="{{ student.student_lname }}" required>
             </div>
 
-            <div class="form-group col-md-3">
+            <div class="form-group input-container-15">
                 <label for="suffux_id">Suffix</label>
                 <input type="text" class="form-control" id="suffix_id" name="suffix_id" value="{{ student.student_suffix_id }}" required>
             </div>
+            <div class="form-group input-container-15">
+                <label for="goesby">Nickname</label>
+                <input type="text" class="form-control" id="goesby" name="goesby" value="{{ student.student_goesby }}" required>
+            </div>
         </div>
+        <div class="form-row">
+            <div class="form-group input-container-15">
+                <label for="gender_id">Gender</label>
+                <select class="form-control" id="gender_id" name="gender_id" required>
+                    {% for gender in genders %}
+                        <option value="{{ gender.gender_id }}" {% if gender.gender_id == student.student_gender_id %}selected{% endif %}>{{ gender.gender_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="goesby">Nickname</label>
-            <input type="text" class="form-control" id="goesby" name="goesby" value="{{ student.student_goesby }}" required>
+            <div class="form-group input-container-15">
+                <label for="level_id">Grade</label>
+                <select class="form-control" id="level_id" name="level_id" required>
+                    {% for level in levels %}
+                        <option value="{{ level.level_id }}" {% if level.level_id == student.student_level_id %}selected{% endif %}>{{ level.level_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group input-container-15">
+                <label for="division">Grade Division</label>
+                <input type="text" class="form-control" id="division" name="division" value="{{ student.student_division }}" required>
+            </div>
+
+            <div class="form-group input-container-15">
+                <label for="age">Age</label>
+                <input type="text" class="form-control" id="age" name="age" value="{{ student.student_age }}" required>
+            </div>
+
+            <div class="form-group input-container-15">
+                <label for="birthday">Birthday</label>
+                <input type="text" class="form-control datepicker" id="birthday" name="birthday" value="{{ student.student_birthday }}" required>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="gender_id">Gender</label>
-            <input type="text" class="form-control" id="gender_id" name="gender_id" value="{{ student.student_gender_id }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="level_id">Grade</label>
-            <input type="text" class="form-control" id="level_id" name="level_id" value="{{ student.student_level_id }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="division">Grade Division</label>
-            <input type="text" class="form-control" id="division" name="division" value="{{ student.student_division }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="age">Age</label>
-            <input type="text" class="form-control" id="age" name="age" value="{{ student.student_age }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="birthday">Birthday</label>
-            <input type="text" class="form-control" id="birthday" name="birthday" value="{{ student.student_birthday }}" required>
-        </div>
-
         <div class="form-group">
             <label for="address">Address</label>
             <input type="text" class="form-control" id="address" name="address" value="{{ student.student_address }}" required>
@@ -116,4 +124,16 @@
         <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+    });
+</script>
+
 {% endblock %}
