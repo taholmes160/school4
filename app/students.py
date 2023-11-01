@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions
 from sqlalchemy import or_
 from app import db
 
@@ -59,4 +59,6 @@ def edit_student(student_id):
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
     statuses = Status.query.all()
-    return render_template('students/edit_student.html', student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
+    suffix=Suffix.query.all()
+    divisions=Divisions.query.all()
+    return render_template('students/edit_student.html', suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
