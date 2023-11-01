@@ -33,7 +33,7 @@ def edit_student(student_id):
         student.student_goesby = request.form.get('goesby')
         student.student_gender_id = request.form.get('gender_id')
         student.student_level_id = request.form.get('level_id')
-        student.student_division = request.form.get('division')
+        student.student_division_id = request.form.get('division_id')
         student.student_age = request.form.get('age')
         student.student_birthday = request.form.get('birthday')
         student.student_address = request.form.get('address')

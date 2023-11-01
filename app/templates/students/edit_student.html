@@ -28,7 +28,7 @@
                 <label for="suffix_id">Suffix</label>
                 <div class="custom-select-icon">
                 <select class="form-control" id="suffix_id" name="suffix_id" required>
-                    {% for suffix in suffixs %}
+                    {% for suffix in suffix %}
                         <option value="{{ suffix.suffix_id }}" {% if suffix.suffix_id == student.student_suffix_id %}selected{% endif %}>{{ suffix.suffix }}</option>
                     {% endfor %}
                 </select>
@@ -67,8 +67,8 @@
                 <label for="division_id">Division</label>
                 <div class="custom-select-icon">
                 <select class="form-control" id="division_id" name="division_id" required>
-                    {% for suffix in suffixs %}
-                        <option value="{{ division.division_id }}" {% if division.division_idd == student.student_division_id %}selected{% endif %}>{{ division.division }}</option>
+                    {% for division in divisions %}
+                        <option value="{{ division.division_id }}" {% if division.division_id == student.student_division_id %}selected{% endif %}>{{ division.division_name }}</option>
                     {% endfor %}
                 </select>
                 <i class="fas fa-caret-down"></i>
