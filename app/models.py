@@ -16,6 +16,12 @@ class Campus(db.Model):
     campus_id = db.Column(db.Integer, primary_key=True)
     campus_name = db.Column(db.String(45), nullable=False)
     # Add other fields for the campus table
+    
+class Status(db.Model):
+    __tablename__ = 'tbl_status'
+    student_status_id = db.Column(db.Integer, primary_key=True)
+    student_status = db.Column(db.String(45), nullable=False)
+    # Add other fields for the campus table
 
 class State(db.Model):
     __tablename__ = 'tbl_state'

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status
 from sqlalchemy import or_
 from app import db
 
@@ -19,7 +19,6 @@ def list_students():
         students = Student.query.join(Student.level).order_by(Level.level_name).paginate(page=page, per_page=per_page)
     else:
         students = Student.query.order_by(sort_by).paginate(page=page, per_page=per_page)
-
     return render_template('students/list_students.html', students=students, search_query=search_query, sort_by=sort_by)
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
@@ -56,7 +55,8 @@ def edit_student(student_id):
     genders = Gender.query.all()
     levels = Level.query.all()
     campus = Campus.query.all()
-    state = State.query.all()
+    states = State.query.all()
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
-    return render_template('students/edit_student.html', student=student, genders=genders, levels=levels, campus=campus, state=state, nationality=nationality, ethnicity=ethnicity)
+    statuses = Status.query.all()
+    return render_template('students/edit_student.html', student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
