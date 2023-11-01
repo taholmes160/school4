@@ -25,8 +25,15 @@
             </div>
 
             <div class="form-group input-container-15">
-                <label for="suffux_id">Suffix</label>
-                <input type="text" class="form-control" id="suffix_id" name="suffix_id" value="{{ student.student_suffix_id }}" required>
+                <label for="suffix_id">Grade</label>
+                <div class="custom-select-icon">
+                <select class="form-control" id="suffix_id" name="suffix_id" required>
+                    {% for suffix in suffixs %}
+                        <option value="{{ suffix.suffix_id }}" {% if suffix.suffix_id == student.student_suffix_id %}selected{% endif %}>{{ suffix.suffix }}</option>
+                    {% endfor %}
+                </select>
+                <i class="fas fa-caret-down"></i>
+                </div>
             </div>
             <div class="form-group input-container-15">
                 <label for="goesby">Nickname</label>
@@ -57,8 +64,15 @@
                 </div>
             </div>
             <div class="form-group input-container-15">
-                <label for="division">Grade Division</label>
-                <input type="text" class="form-control" id="division" name="division" value="{{ student.student_division }}" required>
+                <label for="division_id">Division</label>
+                <div class="custom-select-icon">
+                <select class="form-control" id="division_id" name="division_id" required>
+                    {% for suffix in suffixs %}
+                        <option value="{{ division.division_id }}" {% if division.division_idd == student.student_division_id %}selected{% endif %}>{{ division.division }}</option>
+                    {% endfor %}
+                </select>
+                <i class="fas fa-caret-down"></i>
+                </div>
             </div>
 
             <div class="form-group input-container-15">

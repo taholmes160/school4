@@ -41,6 +41,21 @@ class Ethnicity(db.Model):
     ethnicity_name = db.Column(db.String(45), nullable=False)
     # Add other fields for the ethnicity table
 
+class Suffix(db.Model):
+    __tablename__ = 'tbl_suffix'
+    suffix_id = db.Column(db.Integer, primary_key=True)
+    suffix = db.Column(db.String(45), nullable=False)
+    
+class Divisions(db.Model):
+    __tablename__='tbl_divisions'
+    division_id = db.Column(db.Integer, primary_key=True)
+    division_name = db.Column(db.String(45), nullable=False)
+    
+class Prefix(db.Model):
+    __tablename__ = 'tbl_prefix'
+    prefix_id = db.Column(db.Integer, primary_key=True)
+    prefix_name = db.Column(db.String(45), nullable=False)
+    
 class Student(db.Model):
     __tablename__ = 'tbl_student'
     student_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
