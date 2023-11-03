@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions
 from sqlalchemy import or_
 from app import db
+from datetime import datetime
 
 students_bp = Blueprint('students', __name__)
 
