@@ -8,7 +8,7 @@ students_bp = Blueprint('students', __name__)
 @students_bp.route('/students', methods=['GET'])
 def list_students():
     page = request.args.get('page', 1, type=int)
-    per_page = 20  # Number of students per page
+    per_page = 18  # Number of students per page
 
     search_query = request.args.get('search', '')
     sort_by = request.args.get('sort', 'student_id')
