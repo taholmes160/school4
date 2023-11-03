@@ -4,7 +4,7 @@ class Gender(db.Model):
     __tablename__ = 'tbl_gender'
     gender_id = db.Column(db.Integer, primary_key=True)
     gender_name = db.Column(db.String(45), nullable=False)
-    
+
 class Level(db.Model):
     __tablename__ = 'tbl_levels'
     level_id = db.Column(db.Integer, primary_key=True)
@@ -16,7 +16,7 @@ class Campus(db.Model):
     campus_id = db.Column(db.Integer, primary_key=True)
     campus_name = db.Column(db.String(45), nullable=False)
     # Add other fields for the campus table
-    
+
 class Status(db.Model):
     __tablename__ = 'tbl_status'
     student_status_id = db.Column(db.Integer, primary_key=True)
@@ -45,17 +45,17 @@ class Suffix(db.Model):
     __tablename__ = 'tbl_suffix'
     suffix_id = db.Column(db.Integer, primary_key=True)
     suffix = db.Column(db.String(45), nullable=False)
-    
+
 class Divisions(db.Model):
     __tablename__='tbl_divisions'
     division_id = db.Column(db.Integer, primary_key=True)
     division_name = db.Column(db.String(45), nullable=False)
-    
+
 class Prefix(db.Model):
     __tablename__ = 'tbl_prefix'
     prefix_id = db.Column(db.Integer, primary_key=True)
     prefix_name = db.Column(db.String(45), nullable=False)
-    
+
 class Student(db.Model):
     __tablename__ = 'tbl_student'
     student_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -107,8 +107,8 @@ class Faculty(db.Model):
     emergency_contact_name = db.Column(db.String(255))
     emergency_contact_type = db.Column(db.String(255))
     emergency_contact_phone = db.Column(db.String(255))
-    
-    class Staff(db.Model):
+
+class Staff(db.Model):
     __tablename__ = 'staff'
 
     staff_id = db.Column(db.Integer, primary_key=True)
@@ -117,8 +117,8 @@ class Faculty(db.Model):
     email = db.Column(db.String(255))
     address = db.Column(db.String(255))
     emergency_contact = db.Column(db.String(255))
-    
-    class Comment(db.Model):
+
+class Comment(db.Model):
     __tablename__ = 'tbl_comments'
 
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -126,8 +126,8 @@ class Faculty(db.Model):
     comment_text = db.Column(db.String(2500))
     comment_by = db.Column(db.String(45))
     comment_date = db.Column(db.Date)
-    
-    class Dorm(db.Model):
+
+class Dorm(db.Model):
     __tablename__ = 'tbl_dorms'
 
     dorm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -135,15 +135,15 @@ class Faculty(db.Model):
     dorm_phone = db.Column(db.String(45))
     dorm_capacity = db.Column(db.String(45))
     dm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_managers.dm_id'))
-    
-    class DormManager(db.Model):
+
+class DormManager(db.Model):
     __tablename__ = 'tbl_dorm_managers'
 
     dm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     dm_name = db.Column(db.String(45))
     dm_phone = db.Column(db.String(45))
-    
-    class DormRoom(db.Model):
+
+class DormRoom(db.Model):
     __tablename__ = 'tbl_dorm_rooms'
 
     droom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -154,8 +154,8 @@ class Faculty(db.Model):
     droom_floor = db.Column(db.String(12))
     droom_unit = db.Column(db.String(12))
     dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
-    
-    class User(db.Model):
+
+class User(db.Model):
     __tablename__ = 'tbl_users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
