@@ -48,7 +48,7 @@ def dorms():
 @dorms_bp.route('/dorm_rooms', methods=['GET'])
 def list_dorm_rooms():
     page = request.args.get('page', 1, type=int)
-    per_page = 10  # Number of dorm rooms per page
+    per_page = 20  # Number of dorm rooms per page
 
     dorm_rooms = DormRoom.query.paginate(page=page, per_page=per_page)
     return render_template('dorms/list_dorm_rooms.html', dorm_rooms=dorm_rooms)
