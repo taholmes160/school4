@@ -4,17 +4,6 @@ from app import db
 
 dorms_bp = Blueprint('dorms', __name__)
 
-@dorms_bp.route('/dorms', methods=['GET'])
-def list_dorms():
-    dorms = Dorm.query.all()
-    return render_template('dorms/list_dorms.html', dorms=dorms)
-
-@dorms_bp.route('/dorms/<int:dorm_id>', methods=['GET'])
-def view_dorm(dorm_id):
-    dorm = Dorm.query.get_or_404(dorm_id)
-    return render_template('dorms/view_dorm.html', dorm=dorm)
-
-
 @dorms_bp.route('/dorm_managers', methods=['GET', 'POST'])
 def dorm_managers():
     if request.method == 'POST':
@@ -33,5 +22,27 @@ def dorm_managers():
 
     dorm_managers = DormManager.query.all()
     return render_template('dorms/dorm_managers.html', dorm_managers=dorm_managers)
+
+@dorms_bp.route('/dorms', methods=['GET', 'POST'])
+def dorms():
+    if request.method == 'POST':
+        dorm_name = request.form.get('dorm_name')
+        dorm_phone = request.form.get('dorm_phone')
+        dorm_capacity = request.form.get('dorm_capacity')
+        dm_id = request.form.get('dm_id')
+
+        # Create a new Dorm object
+        dorm = Dorm(dorm_name=dorm_name, dorm_phone=dorm_phone, dorm_capacity=dorm_capacity, dm_id=dm_id)
+
+        # Add the dorm to the database
+        db.session.add(dorm)
+        db.session.commit()
+
+        flash('Dorm added successfully', 'success')
+        return redirect(url_for('dorms.dorms'))
+
+    dorms = Dorm.query.all()
+    dorm_managers = DormManager.query.all()
+    return render_template('dorms/dorms.html', dorms=dorms, dorm_managers=dorm_managers)
 
 # Add more routes and functions as needed

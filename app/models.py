@@ -136,6 +136,9 @@ class Dorm(db.Model):
     dorm_capacity = db.Column(db.String(45))
     dm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_managers.dm_id'))
 
+    dorm_manager = db.relationship('DormManager', backref='dorms')
+
+
 class DormManager(db.Model):
     __tablename__ = 'tbl_dorm_managers'
 
