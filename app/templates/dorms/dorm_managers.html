@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Dorm Managers</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dorm_manager in dorm_managers %}
+        <tr>
+          <td>{{ dorm_manager.dm_name }}</td>
+          <td>{{ dorm_manager.dm_phone }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Add/Edit Dorm Manager</h2>
+
+  <form method="POST" action="{{ url_for('dorms.dorm_managers') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="dm_name">Name:</label>
+    <input type="text" id="dm_name" name="dm_name" required>
+
+    <label for="dm_phone">Phone:</label>
+    <input type="text" id="dm_phone" name="dm_phone" required>
+
+    <button type="submit">Save</button>
+  </form>
+{% endblock %}

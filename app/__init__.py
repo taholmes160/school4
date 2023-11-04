@@ -17,8 +17,8 @@ csrf = CSRFProtect(app)
 bootstrap = Bootstrap(app)
 
 from app.students import students_bp  # Import the students blueprint
-
 app.register_blueprint(students_bp, url_prefix='/students')
 
+from app.dorms import dorms_bp
+app.register_blueprint(dorms_bp, url_prefix='/dorms')
 from app import routes
-
