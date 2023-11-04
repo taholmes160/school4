@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>List of Dorm Rooms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Room Number</th>
+      <th>Capacity</th>
+      <th>Notes</th>
+      <th>Phone</th>
+      <th>Floor</th>
+      <th>Unit</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for dorm_room in dorm_rooms.items %}
+    <tr>
+      <td>{{ dorm_room.droom_number }}</td>
+      <td>{{ dorm_room.droom_capacity }}</td>
+      <td>{{ dorm_room.droom_notes }}</td>
+      <td>{{ dorm_room.droom_phone }}</td>
+      <td>{{ dorm_room.droom_floor }}</td>
+      <td>{{ dorm_room.droom_unit }}</td>
+      <td>
+        <a href="{{ url_for('dorms.edit_dorm_room', droom_id=dorm_room.droom_id) }}">Edit</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{{ dorm_rooms.links }}
+
+{% endblock %}
