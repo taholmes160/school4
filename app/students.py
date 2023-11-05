@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions
 from sqlalchemy import or_
-from app import db
+from app import db, app
 from datetime import datetime
 
 students_bp = Blueprint('students', __name__)
@@ -63,3 +63,21 @@ def edit_student(student_id):
     suffix=Suffix.query.all()
     divisions=Divisions.query.all()
     return render_template('students/edit_student.html', suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
+
+@app.route('/students/<int:student_id>/comments', methods=['POST'])
+def add_comment(student_id):
+    # Retrieve the form data from the request
+    comment_text = request.form.get('comment_text')
+    comment_by = request.form.get('comment_by')
+    comment_date = request.form.get('comment_date')
+    comment_level = request.form.get('comment_level')
+
+    # Create a new Comment object
+    comment = Comment(student_id=student_id, comment_text=comment_text, comment_by=comment_by, comment_date=comment_date, comment_level=comment_level)
+
+    # Add the comment to the database
+    db.session.add(comment)
+    db.session.commit()
+
+    flash('Comment added successfully', 'success')
+    return redirect(url_for('students.edit_student', student_id=student_id))

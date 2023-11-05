@@ -126,6 +126,7 @@ class Comment(db.Model):
     comment_text = db.Column(db.String(2500))
     comment_by = db.Column(db.String(45))
     comment_date = db.Column(db.Date)
+    comment_level =  db.Column(db.String(45))
 
 class Dorm(db.Model):
     __tablename__ = 'tbl_dorms'
