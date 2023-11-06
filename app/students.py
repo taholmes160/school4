@@ -81,3 +81,22 @@ def add_comment(student_id):
 
     flash('Comment added successfully', 'success')
     return redirect(url_for('students.edit_student', student_id=student_id))
+
+@students_bp.route('/students/<int:student_id>/comments', methods=['POST'])
+def add_comment(student_id):
+    # Retrieve the form data from the request
+    comment_text = request.form.get('comment_text')
+    comment_by = request.form.get('comment_by')
+    comment_date = request.form.get('comment_date')
+    comment_level = request.form.get('comment_level')
+
+    # Create a new Comment object
+    comment = Comment(student_id=student_id, comment_text=comment_text, comment_by=comment_by, comment_date=comment_date, comment_level=comment_level)
+
+    # Add the comment to the database
+    db.session.add(comment)
+    db.session.commit()
+
+    flash('Comment added successfully', 'success')
+    return redirect(url_for('students.edit_student', student_id=student_id))
+

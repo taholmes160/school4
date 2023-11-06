@@ -89,6 +89,7 @@ class Student(db.Model):
     ethnicity = db.relationship('Ethnicity', backref='students')
     suffix = db.relationship('Suffix', backref='students')
     divisions = db.relationship('Divisions', backref='students')
+    comments = db.relationship('Comment', backref='student', lazy=True)
 
 class Faculty(db.Model):
     __tablename__ = 'faculty'
@@ -122,11 +123,11 @@ class Comment(db.Model):
     __tablename__ = 'tbl_comments'
 
     comment_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('tbl_students.student_id'), nullable=False)
+    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'), nullable=False)
     comment_text = db.Column(db.String(2500))
     comment_by = db.Column(db.String(45))
     comment_date = db.Column(db.Date)
-    comment_level =  db.Column(db.String(45))
+    comment_level = db.Column(db.String(45))
 
 class Dorm(db.Model):
     __tablename__ = 'tbl_dorms'
