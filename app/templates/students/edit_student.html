@@ -227,19 +227,21 @@
         
             <form class="form-wide" method="POST" action="{{ url_for('students.add_comment', student_id=student.student_id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
                 <div class="form-group">
                     <label for="comment_text">Comment Text</label>
                     <textarea class="form-control" id="comment_text" name="comment_text" rows="5"></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-row">
+                <div class="form-group input-container-15">
                     <label for="comment_by">Comment By</label>
                     <input type="text" class="form-control" id="comment_by" name="comment_by">
                 </div>
-                <div class="form-group">
+                <div class="form-group input-container-15">
                     <label for="comment_date">Comment Date</label>
                     <input type="text" class="form-control datepicker" id="comment_date" name="comment_date">
                 </div>
-                <div class="form-group">
+                <div class="form-group input-container-15">
                     <label for="comment_level">Comment Level</label>
                     <select class="form-control" id="comment_level" name="comment_level">
                         <option value="Administration">Administration</option>

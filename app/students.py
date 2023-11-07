@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions, Comment
 from sqlalchemy import or_
 from app import db, app
 from datetime import datetime
