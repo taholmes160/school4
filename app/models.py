@@ -1,4 +1,7 @@
 from app import db
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 class Gender(db.Model):
     __tablename__ = 'tbl_gender'
@@ -90,6 +93,8 @@ class Student(db.Model):
     suffix = db.relationship('Suffix', backref='students')
     divisions = db.relationship('Divisions', backref='students')
     comments = db.relationship('Comment', backref='student', lazy=True)
+    housing = db.relationship('Housing', backref='student', uselist=False)
+    
 
 class Faculty(db.Model):
     __tablename__ = 'faculty'
@@ -159,16 +164,18 @@ class DormRoom(db.Model):
     droom_floor = db.Column(db.String(12))
     droom_unit = db.Column(db.String(12))
     dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
+    
+    housing = db.relationship('Housing', backref='dorm_room')
 
 class User(db.Model):
     __tablename__ = 'tbl_users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    prefix_id = db.Column(db.Integer, db.ForeignKey('tbl_prefixes.prefix_id'))
+    prefix_id = db.Column(db.Integer, db.ForeignKey('tbl_prefix.prefix_id'))
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
-    suffix_id = db.Column(db.Integer, db.ForeignKey('tbl_suffixes.suffix_id'))
-    role_id = db.Column(db.Integer, db.ForeignKey('tbl_roles.role_id'))
+    suffix_id = db.Column(db.Integer, db.ForeignKey('tbl_suffix.suffix_id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('tbl_role.role_id'))
     username = db.Column(db.String(50))
     password = db.Column(db.String(255))
     email = db.Column(db.String(100))
@@ -177,8 +184,21 @@ class User(db.Model):
     address = db.Column(db.String(255))
     address2 = db.Column(db.String(255))
     city = db.Column(db.String(255))
-    state_id = db.Column(db.Integer, db.ForeignKey('tbl_states.state_id'))
+    state_id = db.Column(db.Integer, db.ForeignKey('tbl_state.state_id'))
     zip = db.Column(db.String(255))
     profile_picture = db.Column(db.String(255))
     account_status_id = db.Column(db.Integer, db.ForeignKey('tbl_account_statuses.account_status_id'))
     registration_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
+
+class Housing(db.Model):
+    __tablename__ = 'tbl_housing'
+    
+    housing_id = db.Column(db.Integer, primary_key=True)
+    droom_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))
+
+class Role(db.Model):
+    __tablename__ = 'tbl_role'
+
+    role_id = db.Column(db.Integer, primary_key=True)
+    role_name = db.Column(db.String(50))
