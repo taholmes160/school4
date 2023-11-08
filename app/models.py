@@ -187,7 +187,7 @@ class User(db.Model):
     state_id = db.Column(db.Integer, db.ForeignKey('tbl_state.state_id'))
     zip = db.Column(db.String(255))
     profile_picture = db.Column(db.String(255))
-    account_status_id = db.Column(db.Integer, db.ForeignKey('tbl_account_statuses.account_status_id'))
+    acc_status_id = db.Column(db.Integer, db.ForeignKey('tbl_account_statuses.acc_status_id'))
     registration_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
 
 class Housing(db.Model):
@@ -202,3 +202,9 @@ class Role(db.Model):
 
     role_id = db.Column(db.Integer, primary_key=True)
     role_name = db.Column(db.String(50))
+ 
+class Account_status(db.Model):
+    __tablename__ = 'tbl_account_statuses'
+    
+    acc_status_id = db.Column(db.Integer, primary_key=True)
+    acc_status_name = db.Column(db.String(45))
