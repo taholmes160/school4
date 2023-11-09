@@ -263,8 +263,34 @@
         </div>
         <div class="tab-pane fade" id="housing" role="tabpanel" aria-labelledby="housing-tab">
             <h2>Housing</h2>
-            <p>This is a test page for the Housing tab.</p>
+            <form method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
+                <div class="form-group input-container-15">
+                    <label for="dorm">Dormitory:</label>
+                    <div class="custom-select-icon">
+                        <select class="form-control" id="dorm" name="dorm_id">
+                            {% for dorm in dorms %}
+                            <option value="{{ dorm.dorm_id }}">{{ dorm.dorm_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <div>
+                    <label for="room">Room:</label>
+                    <div class="custom-select-icon">
+                        <select class="form-control" id="room" name="room_id">
+                            {% for room in rooms %}
+                            <option value="{{ room.droom_id }}">{{ room.droom_number }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Assign Housing</button>
+            </form>
         </div>
+        
+        
         <!-- Add more tab panes as needed -->
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

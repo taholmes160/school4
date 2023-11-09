@@ -93,20 +93,22 @@ def add_comment(student_id):
     flash('Comment added successfully', 'success')
     return redirect(url_for('students.edit_student', student_id=student_id))
 
-@students_bp.route('/students/<int:student_id>/assign_dorm', methods=['POST'])
-def assign_dorm(student_id):
+@students_bp.route('/students/<int:student_id>/assign_housing', methods=['POST'])
+def assign_housing(student_id):
     student = Student.query.get_or_404(student_id)
     dorm_id = request.form.get('dorm_id')
-    droom_id = request.form.get('droom_id')
+    room_id = request.form.get('room_id')
 
-    housing = Housing.query.filter_by(student_id=student_id).first()
-    if housing:
-        housing.dorm_id = dorm_id
-        housing.droom_id = droom_id
-    else:
-        housing = Housing(student_id=student_id, dorm_id=dorm_id, droom_id=droom_id)
-        db.session.add(housing)
+    # Retrieve the dorm and room objects from the database
+    dorm = Dorm.query.get_or_404(dorm_id)
+    room = DormRoom.query.get_or_404(room_id)
 
+    # Create a new Housing object and assign it to the student
+    housing = Housing(dorm_room=room, student=student)
+
+    # Add the housing to the database
+    db.session.add(housing)
     db.session.commit()
-    flash('Dorm and room assigned successfully', 'success')
+
+    flash('Housing assigned successfully', 'success')
     return redirect(url_for('students.edit_student', student_id=student_id))
