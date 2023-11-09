@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions, Comment
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions, Comment, Dorm, DormRoom, Housing
 from sqlalchemy import or_
 from app import db, app
 from datetime import datetime
@@ -24,8 +24,13 @@ def list_students():
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
 def edit_student(student_id):
+    print("Student ID:", student_id)
     student = Student.query.get_or_404(student_id)
+    print("Student ID:", student.student_id)
+    print("Student Name:", student.student_fname, student.student_lname)
+    print("Housing:", student.housing)
 
+    
     if request.method == 'POST':
         student.student_fname = request.form.get('fname')
         student.student_mname = request.form.get('mname')
@@ -62,25 +67,13 @@ def edit_student(student_id):
     statuses = Status.query.all()
     suffix=Suffix.query.all()
     divisions=Divisions.query.all()
-    return render_template('students/edit_student.html', suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
-
-@app.route('/students/<int:student_id>/comments', methods=['POST'])
-def add_comment(student_id):
-    # Retrieve the form data from the request
-    comment_text = request.form.get('comment_text')
-    comment_by = request.form.get('comment_by')
-    comment_date = request.form.get('comment_date')
-    comment_level = request.form.get('comment_level')
-
-    # Create a new Comment object
-    comment = Comment(student_id=student_id, comment_text=comment_text, comment_by=comment_by, comment_date=comment_date, comment_level=comment_level)
-
-    # Add the comment to the database
-    db.session.add(comment)
-    db.session.commit()
-
-    flash('Comment added successfully', 'success')
-    return redirect(url_for('students.edit_student', student_id=student_id))
+    dorms = Dorm.query.all()
+    rooms = DormRoom.query.all()
+    
+    print("Dorms:", dorms)
+    print("Rooms:", rooms)
+    
+    return render_template('students/edit_student.html', dorms=dorms, rooms=rooms, suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
 
 @students_bp.route('/students/<int:student_id>/comments', methods=['POST'])
 def add_comment(student_id):
@@ -100,3 +93,20 @@ def add_comment(student_id):
     flash('Comment added successfully', 'success')
     return redirect(url_for('students.edit_student', student_id=student_id))
 
+@students_bp.route('/students/<int:student_id>/assign_dorm', methods=['POST'])
+def assign_dorm(student_id):
+    student = Student.query.get_or_404(student_id)
+    dorm_id = request.form.get('dorm_id')
+    droom_id = request.form.get('droom_id')
+
+    housing = Housing.query.filter_by(student_id=student_id).first()
+    if housing:
+        housing.dorm_id = dorm_id
+        housing.droom_id = droom_id
+    else:
+        housing = Housing(student_id=student_id, dorm_id=dorm_id, droom_id=droom_id)
+        db.session.add(housing)
+
+    db.session.commit()
+    flash('Dorm and room assigned successfully', 'success')
+    return redirect(url_for('students.edit_student', student_id=student_id))

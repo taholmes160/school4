@@ -93,7 +93,7 @@ class Student(db.Model):
     suffix = db.relationship('Suffix', backref='students')
     divisions = db.relationship('Divisions', backref='students')
     comments = db.relationship('Comment', backref='student', lazy=True)
-    housing = db.relationship('Housing', backref='student', uselist=False)
+    housing = db.relationship('Housing', backref='student', lazy='select')
     
 
 class Faculty(db.Model):
@@ -165,7 +165,7 @@ class DormRoom(db.Model):
     droom_unit = db.Column(db.String(12))
     dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
     
-    housing = db.relationship('Housing', backref='dorm_room')
+    housing = db.relationship('Housing', backref='dorm')
 
 class User(db.Model):
     __tablename__ = 'tbl_users'
@@ -196,6 +196,9 @@ class Housing(db.Model):
     housing_id = db.Column(db.Integer, primary_key=True)
     droom_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'))
     student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))
+    
+    dorm_room = db.relationship('DormRoom', backref='housing2')
+
 
 class Role(db.Model):
     __tablename__ = 'tbl_role'

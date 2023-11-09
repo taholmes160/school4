@@ -30,8 +30,11 @@
             <a class="nav-link active" id="student-info-tab" data-toggle="tab" href="#student-info" role="tab" aria-controls="student-info" aria-selected="true">Student Info</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role,="tab" aria-controls="comments" aria-selected="false">Comments</a>
-        </li>
+            <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comments</a>
+        </li>  
+        <li class="nav-item">
+            <a class="nav-link" id="housing-tab" data-toggle="tab" href="#housing" role="tab" aria-controls="housing" aria-selected="false">Housing</a>
+        </li>     
         <!-- Add more tabs as needed -->
     </ul>
 
@@ -47,11 +50,11 @@
                     <div class="form-row">
                         <div class="form-group input-container-15">
                             <label for="fname">First Name</label>
-                            <input type="text" class="form-control" id="fname" name="fname" value="{{ student.student_fname }}" >
+                            <input type="text" class="form-control" id="fname" name="fname" value="{{ student.student_fname }}">
                         </div>
                         <div class="form-group input-container-15">
                             <label for="mname">Middle Name</label>
-                            <input type="text" class="form-control" id="mname" name="mname" value="{{ student.student_mname }}" >
+                            <input type="text" class="form-control" id="mname" name="mname" value="{{ student.student_mname }}">
                         </div>
                         <div class="form-group input-container-15">
                             <label for="lname">Last Name</label>
@@ -60,7 +63,7 @@
                         <div class="form-group input-container-15">
                             <label for="suffix_id">Suffix</label>
                             <div class="custom-select-icon">
-                                <select class="form-control" id="suffix_id" name="suffix_id" >
+                                <select class="form-control" id="suffix_id" name="suffix_id">
                                     {% for suffix in suffix %}
                                         <option value="{{ suffix.suffix_id }}" {% if suffix.suffix_id == student.student_suffix_id %}selected{% endif %}>{{ suffix.suffix }}</option>
                                     {% endfor %}
@@ -123,20 +126,20 @@
                     </div>
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" value="{{ student.student_address }}" >
+                        <input type="text" class="form-control" id="address" name="address" value="{{ student.student_address }}">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="address2" name="address2" value="{{ student.student_address2 }}" >
+                        <input type="text" class="form-control" id="address2" name="address2" value="{{ student.student_address2 }}">
                     </div>
                     <div class="form-row">
                         <div class="form-group input-container-15">
                             <label for="city">City</label>
-                            <input type="text" class="form-control" id="city" name="city" value="{{ student.student_city }}" >
+                            <input type="text" class="form-control" id="city" name="city" value="{{ student.student_city }}">
                         </div>
                         <div class="form-group input-container-15">
                             <label for="state">State</label>
                             <div class="custom-select-icon">
-                                <select class="form-control" id="state_id" name="state_id" >
+                                <select class="form-control" id="state_id" name="state_id">
                                     {% for state in states %}
                                         <option value="{{ state.state_id }}" {% if state.state_id == student.student_state_id %}selected{% endif %}>{{ state.state_name }}</option>
                                     {% endfor %}
@@ -146,16 +149,16 @@
                         </div>
                         <div class="form-group input-container-15">
                             <label for="zip">Zip</label>
-                            <input type="text" class="form-control" id="zip" name="zip" value="{{ student.student_zip }}" >
+                            <input type="text" class="form-control" id="zip" name="zip" value="{{ student.student_zip }}">
                         </div>
                         <div class="form-group input-container-15">
                             <label for="district">Home District</label>
-                            <input type="text" class="form-control" id="district" name="district" value="{{ student.student_district }}" >
+                            <input type="text" class="form-control" id="district" name="district" value="{{ student.student_district }}">
                         </div>
                         <div class="form-group input-container-15">
                             <label for="status">Status</label>
                             <div class="custom-select-icon">
-                                <select class="form-control" id="status" name="status" >
+                                <select class="form-control" id="status" name="status">
                                     {% for status in statuses %}
                                         <option value="{{ status.student_status_id }}" {% if status.student_status_id == student.student_status %}selected{% endif %}>{{ status.student_status }}</option>
                                     {% endfor %}
@@ -168,7 +171,7 @@
                         <div class="form-group input-container-15">
                             <label for="enrolled">Date Enrolled</label>
                             <div class="input-group">
-                                <input type="text" class="form-control datepicker" id="enrolled" name="enrolled" value="{{ student.student_enrolled }}" >
+                                <input type="text" class="form-control datepicker" id="enrolled" name="enrolled" value="{{ student.student_enrolled }}">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                                 </div>
@@ -188,7 +191,7 @@
                         <div class="form-group input-container-15">
                             <label for="nationality_id">Nationality</label>
                             <div class="custom-select-icon">
-                                <select class="form-control" id="nationality_id" name="nationality_id" >
+                                <select class="form-control" id="nationality_id" name="nationality_id">
                                     {% for nationality in nationality %}
                                         <option value="{{ nationality.nationality_id }}" {% if nationality.nationality_id == student.student_nationality_id %}selected{% endif %}>{{ nationality.nationality_name }}</option>
                                     {% endfor %}
@@ -199,7 +202,7 @@
                         <div class="form-group input-container-15">
                             <label for="ethnicity_id">Ethnicity</label>
                             <div class="custom-select-icon">
-                                <select class="form-control" id="ethnicity_id" name="ethnicity_id" >
+                                <select class="form-control" id="ethnicity_id" name="ethnicity_id">
                                     {% for ethnicity in ethnicity %}
                                         <option value="{{ ethnicity.ethnicity_id }}" {% if ethnicity.ethnicity_id == student.student_ethnicity_id %}selected{% endif %}>{{ ethnicity.ethnicity_name }}</option>
                                     {% endfor %}
@@ -233,43 +236,46 @@
                     <textarea class="form-control" id="comment_text" name="comment_text" rows="5"></textarea>
                 </div>
                 <div class="form-row">
-                <div class="form-group input-container-15">
-                    <label for="comment_by">Comment By</label>
-                    <input type="text" class="form-control" id="comment_by" name="comment_by">
+                    <div class="form-group input-container-15">
+                        <label for="comment_by">Comment By</label>
+                        <input type="text" class="form-control" id="comment_by" name="comment_by">
+                    </div>
+                    <div class="form-group input-container-15">
+                        <label for="comment_date">Comment Date</label>
+                        <input type="text" class="form-control datepicker" id="comment_date" name="comment_date">
+                    </div>
+                    <div class="form-group input-container-15">
+                        <label for="comment_level">Comment Level</label>
+                        <select class="form-control" id="comment_level" name="comment_level">
+                            <option value="Administration">Administration</option>
+                            <option value="Discipline">Discipline</option>
+                            <option value="Counseling">Counseling</option>
+                            <option value="Guidance">Guidance</option>
+                            <option value="Medical">Medical</option>
+                            <option value="Faculty">Faculty</option>
+                            <option value="Staff">Staff</option>
+                            <option value="Office">Office</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Comments</button>
                 </div>
-                <div class="form-group input-container-15">
-                    <label for="comment_date">Comment Date</label>
-                    <input type="text" class="form-control datepicker" id="comment_date" name="comment_date">
-                </div>
-                <div class="form-group input-container-15">
-                    <label for="comment_level">Comment Level</label>
-                    <select class="form-control" id="comment_level" name="comment_level">
-                        <option value="Administration">Administration</option>
-                        <option value="Discipline">Discipline</option>
-                        <option value="Counseling">Counseling</option>
-                        <option value="Guidance">Guidance</option>
-                        <option value="Medical">Medical</option>
-                        <option value="Faculty">Faculty</option>
-                        <option value="Staff">Staff</option>
-                        <option value="Office">Office</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Save Comments</button>
             </form>
         </div>
-        
+        <div class="tab-pane fade" id="housing" role="tabpanel" aria-labelledby="housing-tab">
+            <h2>Housing</h2>
+            <p>This is a test page for the Housing tab.</p>
+        </div>
+        <!-- Add more tab panes as needed -->
     </div>
-    <!-- Add more tab panes as needed -->
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<script>
-    $(document).ready(function() {
-        console.log("Initializing date picker");
-        $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("Initializing date picker");
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
         });
-    });
-</script>
+    </script>
 {% endblock %}
