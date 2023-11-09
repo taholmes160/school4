@@ -24,13 +24,10 @@ def list_students():
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
 def edit_student(student_id):
-    print("Student ID:", student_id)
-    student = Student.query.get_or_404(student_id)
-    print("Student ID:", student.student_id)
-    print("Student Name:", student.student_fname, student.student_lname)
-    print("Housing:", student.housing)
-
     
+    student = Student.query.get_or_404(student_id)
+    roommates = student.dorm_room.students
+       
     if request.method == 'POST':
         student.student_fname = request.form.get('fname')
         student.student_mname = request.form.get('mname')
@@ -70,10 +67,8 @@ def edit_student(student_id):
     dorms = Dorm.query.all()
     rooms = DormRoom.query.all()
     
-    print("Dorms:", dorms)
-    print("Rooms:", rooms)
     
-    return render_template('students/edit_student.html', dorms=dorms, rooms=rooms, suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
+    return render_template('students/edit_student.html', dorms=dorms, rooms=rooms, suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity, roommates=roommates)
 
 @students_bp.route('/students/<int:student_id>/comments', methods=['POST'])
 def add_comment(student_id):

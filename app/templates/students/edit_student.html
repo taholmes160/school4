@@ -288,6 +288,19 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Assign Housing</button>
             </form>
+            <div class="roommates">
+                <h3>Roommates:</h3>
+                {% if roommates %}
+                    <ul>
+                        {% for roommate in roommates %}
+                            <li>{{ roommate.student_fname }} {{ roommate.student_lname }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No roommates assigned.</p>
+                {% endif %}
+            </div>
+        </div>
         </div>
         
         

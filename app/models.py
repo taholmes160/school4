@@ -164,8 +164,11 @@ class DormRoom(db.Model):
     droom_floor = db.Column(db.String(12))
     droom_unit = db.Column(db.String(12))
     dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
+    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))
     
     housing = db.relationship('Housing', backref='dorm')
+    students = db.relationship('Student', backref='dorm_room', lazy=True)
+    
 
 class User(db.Model):
     __tablename__ = 'tbl_users'

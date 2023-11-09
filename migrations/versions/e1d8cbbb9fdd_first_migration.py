@@ -81,6 +81,9 @@ def upgrade():
 
     with op.batch_alter_table('tbl_users', schema=None) as batch_op:
         batch_op.drop_index('account_status_id')
+        
+    with op.batch_alter_table('tbl_dorm_rooms', schema=None) as batch_op:
+        batch_op.create_foreign_key('fk_dorm_room_student', 'tbl_student', ['student_id'], ['student_id'])
 
     # ### end Alembic commands ###
 
@@ -147,5 +150,7 @@ def downgrade():
                type_=mysql.VARCHAR(length=11),
                existing_nullable=False)
 
-    op.drop_table('staff')
+    with op.batch_alter_table('tbl_dorm_rooms', schema=None) as batch_op:
+        batch_op.drop_constraint('fk_dorm_room_student', type_='foreignkey')
+
     # ### end Alembic commands ###
