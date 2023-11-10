@@ -23,21 +23,6 @@
             });
         });
     </script>
-
-    <!-- Add the tab bar -->
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" id="student-info-tab" data-toggle="tab" href="#student-info" role="tab" aria-controls="student-info" aria-selected="true">Student Info</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comments</a>
-        </li>  
-        <li class="nav-item">
-            <a class="nav-link" id="housing-tab" data-toggle="tab" href="#housing" role="tab" aria-controls="housing" aria-selected="false">Housing</a>
-        </li>     
-        <!-- Add more tabs as needed -->
-    </ul>
-
     <!-- Add the tab content -->
     <div class="tab-content">
         <div class="tab-pane fade show active" id="student-info" role="tabpanel" aria-labelledby="student-info-tab">
@@ -227,84 +212,8 @@
                     </div>
                 </div>
             {% endfor %}
-        
-            <form class="form-wide" method="POST" action="{{ url_for('students.add_comment', student_id=student.student_id) }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                
-                <div class="form-group">
-                    <label for="comment_text">Comment Text</label>
-                    <textarea class="form-control" id="comment_text" name="comment_text" rows="5"></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group input-container-15">
-                        <label for="comment_by">Comment By</label>
-                        <input type="text" class="form-control" id="comment_by" name="comment_by">
-                    </div>
-                    <div class="form-group input-container-15">
-                        <label for="comment_date">Comment Date</label>
-                        <input type="text" class="form-control datepicker" id="comment_date" name="comment_date">
-                    </div>
-                    <div class="form-group input-container-15">
-                        <label for="comment_level">Comment Level</label>
-                        <select class="form-control" id="comment_level" name="comment_level">
-                            <option value="Administration">Administration</option>
-                            <option value="Discipline">Discipline</option>
-                            <option value="Counseling">Counseling</option>
-                            <option value="Guidance">Guidance</option>
-                            <option value="Medical">Medical</option>
-                            <option value="Faculty">Faculty</option>
-                            <option value="Staff">Staff</option>
-                            <option value="Office">Office</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save Comments</button>
-                </div>
-            </form>
         </div>
-        <div class="tab-pane fade" id="housing" role="tabpanel" aria-labelledby="housing-tab">
-            <h2>Housing</h2>
-            <form method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
-                <div class="form-group input-container-15">
-                    <label for="dorm">Dormitory:</label>
-                    <div class="custom-select-icon">
-                        <select class="form-control" id="dorm" name="dorm_id">
-                            {% for dorm in dorms %}
-                            <option value="{{ dorm.dorm_id }}">{{ dorm.dorm_name }}</option>
-                            {% endfor %}
-                        </select>
-                        <i class="fas fa-caret-down"></i>
-                    </div>
-                </div>
-                <div>
-                    <label for="room">Room:</label>
-                    <div class="custom-select-icon">
-                        <select class="form-control" id="room" name="room_id">
-                            {% for room in rooms %}
-                            <option value="{{ room.droom_id }}">{{ room.droom_number }}</option>
-                            {% endfor %}
-                        </select>
-                        <i class="fas fa-caret-down"></i>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Assign Housing</button>
-            </form>
-            <div class="roommates">
-                <h3>Roommates:</h3>
-                {% if roommates %}
-                    <ul>
-                        {% for roommate in roommates %}
-                            <li>{{ roommate.student_fname }} {{ roommate.student_lname }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>No roommates assigned.</p>
-                {% endif %}
-            </div>
-        </div>
-        </div>
-        
-        
-        <!-- Add more tab panes as needed -->
+
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script>
