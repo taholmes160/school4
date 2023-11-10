@@ -200,8 +200,6 @@ class Housing(db.Model):
     droom_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'))
     student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))
     
-    dorm_room = db.relationship('DormRoom', backref='housing2')
-
 
 class Role(db.Model):
     __tablename__ = 'tbl_role'
