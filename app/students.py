@@ -26,7 +26,6 @@ def list_students():
 def edit_student(student_id):
     
     student = Student.query.get_or_404(student_id)
-    roommates = student.dorm_room.students
        
     if request.method == 'POST':
         student.student_fname = request.form.get('fname')
@@ -64,9 +63,22 @@ def edit_student(student_id):
     statuses = Status.query.all()
     suffix=Suffix.query.all()
     divisions=Divisions.query.all()
-    dorms = Dorm.query.all()
-    rooms = DormRoom.query.all()
+
     
     
     return render_template('students/edit_student.html', suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
 
+@students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
+def add_comment(student_id):
+    student = Student.query.get_or_404(student_id)
+
+    comment_text = request.form.get('comment_text')
+    comment_date = datetime.now().date()
+    comment_level = 'Student'  # You can adjust this based on your requirements
+
+    comment = Comment(student_id=student_id, comment_text=comment_text, comment_date=comment_date, comment_level=comment_level)
+    db.session.add(comment)
+    db.session.commit()
+
+    flash('Comment added successfully', 'success')
+    return redirect(url_for('students.edit_student', student_id=student_id))
