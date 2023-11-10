@@ -82,3 +82,23 @@ def add_comment(student_id):
 
     flash('Comment added successfully', 'success')
     return redirect(url_for('students.edit_student', student_id=student_id))
+
+@students_bp.route('/students/<int:student_id>/housing/assign', methods=['POST'])
+def assign_housing(student_id):
+    student = Student.query.get_or_404(student_id)
+
+    dorm_id = request.form.get('dorm_id')
+    room_id = request.form.get('room_id')
+
+    dorm = Dorm.query.get(dorm_id)
+    room = DormRoom.query.get(room_id)
+
+    if dorm and room:
+        student.dorm_room = room
+        db.session.commit()
+        flash('Housing assigned successfully', 'success')
+    else:
+        flash('Invalid dorm or room selection', 'error')
+
+    return redirect(url_for('students.edit_student', student_id=student_id))
+
