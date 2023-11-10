@@ -63,10 +63,12 @@ def edit_student(student_id):
     statuses = Status.query.all()
     suffix=Suffix.query.all()
     divisions=Divisions.query.all()
+    dorms = Dorm.query.all()
+    rooms = DormRoom.query.all()
 
     
     
-    return render_template('students/edit_student.html', suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
+    return render_template('students/edit_student.html', dorms=dorms, rooms=rooms, suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):

@@ -237,12 +237,16 @@
         </div>
         <div class="tab-pane fade" id="housing" role="tabpanel" aria-labelledby="housing-tab">
             <h2>Housing</h2>
-            {% if student.dorm_room %}
-                <p>Assigned Dorm: {{ student.dorm_room.dorm.dorm_name }}</p>
-                <p>Assigned Room: {{ student.dorm_room.droom_number }}</p>
-                {% if student.dorm_room.students|length > 1 %}
-                    <p>Roommate: {{ student.dorm_room.students|rejectattr('student_id', 'eq', student.student_id)|map(attribute='student_fname')|join(', ') }}</p>
-                {% endif %}
+            {% if student.dorm_room.students|length > 1 %}
+                <p>Roommate:
+                    {% for roommate in student.dorm_room.students %}
+                        {% if roommate.student_id != student.student_id %}
+                            {{ roommate.student_fname }} {{ roommate.student_lname }}
+                        {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+
             {% else %}
                 <form class="mt-4" method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
