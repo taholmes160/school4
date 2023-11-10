@@ -3,212 +3,318 @@
 {% block title %}Edit Student{% endblock %}
 
 {% block content %}
-<script>
-    function validateForm() {
-        var birthday = document.getElementById('birthday').value;
-        
-        if (birthday !== '' && birthday !== 'NONE') {
-            // Add additional validation for date format if needed
-            // ...
+    <script>
+        function validateForm() {
+            var birthday = document.getElementById('birthday').value;
+
+            if (birthday !== '' && birthday !== 'NONE') {
+                // Add additional validation for date format if needed
+                // ...
+            }
+
+            return true;
         }
-        
-        return true;
-    }
-</script>
-<div class="container">
-    <h1>Edit Student</h1>
-    <form class="form-wide" method="POST" action="{{ url_for('students.edit_student', student_id=student.student_id) }}">
-        
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
-        <div class="form-row">
-            <div class="form-group input-container-15">
-                <label for="fname">First Name</label>
-                <input type="text" class="form-control" id="fname" name="fname" value="{{ student.student_fname }}" >
-            </div>
-            <div class="form-group input-container-15">
-                <label for="mname">Middle Name</label>
-                <input type="text" class="form-control" id="mname" name="mname" value="{{ student.student_mname }}" >
-            </div>
-
-            <div class="form-group input-container-15">
-                <label for="lname">Last Name</label>
-                <input type="text" class="form-control" id="lname" name="lname" value="{{ student.student_lname }}">
-            </div>
-
-            <div class="form-group input-container-15">
-                <label for="suffix_id">Suffix</label>
-                <div class="custom-select-icon">
-                <select class="form-control" id="suffix_id" name="suffix_id" >
-                    {% for suffix in suffix %}
-                        <option value="{{ suffix.suffix_id }}" {% if suffix.suffix_id == student.student_suffix_id %}selected{% endif %}>{{ suffix.suffix }}</option>
-                    {% endfor %}
-                </select>
-                <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-            <div class="form-group input-container-15">
-                <label for="goesby">Nickname</label>
-                <input type="text" class="form-control" id="goesby" name="goesby" value="{{ student.student_goesby }}">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group input-container-15">
-                <label for="gender_id">Gender</label>
-                <div class="custom-select-icon">
-                <select class="form-control" id="gender_id" name="gender_id">
-                    {% for gender in genders %}
-                        <option value="{{ gender.gender_id }}" {% if gender.gender_id == student.student_gender_id %}selected{% endif %}>{{ gender.gender_name }}</option>
-                    {% endfor %}
-                </select>
-                <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-            <div class="form-group input-container-15">
-                <label for="level_id">Grade</label>
-                <div class="custom-select-icon">
-                <select class="form-control" id="level_id" name="level_id">
-                    {% for level in levels %}
-                        <option value="{{ level.level_id }}" {% if level.level_id == student.student_level_id %}selected{% endif %}>{{ level.level_name }}</option>
-                    {% endfor %}
-                </select>
-                <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-            <div class="form-group input-container-15">
-                <label for="division_id">Division</label>
-                <div class="custom-select-icon">
-                <select class="form-control" id="division_id" name="division_id">
-                    {% for division in divisions %}
-                        <option value="{{ division.division_id }}" {% if division.division_id == student.student_division_id %}selected{% endif %}>{{ division.division_name }}</option>
-                    {% endfor %}
-                </select>
-                <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-
-            <div class="form-group input-container-15">
-                <label for="age">Age</label>
-                <input type="text" class="form-control" id="age" name="age" value="{{ student.student_age }}">
-            </div>
-
-            <div class="form-group input-container-15">
-                <label for="birthday">Birthday</label>
-                <div class="input-group">
-                    <input type="text" class="form-control datepicker" id="birthday" name="birthday" value="{{ student.student_birthday }}">
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </div>
-                </div>
-            </div>
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" value="{{ student.student_address }}" >
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" id="address2" name="address2" value="{{ student.student_address2 }}" >
-        </div>
-        <div class="form-row">
-            <div class="form-group input-container-15">
-                <label for="city">City</label>
-                <input type="text" class="form-control" id="city" name="city" value="{{ student.student_city }}" >
-            </div>
-
-            <div class="form-group input-container-15">
-                <label for="state">State</label>
-                <div class="custom-select-icon">
-                    <select class="form-control" id="state_id" name="state_id" >
-                        {% for state in states %}
-                            <option value="{{ state.state_id }}" {% if state.state_id == student.student_state_id %}selected{% endif %}>{{ state.state_name }}</option>
-                        {% endfor %}
-                    </select>
-                    <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-            <div class="form-group input-container-15">
-                <label for="zip">Zip</label>
-                <input type="text" class="form-control" id="zip" name="zip" value="{{ student.student_zip }}" >
-            </div>
-
-            <div class="form-group input-container-15">
-                <label for="district">Home District</label>
-                <input type="text" class="form-control" id="district" name="district" value="{{ student.student_district }}" >
-            </div>
-        
-            <div class="form-group input-container-15">
-                <label for="status">Status</label>
-                <div class="custom-select-icon">
-                    <select class="form-control" id="status" name="status" >
-                        {% for status in statuses %}
-                            <option value="{{ status.student_status_id }}" {% if status.student_status_id == student.student_status %}selected{% endif %}>{{ status.student_status }}</option>
-                        {% endfor %}
-                    </select>
-                    <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group input-container-15">
-                <label for="enrolled">Date Enrolled</label>
-                <div class="input-group">
-                    <input type="text" class="form-control datepicker" id="enrolled" name="enrolled" value="{{ student.student_enrolled }}" >
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group input-container-15">
-                <label for="campus_id">Campus</label>
-                <div class="custom-select-icon">
-                    <select class="form-control" id="campus_id" name="campus_id">
-                        {% for campus in campus %}
-                            <option value="{{ campus.campus_id }}" {% if campus.campus_id == student.student_campus_id %}selected{% endif %}>{{ campus.campus_name }}</option>
-                        {% endfor %}
-                    </select>
-                    <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-            
-            <div class="form-group input-container-15">
-                <label for="nationality_id">Nationality</label>
-                <div class="custom-select-icon">
-                    <select class="form-control" id="nationality_id" name="nationality_id" >
-                        {% for nationality in nationality %}
-                            <option value="{{ nationality.nationality_id }}" {% if nationality.nationality_id == student.student_nationality_id %}selected{% endif %}>{{ nationality.nationality_name }}</option>
-                        {% endfor %}
-                    </select>
-                    <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-            
-            <div class="form-group input-container-15">
-                <label for="ethnicity_id">Ethnicity</label>
-                <div class="custom-select-icon">
-                    <select class="form-control" id="ethnicity_id" name="ethnicity_id" >
-                        {% for ethnicity in ethnicity %}
-                            <option value="{{ ethnicity.ethnicity_id }}" {% if ethnicity.ethnicity_id == student.student_ethnicity_id %}selected{% endif %}>{{ ethnicity.ethnicity_name }}</option>
-                        {% endfor %}
-                    </select>
-                    <i class="fas fa-caret-down"></i>
-                </div>
-            </div>
-        </div>
-       
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </form>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<script>
-    $(document).ready(function() {
-        console.log("Initializing date picker");
-        $('.datepicker').datepicker({
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            todayHighlight: true
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.nav-link').on('click', function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
         });
-    });
-</script>
+    </script>
 
+    <!-- Add the tab bar -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" id="student-info-tab" data-toggle="tab" href="#student-info" role="tab" aria-controls="student-info" aria-selected="true">Student Info</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">Comments</a>
+        </li>  
+        <li class="nav-item">
+            <a class="nav-link" id="housing-tab" data-toggle="tab" href="#housing" role="tab" aria-controls="housing" aria-selected="false">Housing</a>
+        </li>     
+        <!-- Add more tabs as needed -->
+    </ul>
+
+    <!-- Add the tab content -->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="student-info" role="tabpanel" aria-labelledby="student-info-tab">
+            <!-- Add the student info form here -->
+            <div class="container">
+                <h1>Edit Student</h1>
+                <form class="form-wide" method="POST" action="{{ url_for('students.edit_student', student_id=student.student_id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="form-row">
+                        <div class="form-group input-container-15">
+                            <label for="fname">First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname" value="{{ student.student_fname }}">
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="mname">Middle Name</label>
+                            <input type="text" class="form-control" id="mname" name="mname" value="{{ student.student_mname }}">
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="lname">Last Name</label>
+                            <input type="text" class="form-control" id="lname" name="lname" value="{{ student.student_lname }}">
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="suffix_id">Suffix</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="suffix_id" name="suffix_id">
+                                    {% for suffix in suffix %}
+                                        <option value="{{ suffix.suffix_id }}" {% if suffix.suffix_id == student.student_suffix_id %}selected{% endif %}>{{ suffix.suffix }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="goesby">Nickname</label>
+                            <input type="text" class="form-control" id="goesby" name="goesby" value="{{ student.student_goesby }}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group input-container-15">
+                            <label for="gender_id">Gender</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="gender_id" name="gender_id">
+                                    {% for gender in genders %}
+                                        <option value="{{ gender.gender_id }}" {% if gender.gender_id == student.student_gender_id %}selected{% endif %}>{{ gender.gender_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="level_id">Grade</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="level_id" name="level_id">
+                                    {% for level in levels %}
+                                        <option value="{{ level.level_id }}" {% if level.level_id == student.student_level_id %}selected{% endif %}>{{ level.level_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="division_id">Division</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="division_id" name="division_id">
+                                    {% for division in divisions %}
+                                        <option value="{{ division.division_id }}" {% if division.division_id == student.student_division_id %}selected{% endif %}>{{ division.division_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="age">Age</label>
+                            <input type="text" class="form-control" id="age" name="age" value="{{ student.student_age }}">
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="birthday">Birthday</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker" id="birthday" name="birthday" value="{{ student.student_birthday }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ student.student_address }}">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="address2" name="address2" value="{{ student.student_address2 }}">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group input-container-15">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="city" value="{{ student.student_city }}">
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="state">State</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="state_id" name="state_id">
+                                    {% for state in states %}
+                                        <option value="{{ state.state_id }}" {% if state.state_id == student.student_state_id %}selected{% endif %}>{{ state.state_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="zip">Zip</label>
+                            <input type="text" class="form-control" id="zip" name="zip" value="{{ student.student_zip }}">
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="district">Home District</label>
+                            <input type="text" class="form-control" id="district" name="district" value="{{ student.student_district }}">
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="status">Status</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="status" name="status">
+                                    {% for status in statuses %}
+                                        <option value="{{ status.student_status_id }}" {% if status.student_status_id == student.student_status %}selected{% endif %}>{{ status.student_status }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group input-container-15">
+                            <label for="enrolled">Date Enrolled</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control datepicker" id="enrolled" name="enrolled" value="{{ student.student_enrolled }}">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="campus_id">Campus</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="campus_id" name="campus_id">
+                                    {% for campus in campus %}
+                                        <option value="{{ campus.campus_id }}" {% if campus.campus_id == student.student_campus_id %}selected{% endif %}>{{ campus.campus_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="nationality_id">Nationality</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="nationality_id" name="nationality_id">
+                                    {% for nationality in nationality %}
+                                        <option value="{{ nationality.nationality_id }}" {% if nationality.nationality_id == student.student_nationality_id %}selected{% endif %}>{{ nationality.nationality_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                        <div class="form-group input-container-15">
+                            <label for="ethnicity_id">Ethnicity</label>
+                            <div class="custom-select-icon">
+                                <select class="form-control" id="ethnicity_id" name="ethnicity_id">
+                                    {% for ethnicity in ethnicity %}
+                                        <option value="{{ ethnicity.ethnicity_id }}" {% if ethnicity.ethnicity_id == student.student_ethnicity_id %}selected{% endif %}>{{ ethnicity.ethnicity_name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <i class="fas fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+            <h2>Comments</h2>
+            {% for comment in student.comments %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ comment.comment_by }}</h5>
+                        <p class="card-text">{{ comment.comment_text }}</p>
+                        <p class="card-text"><small class="text-muted">{{ comment.comment_date }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+        
+            <form class="form-wide" method="POST" action="{{ url_for('students.add_comment', student_id=student.student_id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                
+                <div class="form-group">
+                    <label for="comment_text">Comment Text</label>
+                    <textarea class="form-control" id="comment_text" name="comment_text" rows="5"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group input-container-15">
+                        <label for="comment_by">Comment By</label>
+                        <input type="text" class="form-control" id="comment_by" name="comment_by">
+                    </div>
+                    <div class="form-group input-container-15">
+                        <label for="comment_date">Comment Date</label>
+                        <input type="text" class="form-control datepicker" id="comment_date" name="comment_date">
+                    </div>
+                    <div class="form-group input-container-15">
+                        <label for="comment_level">Comment Level</label>
+                        <select class="form-control" id="comment_level" name="comment_level">
+                            <option value="Administration">Administration</option>
+                            <option value="Discipline">Discipline</option>
+                            <option value="Counseling">Counseling</option>
+                            <option value="Guidance">Guidance</option>
+                            <option value="Medical">Medical</option>
+                            <option value="Faculty">Faculty</option>
+                            <option value="Staff">Staff</option>
+                            <option value="Office">Office</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Comments</button>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="housing" role="tabpanel" aria-labelledby="housing-tab">
+            <h2>Housing</h2>
+            <form method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
+                <div class="form-group input-container-15">
+                    <label for="dorm">Dormitory:</label>
+                    <div class="custom-select-icon">
+                        <select class="form-control" id="dorm" name="dorm_id">
+                            {% for dorm in dorms %}
+                            <option value="{{ dorm.dorm_id }}">{{ dorm.dorm_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <div>
+                    <label for="room">Room:</label>
+                    <div class="custom-select-icon">
+                        <select class="form-control" id="room" name="room_id">
+                            {% for room in rooms %}
+                            <option value="{{ room.droom_id }}">{{ room.droom_number }}</option>
+                            {% endfor %}
+                        </select>
+                        <i class="fas fa-caret-down"></i>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Assign Housing</button>
+            </form>
+            <div class="roommates">
+                <h3>Roommates:</h3>
+                {% if roommates %}
+                    <ul>
+                        {% for roommate in roommates %}
+                            <li>{{ roommate.student_fname }} {{ roommate.student_lname }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No roommates assigned.</p>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+        
+        
+        <!-- Add more tab panes as needed -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            console.log("Initializing date picker");
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+    </script>
 {% endblock %}
