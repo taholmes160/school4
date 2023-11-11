@@ -83,6 +83,8 @@ class Student(db.Model):
     student_campus_id = db.Column(db.Integer, db.ForeignKey('tbl_campus.campus_id'), nullable=True)
     student_nationality_id = db.Column(db.Integer, db.ForeignKey('tbl_nationality.nationality_id'), nullable=True)
     student_ethnicity_id = db.Column(db.Integer, db.ForeignKey('tbl_ethnicity.ethnicity_id'), nullable=True)
+    dorm_room_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'))
+    
 
     gender = db.relationship('Gender', backref='students')
     level = db.relationship('Level', backref='students')
@@ -94,6 +96,9 @@ class Student(db.Model):
     divisions = db.relationship('Divisions', backref='students')
     comments = db.relationship('Comment', backref='student', lazy=True)
     housing = db.relationship('Housing', backref='student', lazy='select')
+    dorm_room_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'), unique=True)
+    dorm_room = db.relationship('DormRoom', backref='dorm_room_student', uselist=False, foreign_keys=[dorm_room_id])
+    
     
 
 class Faculty(db.Model):
@@ -164,10 +169,10 @@ class DormRoom(db.Model):
     droom_floor = db.Column(db.String(12))
     droom_unit = db.Column(db.String(12))
     dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
-    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))
+
+    dorm = db.relationship('Dorm', backref='rooms')
+    students = db.relationship('Student', backref='dorm_room2', foreign_keys='Student.dorm_room_id')
     
-    housing = db.relationship('Housing', backref='dorm')
-    students = db.relationship('Student', backref='dorm_room', lazy=True)
     
 
 class User(db.Model):

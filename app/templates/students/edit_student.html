@@ -239,12 +239,14 @@
             <h2>Housing</h2>
             {% if student.dorm_room.students|length > 1 %}
                 <p>Roommate:
-                    {% for roommate in student.dorm_room.students %}
+                    {% for roommate in student.dorm_room2.students %}
                         {% if roommate.student_id != student.student_id %}
                             {{ roommate.student_fname }} {{ roommate.student_lname }}
                         {% endif %}
                     {% endfor %}
                 </p>
+            {% elif student.dorm_room.students|length == 1 %}
+                <p>No roommates</p>
             {% else %}
                 <form class="mt-4" method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

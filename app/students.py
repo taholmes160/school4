@@ -96,11 +96,22 @@ def assign_housing(student_id):
     room = DormRoom.query.get(room_id)
 
     if dorm and room:
-        student.dorm_room = room
-        db.session.commit()
-        flash('Housing assigned successfully', 'success')
+        # Check if the room is already assigned to another student
+        if room.student_id is not None:
+            flash('Room already assigned to another student', 'error')
+        else:
+            # Remove the student from their current room (if any)
+            if student.dorm_room_2:
+                student.dorm_room_2.student_id = None
+
+            # Assign the room to the student
+            student.dorm_room_2 = room
+            db.session.commit()
+            flash('Housing assigned successfully', 'success')
     else:
         flash('Invalid dorm or room selection', 'error')
 
     return redirect(url_for('students.edit_student', student_id=student_id))
+
+    
 
