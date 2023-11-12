@@ -138,6 +138,17 @@ footer {
     z-index: 100;
 }
 
+.navbar-title {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-family: "Arial", sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #0E57CC;
+}
+
+
 /* Student List Table Styles */
 .student-table {
     width: 90%;
