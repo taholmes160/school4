@@ -101,11 +101,11 @@ def assign_housing(student_id):
             flash('Room already assigned to another student', 'error')
         else:
             # Remove the student from their current room (if any)
-            if student.dorm_room_2:
-                student.dorm_room_2.student_id = None
+            if student.dorm_room2:
+                student.dorm_room2.student_id = None
 
             # Assign the room to the student
-            student.dorm_room_2 = room
+            student.dorm_room2 = room
             db.session.commit()
             flash('Housing assigned successfully', 'success')
     else:

@@ -159,19 +159,20 @@ class DormManager(db.Model):
     dm_phone = db.Column(db.String(45))
 
 class DormRoom(db.Model):
-    __tablename__ = 'tbl_dorm_rooms'
-
-    droom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    droom_number = db.Column(db.Integer)
-    droom_capacity = db.Column(db.Integer)
-    droom_notes = db.Column(db.String(500))
-    droom_phone = db.Column(db.String(12))
-    droom_floor = db.Column(db.String(12))
-    droom_unit = db.Column(db.String(12))
-    dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
-
-    dorm = db.relationship('Dorm', backref='rooms')
-    students = db.relationship('Student', backref='dorm_room2', foreign_keys='Student.dorm_room_id')
+        __tablename__ = 'tbl_dorm_rooms'
+    
+        droom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+        droom_number = db.Column(db.Integer)
+        droom_capacity = db.Column(db.Integer)
+        droom_notes = db.Column(db.String(500))
+        droom_phone = db.Column(db.String(12))
+        droom_floor = db.Column(db.String(12))
+        droom_unit = db.Column(db.String(12))
+        dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
+        student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))  # Add this line
+    
+        dorm = db.relationship('Dorm', backref='rooms')
+        students = db.relationship('Student', backref='dorm_room2', foreign_keys='Student.dorm_room_id')
     
     
 
