@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Status, Suffix, Divisions, Comment, Dorm, DormRoom, Housing
-from sqlalchemy import or_
-from app import db, app
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions
+from app import db
 from datetime import datetime
 
 students_bp = Blueprint('students', __name__)
@@ -24,9 +23,8 @@ def list_students():
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
 def edit_student(student_id):
-    
     student = Student.query.get_or_404(student_id)
-       
+        
     if request.method == 'POST':
         student.student_fname = request.form.get('fname')
         student.student_mname = request.form.get('mname')
@@ -56,19 +54,14 @@ def edit_student(student_id):
 
     genders = Gender.query.all()
     levels = Level.query.all()
-    campus = Campus.query.all()
+    divisions = Divisions.query.all()
+    suffixes = Suffix.query.all()
     states = State.query.all()
+    campus = Campus.query.all()
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
-    statuses = Status.query.all()
-    suffix=Suffix.query.all()
-    divisions=Divisions.query.all()
-    dorms = Dorm.query.all()
-    rooms = DormRoom.query.all()
-
     
-    
-    return render_template('students/edit_student.html', dorms=dorms, rooms=rooms, suffix=suffix, divisions=divisions, student=student, statuses=statuses, genders=genders, levels=levels, campus=campus, states=states, nationality=nationality, ethnicity=ethnicity)
+    return render_template('students/edit_student.html', student=student, genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):
@@ -113,5 +106,68 @@ def assign_housing(student_id):
 
     return redirect(url_for('students.edit_student', student_id=student_id))
 
-    
+@students_bp.route('/students/create', methods=['GET', 'POST'])
+def create_student():
+    if request.method == 'POST':
+        student_fname = request.form.get('fname')
+        student_mname = request.form.get('mname')
+        student_lname = request.form.get('lname')
+        student_suffix_id = request.form.get('suffix_id')
+        student_goesby = request.form.get('goesby')
+        student_gender_id = request.form.get('gender_id')
+        student_level_id = request.form.get('level_id')
+        student_division_id = request.form.get('division_id')
+        student_age = request.form.get('age')
+        student_birthday = request.form.get('birthday')
+        student_address = request.form.get('address')
+        student_address2 = request.form.get('address2')
+        student_city = request.form.get('city')
+        student_state_id = request.form.get('state_id')
+        student_zip = request.form.get('zip')
+        student_district = request.form.get('district')
+        student_status = request.form.get('status')
+        student_enrolled = request.form.get('enrolled')
+        student_campus_id = request.form.get('campus_id')
+        student_nationality_id = request.form.get('nationality_id')
+        student_ethnicity_id = request.form.get('ethnicity_id')
 
+        new_student = Student(
+            student_fname=student_fname,
+            student_mname=student_mname,
+            student_lname=student_lname,
+            student_suffix_id=student_suffix_id,
+            student_goesby=student_goesby,
+            student_gender_id=student_gender_id,
+            student_level_id=student_level_id,
+            student_division_id=student_division_id,
+            student_age=student_age,
+            student_birthday=student_birthday,
+            student_address=student_address,
+            student_address2=student_address2,
+            student_city=student_city,
+            student_state_id=student_state_id,
+            student_zip=student_zip,
+            student_district=student_district,
+            student_status=student_status,
+            student_enrolled=student_enrolled,
+            student_campus_id=student_campus_id,
+            student_nationality_id=student_nationality_id,
+            student_ethnicity_id=student_ethnicity_id
+        )
+
+        db.session.add(new_student)
+        db.session.commit()
+
+        flash('Student created successfully', 'success')
+        return redirect(url_for('students.list_students'))
+
+    genders = Gender.query.all()
+    levels = Level.query.all()
+    divisions = Divisions.query.all()
+    suffixes = Suffix.query.all()
+    states = State.query.all()
+    campus = Campus.query.all()
+    nationality = Nationality.query.all()
+    ethnicity = Ethnicity.query.all()
+    
+    return render_template('students/create_student.html', genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)

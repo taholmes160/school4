@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Student</h1>
+
+  <form method="POST" action="{{ url_for('students.create_student') }}">
+    <div class="form-group">
+      <label for="fname">First Name</label>
+      <input type="text" class="form-control" id="fname" name="fname" required>
+    </div>
+    <div class="form-group">
+      <label for="mname">Middle Name</label>
+      <input type="text" class="form-control" id="mname" name="mname">
+    </div>
+    <div class="form-group">
+      <label for="lname">Last Name</label>
+      <input type="text" class="form-control" id="lname" name="lname" required>
+    </div>
+    <div class="form-group">
+      <label for="suffix_id">Suffix</label>
+      <select class="form-control" id="suffix_id" name="suffix_id">
+        <option value="">Select Suffix</option>
+        {% for suffix in suffixes %}
+          <option value="{{ suffix.suffix_id }}">{{ suffix.suffix }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="goesby">Goes By</label>
+      <input type="text" class="form-control" id="goesby" name="goesby">
+    </div>
+    <div class="form-group">
+      <label for="gender_id">Gender</label>
+      <select class="form-control" id="gender_id" name="gender_id">
+        <option value="">Select Gender</option>
+        {% for gender in genders %}
+          <option value="{{ gender.gender_id }}">{{ gender.gender_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="level_id">Level</label>
+      <select class="form-control" id="level_id" name="level_id">
+        <option value="">Select Level</option>
+        {% for level in levels %}
+          <option value="{{ level.level_id }}">{{ level.level_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="division_id">Division</label>
+      <select class="form-control" id="division_id" name="division_id">
+        <option value="">Select Division</option>
+        {% for division in divisions %}
+          <option value="{{ division.division_id }}">{{ division.division_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="age">Age</label>
+      <input type="text" class="form-control" id="age" name="age">
+    </div>
+    <div class="form-group">
+      <label for="birthday">Birthday</label>
+      <input type="date" class="form-control" id="birthday" name="birthday">
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" class="form-control" id="address" name="address">
+    </div>
+    <div class="form-group">
+      <label for="address2">Address 2</label>
+      <input type="text" class="form-control" id="address2" name="address2">
+    </div>
+    <div class="form-group">
+      <label for="city">City</label>
+      <input type="text" class="form-control" id="city" name="city">
+    </div>
+    <div class="form-group">
+      <label for="state_id">State</label>
+      <select class="form-control" id="state_id" name="state_id">
+        <option value="">Select State</option>
+        {% for state in states %}
+          <option value="{{ state.state_id }}">{{ state.state_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="zip">ZIP</label>
+      <input type="text" class="form-control" id="zip" name="zip">
+    </div>
+    <div class="form-group">
+      <label for="district">District</label>
+      <input type="text" class="form-control" id="district" name="district">
+    </div>
+    <div class="form-group">
+      <label for="status">Status</label>
+      <input type="text" class="form-control" id="status" name="status">
+    </div>
+    <div class="form-group">
+      <label for="enrolled">Enrolled</label>
+      <input type="date" class="form-control" id="enrolled" name="enrolled">
+    </div>
+    <div class="form-group">
+      <label for="campus_id">Campus</label>
+      <select class="form-control" id="campus_id" name="campus_id">
+        <option value="">Select Campus</option>
+        {% for campus in campus %}
+          <option value="{{ campus.campus_id }}">{{ campus.campus_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="nationality_id">Nationality</label>
+      <select class="form-control" id="nationality_id" name="nationality_id">
+        <option value="">Select Nationality</option>
+        {% for nationality in nationality %}
+          <option value="{{ nationality.nationality_id }}">{{ nationality.nationality_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="ethnicity_id">Ethnicity</label>
+      <select class="form-control" id="ethnicity_id" name="ethnicity_id">
+        <option value="">Select Ethnicity</option>
+        {% for ethnicity in ethnicity %}
+          <option value="{{ ethnicity.ethnicity_id }}">{{ ethnicity.ethnicity_name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+{% endblock %}
