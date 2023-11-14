@@ -129,25 +129,19 @@ footer {
     background-color: #0056b3; /* Change the hover color as desired */
 }
 
-/* Navigation Bar Styles */
+ /* Navigation styles */
 .nav-bar {
     background-color: #007BFF;
-    padding: 10px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .navbar-title {
-    display: flex;
-    justify-content: center;
-    width: 100%;
     font-family: "Arial", sans-serif;
     font-size: 40px;
     font-weight: bold;
-    color: #0E57CC;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    margin: 0;
 }
-
 
 /* Student List Table Styles */
 .student-table {
