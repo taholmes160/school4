@@ -3,52 +3,88 @@
 {% block content %}
 
 <h1>List Students</h1>
-<a href="{{ url_for('students.create_student') }}" class="small-button">Create Student</a>
+
+<form action="{{ url_for('students.list_students') }}" method="GET">
+  <input type="text" name="search_query" placeholder="Search by name">
+  <input type="submit" value="Search">
+</form>
+
 <table>
   <thead>
-      <tr>
-          <th><a href="{{ url_for('students.list_students', sort='student_id') }}">ID</a></th>
-          <th><a href="{{ url_for('students.list_students', sort='student_fname') }}">First / </a> <a href="{{ url_for('students.list_students', sort='student_lname') }}">Last Name</a></th>
-          <th><a href="{{ url_for('students.list_students', sort='gender.gender_name') }}">Gender</a></th>
-          <th><a href="{{ url_for('students.list_students', sort='level.level_name') }}">Level</a></th>
-          <th><a href="{{ url_for('students.list_students', sort='student_age') }}">Age</a></th>
-          <th>Edit</th>
-          <!-- ... other fields ... -->
-      </tr>
+    <tr>
+      <th><a href="{{ url_for('students.list_students', sort='student_id') }}">ID</a></th>
+      <th><a href="{{ url_for('students.list_students', sort='student_fname') }}">First / </a> <a href="{{ url_for('students.list_students', sort='student_lname') }}">Last Name</a></th>
+      <th><a href="{{ url_for('students.list_students', sort='gender.gender_name') }}">Gender</a></th>
+      <th><a href="{{ url_for('students.list_students', sort='level.level_name') }}">Level</a></th>
+      <th><a href="{{ url_for('students.list_students', sort='student_age') }}">Age</a></th>
+      <th>Edit</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>
+        <select name="gender_filter">
+          <option value="">All</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </td>
+      <td>
+        <select name="level_filter">
+          <option value="">All</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
+        </select>
+      </td>
+      <td>
+        <input type="number" name="age_filter" placeholder="Age">
+      </td>
+      <td></td>
+    </tr>
   </thead>
   <tbody>
     {% for student in students.items %}
-    <tr>
-      <td>{{ student.student_id }}</td>
-      <td>{{ student.student_fname }} {{ student.student_lname }}</td>
-      <td>{{ student.gender.gender_name }}</td>
-      <td>{{ student.level.level_name }}</td>
-      <td>{{ student.student_age }}</td>
-      <td><a href="{{ url_for('students.edit_student', student_id=student.student_id) }}" >Edit</a></td>
-    
-    </tr>
+      {% if search_query and (search_query.lower() in student.student_fname.lower() or search_query.lower() in student.student_lname.lower()) %}
+        <tr>
+          <td>{{ student.student_id }}</td>
+          <td>{{ student.student_fname }} {{ student.student_lname }}</td>
+          <td>{{ student.gender.gender_name }}</td>
+          <td>{{ student.level.level_name }}</td>
+          <td>{{ student.student_age }}</td>
+          <td><a href="{{ url_for('students.edit_student', student_id=student.student_id) }}">Edit</a></td>
+        </tr>
+      {% elif not search_query and (not gender_filter or student.gender.gender_name == gender_filter) and (not level_filter or student.level.level_name == level_filter) and (not age_filter or student.student_age == age_filter) %}
+        <tr>
+          <td>{{ student.student_id }}</td>
+          <td>{{ student.student_fname }} {{ student.student_lname }}</td>
+          <td>{{ student.gender.gender_name }}</td>
+          <td>{{ student.level.level_name }}</td>
+          <td>{{ student.student_age }}</td>
+          <td><a href="{{ url_for('students.edit_student', student_id=student.student_id) }}">Edit</a></td>
+        </tr>
+      {% endif %}
     {% endfor %}
   </tbody>
 </table>
 
-<!-- Add pagination links -->
 <div class="pagination">
   {% if students.has_prev %}
-    <a href="{{ url_for('students.list_students', page=students.prev_num, search=search_query, sort=sort_by) }}">Previous</a>
+    <a href="{{ url_for('students.list_students', page=students.prev_num, search=search_query, sort=sort_by, gender_filter=gender_filter, level_filter=level_filter, age_filter=age_filter) }}">Previous</a>
   {% endif %}
   {% for num in students.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
     {% if num %}
       {% if students.page == num %}
         <strong>{{ num }}</strong>
       {% else %}
-        <a href="{{ url_for('students.list_students', page=num, search=search_query, sort=sort_by) }}">{{ num }}</a>
+        <a href="{{ url_for('students.list_students', page=num, search=search_query, sort=sort_by, gender_filter=gender_filter, level_filter=level_filter, age_filter=age_filter) }}">{{ num }}</a>
       {% endif %}
     {% else %}
       ...
     {% endif %}
   {% endfor %}
   {% if students.has_next %}
-    <a href="{{ url_for('students.list_students', page=students.next_num, search=search_query, sort=sort_by) }}">Next</a>
+    <a href="{{ url_for('students.list_students', page=students.next_num, search=search_query, sort=sort_by, gender_filter=gender_filter, level_filter=level_filter, age_filter=age_filter) }}">Next</a>
   {% endif %}
 </div>
 
