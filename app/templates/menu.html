@@ -5,10 +5,22 @@
 {% block content %}
 <div class="container">
     <h1>Menu</h1>
-    <a href="{{ url_for('students.list_students') }}" class="btn btn-primary">List Students</a>
-    <a href="{{ url_for('dorms.dorm_managers') }}" class="btn btn-primary">Dorm Managers</a>
-    <a href="{{ url_for('dorms.dorms') }}" class="btn btn-primary">Dorms</a>
-    <a href="{{ url_for('dorms.list_dorm_rooms') }}" class="btn btn-primary">List Dorm Rooms</a>
-    <a href="{{ url_for('dorms.create_dorm_room') }}" class="btn btn-primary">Create Dorm Rooms</a>
+    <div class="button-container">
+        <div class="button-group">
+            <h3>Students</h3>
+            <div class="button-row">
+                <a href="{{ url_for('students.list_students') }}" class="small-button">List Students</a>
+            </div>
+        </div>
+        <div class="button-group">
+            <h3>Dorms</h3>
+            <div class="button-row">
+                <a href="{{ url_for('dorms.dorm_managers') }}" class="small-button">Dorm Managers</a>
+                <a href="{{ url_for('dorms.dorms') }}" class="small-button">Dorms</a>
+                <a href="{{ url_for('dorms.list_dorm_rooms') }}" class="small-button">List Dorm Rooms</a>
+                <a href="{{ url_for('dorms.create_dorm_room') }}" class="small-button">Create Dorm Rooms</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

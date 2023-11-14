@@ -1,7 +1,7 @@
 /* 
    Stylesheet for SpiritSchool web application
    Author: Timothy A. Holmes
-   Version: 2.5
+   Version: 2.7
    Date: 10/21/2023
    Description: This CSS file contains styles for the application's layout and elements.
 */
@@ -57,49 +57,37 @@ footer {
 .footer-text-16 {
     font-size: 16px; /* Adjust the font size as desired */
 }
-
 /* Button Styles */
 .button {
     display: inline-block;
-    padding: 15px 30px;
-    font-size: 24px; /* Adjusted font size for buttons */
+    padding: 10px 20px;
+    font-size: 16px; /* Adjusted font size for buttons */
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin: 10px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow for a 3D effect */
 }
 
 .button:hover {
     background-color: #0056b3;
 }
 
-/* Navigation Buttons */
-.button-container {
-    display: flex;
-    justify-content: center; /* Center the buttons horizontally */
-}
-
 /* New Styles for Button Groups */
 .button-group {
-    border: 3px solid #0b1879;
+    border: 2px solid #0b1879;
     border-radius: 5px;
     margin-bottom: 20px; /* Add space between button groups */
     padding: 10px;
+    width: 50%;
 }
 
 .button-group h3 {
     margin-top: 0; /* Remove default margin for h3 */
     padding-top: 10px; /* Add space between heading and buttons */
-    border-bottom: 3px solid #0b1879; /* Add border line at the bottom of the heading */
-}
-
-.button-group.center {
-    border: 3px solid #0b1879;
-    border-radius: 5px;
-    margin: 0 40px; /* Add margin on left and right sides */
-    padding: 10px;
+    border-bottom: 2px solid #0b1879; /* Add border line at the bottom of the heading */
 }
 
 .button-row {
@@ -108,9 +96,33 @@ footer {
     margin-bottom: 10px;
 }
 
-.center {
-    text-align: center;
+/* New Button Class */
+.small-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 14px; /* Adjust the font size as desired */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    height: 50px !important; /* Set the height to your desired value */
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 1); /* Add a subtle box-shadow for a 3D effect */
 }
+
+.small-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3); /* Increase the box-shadow on hover for a stronger 3D effect */
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
 
 .nav-button {
     display: inline-block;
