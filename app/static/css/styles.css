@@ -198,7 +198,7 @@ footer {
     /* Other table styles as needed */
 }
 
-/* New Button Class */
+/* Small Button Class */
 .small-button {
     display: inline-flex;
     align-items: center;
@@ -216,6 +216,11 @@ footer {
 .small-button:hover {
     background-color: #0056b3;
 }
+
+.btn-create {
+    margin-left: 10px; /* Adjust the margin as desired */
+    vertical-align: top;
+  }
 
 /* Form Styles */
 form {
@@ -377,6 +382,9 @@ input[type="email"] {
     width: 100%;
     height: 35px; /* Adjust the height value as needed */
 }
+.input-search {
+    width: 70%; /* Adjust the width as desired */
+  }
 
 /* styles for option boxes*/
 .custom-select-icon {
