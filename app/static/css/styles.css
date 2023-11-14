@@ -77,11 +77,19 @@ footer {
 
 /* New Styles for Button Groups */
 .button-group {
+ 
     border: 2px solid #0b1879;
     border-radius: 5px;
     margin-bottom: 20px; /* Add space between button groups */
     padding: 10px;
-    width: 50%;
+    width: 33%;
+    margin: 10px auto;
+}
+
+.button-group-small {
+ 
+    width: 15%;
+ 
 }
 
 .button-group h3 {
