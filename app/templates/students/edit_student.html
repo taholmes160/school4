@@ -16,6 +16,9 @@
 
             <input type="radio" id="comments-tab" name="tab-group">
             <label for="comments-tab">Comments</label>
+
+            <input type="radio" id="housing-tab" name="tab-group">
+            <label for="housing-tab">Housing</label>
             
             <!-- Tab content for editing student details -->
             <div class="tab-content" id="edit">
@@ -121,41 +124,72 @@
                     <input type="submit" value="Update Student">
                 </form>
             </div>
-        </div>
-        <!-- Tab content for adding comments -->
-        <div class="tab-content" id="comments">
-            <h2>Add Comment</h2>
-            <form method="POST" action="{{ url_for('students.add_comment', student_id=student.student_id) }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                
-                <label for="comment_text">Comment:</label>
-                <textarea id="comment_text" name="comment_text" required></textarea>
+            
+            <!-- Tab content for adding comments -->
+            <div class="tab-content" id="comments">
+                <h2>Add Comment</h2>
+                <form method="POST" action="{{ url_for('students.add_comment', student_id=student.student_id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    
+                    <label for="comment_text">Comment:</label>
+                    <textarea id="comment_text" name="comment_text" required></textarea>
 
-                <label for="comment_by">Comment By:</label>
-                <input type="text" id="comment_by" name="comment_by">
+                    <label for="comment_by">Comment By:</label>
+                    <input type="text" id="comment_by" name="comment_by">
 
-                <label for="comment_date">Date:</label>
-                <input type="date" id="comment_date" name="comment_date" value="{{ today }}" required>
+                    <label for="comment_date">Date:</label>
+                    <input type="date" id="comment_date" name="comment_date" value="{{ today }}" required>
 
-                <label for="comment_level">Level:</label>
-                <input type="text" id="comment_level" name="comment_level">
+                    <label for="comment_level">Level:</label>
+                    <input type="text" id="comment_level" name="comment_level">
 
-                <input type="submit" value="Add Comment">
-            </form>
+                    <input type="submit" value="Add Comment">
+                </form>
 
-            <h2>Existing Comments</h2>
-            <div class="comments-list">
-                {% for comment in student_comments %}
-                <div class="comment">
-                    <p><strong>Date:</strong> {{ comment.comment_date.strftime('%Y-%m-%d') if comment.comment_date else 'No date provided' }}</p>
-                    <p><strong>By:</strong> {{ comment.comment_by }}</p>
-                    <p><strong>Level:</strong> {{ comment.comment_level }}</p>
-                    <p>{{ comment.comment_text }}</p>
-                </div>
-                {% else %}
-                <p>No comments found for this student.</p>
-                {% endfor %}
-            </div>           
+                <h2>Existing Comments</h2>
+                <div class="comments-list">
+                    {% for comment in student_comments %}
+                    <div class="comment">
+                        <p><strong>Date:</strong> {{ comment.comment_date.strftime('%Y-%m-%d') if comment.comment_date else 'No date provided' }}</p>
+                        <p><strong>By:</strong> {{ comment.comment_by }}</p>
+                        <p><strong>Level:</strong> {{ comment.comment_level }}</p>
+                        <p>{{ comment.comment_text }}</p>
+                    </div>
+                    {% else %}
+                    <p>No comments found for this student.</p>
+                    {% endfor %}
+                </div>           
+            </div>
+            
+            <!-- Tab content for assigning housing -->
+            <div class="tab-content" id="housing">
+                <h2>Assign Housing</h2>
+                <form method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                    <label for="dorm_id">Dorm:</label>
+                    <select id="dorm_id" name="dorm_id">
+                        {% for dorm in dorms %}
+                        <option value="{{ dorm.dorm_id }}">{{ dorm.dorm_name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="room_id">Room:</label>
+                    <select id="room_id" name="room_id">
+                        {% for room in rooms %}
+                        <option value="{{ room.droom_id }}">{{ room.droom_number }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="submit" value="Assign Housing">
+                </form>
+
+                {% if student.dorm_room2 %}
+                <h2>Assigned Housing</h2>
+                <p><strong>Dorm:</strong> {{ student.dorm_room2.dorm.dorm_name }}</p>
+                <p><strong>Room:</strong> {{ student.dorm_room2.droom_number }}</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
