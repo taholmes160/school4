@@ -182,38 +182,39 @@ footer {
 /* Tab Styles */
 
 .tab-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+    margin-bottom: 20px;
 }
 
 .tab-container input[type="radio"] {
-  display: none;
+    display: none;
 }
 
 .tab-container label {
-  padding: 10px 20px;
-  background-color: #f2f2f2;
-  cursor: pointer;
-}
-
-.tab-container label:hover {
-  background-color: #e0e0e0;
-}
-
-.tab-container input[type="radio"]:checked + label {
-  background-color: #007bff;
-  color: #fff;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f9f9f9;
+    cursor: pointer;
 }
 
 .tab-container .tab-content {
-  display: none;
-  padding: 20px;
-  background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+    display: none;
 }
 
-.tab-container input[type="radio"]:checked + label + .tab-content {
-  display: block;
+/* When the radio button is checked, display the corresponding tab content */
+#edit-tab:checked ~ #edit,
+#comments-tab:checked ~ #comments {
+    display: block;
+}
+
+/* Style for the label of the checked radio button to indicate active tab */
+.tab-container input[type="radio"]:checked + label {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
 }
 
 
