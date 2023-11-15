@@ -122,16 +122,42 @@
                 </form>
             </div>
         </div>
-         <!-- Tab content for adding comments -->
-         <div class="tab-content" id="comments">
+        <!-- Tab content for adding comments -->
+        <div class="tab-content" id="comments">
+            <h2>Add Comment</h2>
             <form method="POST" action="{{ url_for('students.add_comment', student_id=student.student_id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <label for="comment_text">Add Comment:</label>
+                
+                <label for="comment_text">Comment:</label>
                 <textarea id="comment_text" name="comment_text" required></textarea>
+
+                <label for="comment_by">Comment By:</label>
+                <input type="text" id="comment_by" name="comment_by">
+
+                <label for="comment_date">Date:</label>
+                <input type="date" id="comment_date" name="comment_date" value="{{ today }}" required>
+
+                <label for="comment_level">Level:</label>
+                <input type="text" id="comment_level" name="comment_level">
+
                 <input type="submit" value="Add Comment">
             </form>
+
+            <h2>Existing Comments</h2>
+            <div class="comments-list">
+                {% for comment in student_comments %}
+                <div class="comment">
+                    <p><strong>Date:</strong> {{ comment.comment_date.strftime('%Y-%m-%d') if comment.comment_date else 'No date provided' }}</p>
+                    <p><strong>By:</strong> {{ comment.comment_by }}</p>
+                    <p><strong>Level:</strong> {{ comment.comment_level }}</p>
+                    <p>{{ comment.comment_text }}</p>
+                </div>
+                {% else %}
+                <p>No comments found for this student.</p>
+                {% endfor %}
+            </div>           
         </div>
-    
+    </div>
 {% endblock %}
 
 {% block scripts %}

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment
 from app import db
 from datetime import datetime
 
@@ -24,33 +24,52 @@ def list_students():
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
 def edit_student(student_id):
     student = Student.query.get_or_404(student_id)
-        
-    if request.method == 'POST':
-        student.student_fname = request.form.get('fname')
-        student.student_mname = request.form.get('mname')
-        student.student_lname = request.form.get('lname')
-        student.student_suffix_id = request.form.get('suffix_id')
-        student.student_goesby = request.form.get('goesby')
-        student.student_gender_id = request.form.get('gender_id')
-        student.student_level_id = request.form.get('level_id')
-        student.student_division_id = request.form.get('division_id')
-        student.student_age = request.form.get('age')
-        student.student_birthday = request.form.get('birthday')
-        student.student_address = request.form.get('address')
-        student.student_address2 = request.form.get('address2')
-        student.student_city = request.form.get('city')
-        student.student_state_id = request.form.get('state_id')
-        student.student_zip = request.form.get('zip')
-        student.student_district = request.form.get('district')
-        student.student_status = request.form.get('status')
-        student.student_enrolled = request.form.get('enrolled')
-        student.student_campus_id = request.form.get('campus_id')
-        student.student_nationality_id = request.form.get('nationality_id')
-        student.student_ethnicity_id = request.form.get('ethnicity_id')
+    student_comments = Comment.query.filter_by(student_id=student_id).order_by(Comment.comment_date.desc()).all()
 
-        db.session.commit()
-        flash('Student details updated successfully', 'success')
-        return redirect(url_for('students.list_students'))
+    if request.method == 'POST':
+        if 'submit_student' in request.form:  # Check if the form submission is for updating student details
+            student.student_fname = request.form.get('fname')
+            student.student_mname = request.form.get('mname')
+            student.student_lname = request.form.get('lname')
+            student.student_suffix_id = request.form.get('suffix_id')
+            student.student_goesby = request.form.get('goesby')
+            student.student_gender_id = request.form.get('gender_id')
+            student.student_level_id = request.form.get('level_id')
+            student.student_division_id = request.form.get('division_id')
+            student.student_age = request.form.get('age')
+            student.student_birthday = request.form.get('birthday')
+            student.student_address = request.form.get('address')
+            student.student_address2 = request.form.get('address2')
+            student.student_city = request.form.get('city')
+            student.student_state_id = request.form.get('state_id')
+            student.student_zip = request.form.get('zip')
+            student.student_district = request.form.get('district')
+            student.student_status = request.form.get('status')
+            student.student_enrolled = request.form.get('enrolled')
+            student.student_campus_id = request.form.get('campus_id')
+            student.student_nationality_id = request.form.get('nationality_id')
+            student.student_ethnicity_id = request.form.get('ethnicity_id')
+
+            db.session.commit()
+            flash('Student details updated successfully', 'success')
+            return redirect(url_for('students.edit_student', student_id=student_id))
+        elif 'submit_comment' in request.form:  # Check if the form submission is for adding a comment
+            comment_text = request.form.get('comment_text')
+            comment_by = request.form.get('comment_by')
+            comment_date = request.form.get('comment_date') or datetime.now().date()
+            comment_level = request.form.get('comment_level')
+
+            comment = Comment(
+                student_id=student_id,
+                comment_text=comment_text,
+                comment_by=comment_by,
+                comment_date=comment_date,
+                comment_level=comment_level
+            )
+            db.session.add(comment)
+            db.session.commit()
+            flash('Comment added successfully', 'success')
+            return redirect(url_for('students.edit_student', student_id=student_id))
 
     genders = Gender.query.all()
     levels = Level.query.all()
@@ -61,7 +80,7 @@ def edit_student(student_id):
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
     
-    return render_template('students/edit_student.html', student=student, genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)
+    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):
@@ -71,7 +90,7 @@ def add_comment(student_id):
     comment_date = datetime.now().date()
     comment_level = 'Student'  # You can adjust this based on your requirements
 
-    comment = Comment(student_id=student_id, comment_text=comment_text, comment_date=comment_date, comment_level=comment_level)
+    comment = comment(student_id=student_id, comment_text=comment_text, comment_date=comment_date, comment_level=comment_level)
     db.session.add(comment)
     db.session.commit()
 
