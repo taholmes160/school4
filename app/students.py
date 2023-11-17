@@ -79,6 +79,8 @@ def edit_student(student_id):
     campus = Campus.query.all()
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
+    dorms = Dorm.query.all()
+    rooms = DormRoom.query.all()
     
     return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms, rooms=rooms)
 
