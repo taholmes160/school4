@@ -18,7 +18,7 @@
             <label for="comments-tab">Comments</label>
 
             <input type="radio" id="housing-tab" name="tab-group">
-            <label for="housing-tab">Housing</label>
+            <label for="housing-tab">Assign Housing</label>
             
             <!-- Tab content for editing student details -->
             <div class="tab-content" id="edit">
@@ -160,38 +160,31 @@
                     {% endfor %}
                 </div>           
             </div>
-            
-            <!-- Tab content for assigning housing -->
+            <!-- New tab content for housing assignment -->
             <div class="tab-content" id="housing">
                 <h2>Assign Housing</h2>
                 <form method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-
+                    
                     <label for="dorm_id">Dorm:</label>
                     <select id="dorm_id" name="dorm_id">
                         {% for dorm in dorms %}
-                        <option value="{{ dorm.dorm_id }}">{{ dorm.dorm_name }}</option>
+                        <option value="{{ dorm.id }}">{{ dorm.name }}</option>
                         {% endfor %}
                     </select>
 
                     <label for="room_id">Room:</label>
                     <select id="room_id" name="room_id">
                         {% for room in rooms %}
-                        <option value="{{ room.droom_id }}">{{ room.droom_number }}</option>
+                        <option value="{{ room.id }}">{{ room.number }}</option>
                         {% endfor %}
                     </select>
-
                     <input type="submit" value="Assign Housing">
                 </form>
-
-                {% if student.dorm_room2 %}
-                <h2>Assigned Housing</h2>
-                <p><strong>Dorm:</strong> {{ student.dorm_room2.dorm.dorm_name }}</p>
-                <p><strong>Room:</strong> {{ student.dorm_room2.droom_number }}</p>
-                {% endif %}
             </div>
         </div>
     </div>
+ 
 {% endblock %}
 
 {% block scripts %}

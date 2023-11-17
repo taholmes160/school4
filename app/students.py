@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment, Dorm, DormRoom
 from app import db
 from datetime import datetime
 
@@ -70,7 +70,7 @@ def edit_student(student_id):
             db.session.commit()
             flash('Comment added successfully', 'success')
             return redirect(url_for('students.edit_student', student_id=student_id))
-
+ 
     genders = Gender.query.all()
     levels = Level.query.all()
     divisions = Divisions.query.all()
@@ -80,7 +80,7 @@ def edit_student(student_id):
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
     
-    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)
+    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms, rooms=rooms)
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):
