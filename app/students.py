@@ -79,8 +79,9 @@ def edit_student(student_id):
     campus = Campus.query.all()
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
+    dorms = Dorm.query.all()
         
-    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity )
+    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms)
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):
@@ -162,3 +163,10 @@ def create_student():
     ethnicity = Ethnicity.query.all()
     
     return render_template('students/create_student.html', genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)
+
+@students_bp.route('/get_rooms')
+def get_rooms():
+    dorm_id = request.args.get('dorm_id', type=int)
+    rooms = DormRoom.query.filter_by(dorm_id=dorm_id).all()
+    room_list = [{'droom_id': room.droom_id, 'droom_number': room.droom_number} for room in rooms]
+    return jsonify(room_list)
