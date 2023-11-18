@@ -169,14 +169,14 @@
                     <label for="dorm_id">Dorm:</label>
                     <select id="dorm_id" name="dorm_id">
                         {% for dorm in dorms %}
-                        <option value="{{ dorm.id }}">{{ dorm.name }}</option>
+                        <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
                         {% endfor %}
                     </select>
 
                     <label for="room_id">Room:</label>
                     <select id="room_id" name="room_id">
                         {% for room in rooms %}
-                        <option value="{{ room.id }}">{{ room.number }}</option>
+                        <option value="{{ room.id }}">{{ room.droom_number }}</option>
                         {% endfor %}
                     </select>
                     <input type="submit" value="Assign Housing">

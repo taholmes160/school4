@@ -82,6 +82,10 @@ def edit_student(student_id):
     dorms = Dorm.query.all()
     rooms = DormRoom.query.all()
     
+    print(dorms)  # Print the list of dorm names
+    print(rooms)  # Print the list of room numbers
+    
+    
     return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms, rooms=rooms)
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
@@ -108,11 +112,6 @@ def assign_housing(student_id):
 
     dorm = Dorm.query.get(dorm_id)
     room = DormRoom.query.get(room_id)
-
-    print('dorm_id:', dorm_id)
-    print('room_id:', room_id)
-    print('dorm:', dorm)
-    print('room:', room)
 
     if dorm and room:
         # Check if the room is already assigned to another student
