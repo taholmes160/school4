@@ -109,6 +109,11 @@ def assign_housing(student_id):
     dorm = Dorm.query.get(dorm_id)
     room = DormRoom.query.get(room_id)
 
+    print('dorm_id:', dorm_id)
+    print('room_id:', room_id)
+    print('dorm:', dorm)
+    print('room:', room)
+
     if dorm and room:
         # Check if the room is already assigned to another student
         if room.student_id is not None:
@@ -126,6 +131,7 @@ def assign_housing(student_id):
         flash('Invalid dorm or room selection', 'error')
 
     return redirect(url_for('students.edit_student', student_id=student_id))
+    
 
 @students_bp.route('/students/create', methods=['GET', 'POST'])
 def create_student():
