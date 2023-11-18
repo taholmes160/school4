@@ -79,14 +79,8 @@ def edit_student(student_id):
     campus = Campus.query.all()
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
-    dorms = Dorm.query.all()
-    rooms = DormRoom.query.all()
-    
-    print(dorms)  # Print the list of dorm names
-    print(rooms)  # Print the list of room numbers
-    
-    
-    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms, rooms=rooms)
+        
+    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity )
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):
@@ -102,35 +96,6 @@ def add_comment(student_id):
 
     flash('Comment added successfully', 'success')
     return redirect(url_for('students.edit_student', student_id=student_id))
-
-@students_bp.route('/students/<int:student_id>/housing/assign', methods=['POST'])
-def assign_housing(student_id):
-    student = Student.query.get_or_404(student_id)
-
-    dorm_id = request.form.get('dorm_id')
-    room_id = request.form.get('room_id')
-
-    dorm = Dorm.query.get(dorm_id)
-    room = DormRoom.query.get(room_id)
-
-    if dorm and room:
-        # Check if the room is already assigned to another student
-        if room.student_id is not None:
-            flash('Room already assigned to another student', 'error')
-        else:
-            # Remove the student from their current room (if any)
-            if student.dorm_room2:
-                student.dorm_room2.student_id = None
-
-            # Assign the room to the student
-            student.dorm_room2 = room
-            db.session.commit()
-            flash('Housing assigned successfully', 'success')
-    else:
-        flash('Invalid dorm or room selection', 'error')
-
-    return redirect(url_for('students.edit_student', student_id=student_id))
-    
 
 @students_bp.route('/students/create', methods=['GET', 'POST'])
 def create_student():

@@ -163,24 +163,7 @@
             <!-- New tab content for housing assignment -->
             <div class="tab-content" id="housing">
                 <h2>Assign Housing</h2>
-                <form method="POST" action="{{ url_for('students.assign_housing', student_id=student.student_id) }}">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    
-                    <label for="dorm_id">Dorm:</label>
-                    <select id="dorm_id" name="dorm_id">
-                        {% for dorm in dorms %}
-                        <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
-                        {% endfor %}
-                    </select>
-
-                    <label for="room_id">Room:</label>
-                    <select id="room_id" name="room_id">
-                        {% for room in rooms %}
-                        <option value="{{ room.id }}">{{ room.droom_number }}</option>
-                        {% endfor %}
-                    </select>
-                    <input type="submit" value="Assign Housing">
-                </form>
+                
             </div>
         </div>
     </div>
@@ -188,5 +171,8 @@
 {% endblock %}
 
 {% block scripts %}
-    <!-- Additional scripts can be added here -->
+
+<script>
+
+</script>
 {% endblock %}
