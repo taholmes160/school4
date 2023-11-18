@@ -1,0 +1,100 @@
+/* Button Styles */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px; /* Adjusted font size for buttons */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow for a 3D effect */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* New Styles for Button Groups */
+.button-group {
+    border: 2px solid #0b1879;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Add space between button groups */
+    padding: 10px;
+    width: 33%;
+    margin: 10px auto;
+}
+
+.button-group-small {
+    width: 15%;
+}
+
+.button-group h3 {
+    margin-top: 0; /* Remove default margin for h3 */
+    padding-top: 10px; /* Add space between heading and buttons */
+    border-bottom: 2px solid #0b1879; /* Add border line at the bottom of the heading */
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* New Button Class */
+.small-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 14px; /* Adjust the font size as desired */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    height: 50px !important; /* Set the height to your desired value */
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 1); /* Add a subtle box-shadow for a 3D effect */
+}
+
+.small-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3); /* Increase the box-shadow on hover for a stronger 3D effect */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF; /* Change the color to your preferred button color */
+    color: #FFF;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow for a 3D effect */
+}
+
+.nav-button:hover {
+    background-color: #0056b3; /* Change the hover color as desired */
+}
+
+/* Submit Button Styles */
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}

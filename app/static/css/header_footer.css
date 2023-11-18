@@ -1,0 +1,25 @@
+/* Header styles */
+h1 {
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+/* Footer Styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #A6A5A8;
+    padding: 0px;
+    font-size: 16px; /* Adjust the font size as desired */
+    text-align: center;
+}
+
+.footer-text-12 {
+    font-size: 12px; /* Adjust the font size as desired */
+}
+
+.footer-text-16 {
+    font-size: 16px; /* Adjust the font size as desired */
+}

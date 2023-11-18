@@ -1,0 +1,41 @@
+/* Navigation styles */
+.nav-bar {
+    background-color: #007BFF;
+    width: 100%; /* This will make the nav bar span the full width of its container */
+    height: 100px; /* This sets the vertical size of the nav bar. Adjust as needed. */
+}
+
+.navbar-title a {
+    color: #FFFFFF !important;
+}
+
+.navbar-title {
+    font-family: "Arial", sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    margin: 0;
+}
+
+.nav-link {
+    color: #FFFFFF !important;
+    background-color: #abacad;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 10px 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 5px #0056b3; /* This creates the 3D effect */
+    position: relative; /* This is needed for the :active pseudo-class */
+}
+
+.nav-link:hover {
+    background-color: #0056b3;
+}
+
+.nav-link:active {
+    box-shadow: 0px 2px #0056b3; /* This reduces the shadow size when the button is clicked */
+    top: 3px; /* This moves the button down when clicked */
+}

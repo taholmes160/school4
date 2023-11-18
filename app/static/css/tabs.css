@@ -1,0 +1,37 @@
+/* Tab Styles */
+.tab-container {
+  margin-bottom: 20px;
+}
+
+.tab-container input[type="radio"] {
+  display: none;
+}
+
+.tab-container label {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.tab-container .tab-content {
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #f9f9f9;
+  display: none;
+}
+
+/* When the radio button is checked, display the corresponding tab content */
+#edit-tab:checked ~ #edit,
+#comments-tab:checked ~ #comments,
+#housing-tab:checked ~ #housing {
+  display: block;
+}
+
+/* Style for the label of the checked radio button to indicate active tab */
+.tab-container input[type="radio"]:checked + label {
+  background-color: #fff;
+  border-bottom: 1px solid #fff;
+}

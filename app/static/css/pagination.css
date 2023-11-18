@@ -1,0 +1,27 @@
+/* Pagination Styles */
+.pagination {
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline;
+    margin-right: 5px; /* Adjust the spacing between page numbers */
+}
+
+.pagination a {
+    text-decoration: none;
+    background-color: #f1f1f1; /* Background color of pagination links */
+    padding: 5px 10px; /* Adjust the padding to control the size of the links */
+    color: #333; /* Text color */
+    border: 1px solid #ccc; /* Border around the links */
+}
+
+.pagination a:hover {
+    background-color: #333; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
+.pagination .active a {
+    background-color: #333; /* Background color for the current page */
+    color: #fff; /* Text color for the current page */
+}

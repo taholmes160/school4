@@ -1,0 +1,80 @@
+/* Input Styles */
+input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+
+/* Input Container Styles for Layout */
+.input-container-10 {
+    display: inline-block;
+    width: 10%;
+    margin-right: 2%;
+}
+
+.input-container-15 {
+    display: inline-block;
+    width: 15%;
+    margin-right: 2%;
+}
+
+.input-container-20 {
+    display: inline-block;
+    width: 20%;
+    margin-right: 2%;
+}
+
+.input-container-25 {
+    display: inline-block;
+    width: 25%;
+    margin-right: 2%;
+}
+
+.input-container-30 {
+    display: inline-block;
+    width: 30%;
+    margin-right: 2%;
+}
+
+.input-container-40 {
+    display: inline-block;
+    width: 40%;
+    margin-right: 2%;
+}
+
+.input-container-50 {
+    display: inline-block;
+    width: 50%;
+    margin-right: 2%;
+}
+
+.select-box {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="date"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="password"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="email"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+.select-field {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+.input-search {
+    width: 70%; /* Adjust the width as desired */
+}

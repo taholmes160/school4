@@ -1,0 +1,5 @@
+/* Divider Styles*/
+.divider {
+    border-top: 2px solid #000; /* Adjust the color and thickness as needed */
+    margin: 20px 0;
+}

@@ -1,0 +1,475 @@
+/* Reset some default styles and set the background color */
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("wavebg.jpg") no-repeat center center fixed;
+    background-size: cover;
+    filter: brightness(80%);
+    z-index: -1;
+}
+
+/* Header styles */
+h1 {
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+/* Footer Styles */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #A6A5A8;
+    padding: 0px;
+    font-size: 16px; /* Adjust the font size as desired */
+    text-align: center;
+}
+
+.footer-text-12 {
+    font-size: 12px; /* Adjust the font size as desired */
+}
+
+.footer-text-16 {
+    font-size: 16px; /* Adjust the font size as desired */
+}
+
+/* Button Styles */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px; /* Adjusted font size for buttons */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow for a 3D effect */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* New Styles for Button Groups */
+.button-group {
+    border: 2px solid #0b1879;
+    border-radius: 5px;
+    margin-bottom: 20px; /* Add space between button groups */
+    padding: 10px;
+    width: 33%;
+    margin: 10px auto;
+}
+
+.button-group-small {
+    width: 15%;
+}
+
+.button-group h3 {
+    margin-top: 0; /* Remove default margin for h3 */
+    padding-top: 10px; /* Add space between heading and buttons */
+    border-bottom: 2px solid #0b1879; /* Add border line at the bottom of the heading */
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* New Button Class */
+.small-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 14px; /* Adjust the font size as desired */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    height: 50px !important; /* Set the height to your desired value */
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 1); /* Add a subtle box-shadow for a 3D effect */
+}
+
+.small-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.3); /* Increase the box-shadow on hover for a stronger 3D effect */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF; /* Change the color to your preferred button color */
+    color: #FFF;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.3); /* Add a subtle box-shadow for a 3D effect */
+}
+
+.nav-button:hover {
+    background-color: #0056b3; /* Change the hover color as desired */
+}
+
+/* Navigation styles */
+.nav-bar {
+    background-color: #007BFF;
+    width: 100%; /* This will make the nav bar span the full width of its container */
+    height: 100px; /* This sets the vertical size of the nav bar. Adjust as needed. */
+}
+
+.navbar-title a {
+    color: #FFFFFF !important;
+}
+
+.navbar-title {
+    font-family: "Arial", sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    margin: 0;
+}
+
+.nav-link {
+    color: #FFFFFF !important;
+    background-color: #abacad;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 10px 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 5px #0056b3; /* This creates the 3D effect */
+    position: relative; /* This is needed for the :active pseudo-class */
+}
+
+.nav-link:hover {
+    background-color: #0056b3;
+}
+
+.nav-link:active {
+    box-shadow: 0px 2px #0056b3; /* This reduces the shadow size when the button is clicked */
+    top: 3px; /* This moves the button down when clicked */
+}
+
+/* Tab Styles */
+
+.tab-container {
+    margin-bottom: 20px;
+}
+
+.tab-container input[type="radio"] {
+    display: none;
+}
+
+.tab-container label {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.tab-container .tab-content {
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f9f9f9;
+    display: none;
+}
+
+/* When the radio button is checked, display the corresponding tab content */
+#edit-tab:checked ~ #edit,
+#comments-tab:checked ~ #comments {
+    display: block;
+}
+
+/* Style for the label of the checked radio button to indicate active tab */
+.tab-container input[type="radio"]:checked + label {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+
+/* Student List Table Styles */
+.student-table {
+    width: 90%;
+    margin: 20px auto;
+    /* Other table styles as needed */
+}
+
+/* Small Button Class */
+.small-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    height: 10px; /* Set the height to your desired value */
+}
+
+.small-button:hover {
+    background-color: #0056b3;
+}
+
+.btn-create {
+    margin-left: 10px; /* Adjust the margin as desired */
+    vertical-align: top;
+}
+
+/* Form Styles */
+form {
+    width: 50%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-narrow {
+    width: 50%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 2px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-wide {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Divider Styles*/
+.divider {
+    border-top: 2px solid #000; /* Adjust the color and thickness as needed */
+    margin: 20px 0;
+}
+
+/* Label Styles */
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Input Styles */
+input[type="text"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+
+/* Submit Button Styles */
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Pagination Styles */
+.pagination {
+    display: inline-block;
+}
+
+.pagination li {
+    display: inline;
+    margin-right: 5px; /* Adjust the spacing between page numbers */
+}
+
+.pagination a {
+    text-decoration: none;
+    background-color: #f1f1f1; /* Background color of pagination links */
+    padding: 5px 10px; /* Adjust the padding to control the size of the links */
+    color: #333; /* Text color */
+    border: 1px solid #ccc; /* Border around the links */
+}
+
+.pagination a:hover {
+    background-color: #333; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
+.pagination .active a {
+    background-color: #333; /* Background color for the current page */
+    color: #fff; /* Text color for the current page */
+}
+
+/* Input Container Styles for Layout */
+.input-container-10 {
+    display: inline-block;
+    width: 10%;
+    margin-right: 2%;
+}
+
+.input-container-15 {
+    display: inline-block;
+    width: 15%;
+    margin-right: 2%;
+}
+
+.input-container-20 {
+    display: inline-block;
+    width: 20%;
+    margin-right: 2%;
+}
+
+.input-container-25 {
+    display: inline-block;
+    width: 25%;
+    margin-right: 2%;
+}
+
+.input-container-30 {
+    display: inline-block;
+    width: 30%;
+    margin-right: 2%;
+}
+
+.input-container-40 {
+    display: inline-block;
+    width: 40%;
+    margin-right: 2%;
+}
+
+.input-container-50 {
+    display: inline-block;
+    width: 50%;
+    margin-right: 2%;
+}
+
+.select-box {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="date"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="password"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+input[type="email"] {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+.select-field {
+    width: 100%;
+    height: 35px; /* Adjust the height value as needed */
+}
+
+.input-search {
+    width: 70%; /* Adjust the width as desired */
+}
+
+/* styles for option boxes*/
+.custom-select-icon {
+    position: relative;
+}
+
+.custom-select-icon select {
+    padding-right: 30px; /* Adjust the padding to make space for the caret icon */
+}
+
+.custom-select-icon i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Table Styles */
+table {
+    width: 50%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 16px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+table.full-width {
+    width: 75%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 16px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Table Header Styles */
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+}
+
+/* Table Cell Styles */
+td {
+    padding: 3px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+}
+
+/* Alternate Row Background Colors for Better Readability */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Alternate Row Background Colors for Better Readability (Odd Rows) */
+tr:nth-child(odd) {
+    background-color: #aaaaaa;
+}
