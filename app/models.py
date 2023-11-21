@@ -172,3 +172,38 @@ class Account_status(db.Model):
     
     acc_status_id = db.Column(db.Integer, primary_key=True)
     acc_status_name = db.Column(db.String(45))
+    
+class DormManager(db.Model):
+    __tablename__ = 'tbl_dorm_manager'
+
+    manager_id = db.Column(db.Integer, primary_key=True)
+    manager_name = db.Column(db.String(100), nullable=False)
+    dormitory_id = db.Column(db.Integer, db.ForeignKey('tbl_dormitory.dormitory_id'), nullable=False)
+    # Add other manager fields
+
+class Dormitory(db.Model):
+    __tablename__ = 'tbl_dormitory'
+
+    dormitory_id = db.Column(db.Integer, primary_key=True)
+    dormitory_name = db.Column(db.String(100), nullable=False)
+    # Add other dormitory fields
+
+    rooms = db.relationship('Room', backref='dormitory', lazy=True)
+
+class Room(db.Model):
+    __tablename__ = 'tbl_room'
+
+    room_id = db.Column(db.Integer, primary_key=True)
+    room_number = db.Column(db.String(20), nullable=False)
+    dormitory_id = db.Column(db.Integer, db.ForeignKey('tbl_dormitory.dormitory_id'), nullable=False)
+    # Add other room fields
+
+    students = db.relationship('Student', backref='room', lazy=True)
+
+class StudentRoomAssignment(db.Model):
+    __tablename__ = 'tbl_student_room_assignment'
+
+    id = db.Column(db.Integer, primary_key=True)
+    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'), nullable=False)
+    room_id = db.Column(db.Integer, db.ForeignKey('tbl_room.room_id'), nullable=False)
+    # You can add more fields specific to this relationship if needed
