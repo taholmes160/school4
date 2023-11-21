@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment, Dorm, DormRoom
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment
 from app import db
 from datetime import datetime
 
@@ -27,7 +27,7 @@ def edit_student(student_id):
     student_comments = Comment.query.filter_by(student_id=student_id).order_by(Comment.comment_date.desc()).all()
 
     if request.method == 'POST':
-        if 'submit_student' in request.form:  # Check if the form submission is for updating student details
+        if 'submit_student' in request.form:
             student.student_fname = request.form.get('fname')
             student.student_mname = request.form.get('mname')
             student.student_lname = request.form.get('lname')
@@ -53,23 +53,24 @@ def edit_student(student_id):
             db.session.commit()
             flash('Student details updated successfully', 'success')
             return redirect(url_for('students.edit_student', student_id=student_id))
-        elif 'submit_comment' in request.form:  # Check if the form submission is for adding a comment
-            comment_text = request.form.get('comment_text')
-            comment_by = request.form.get('comment_by')
-            comment_date = request.form.get('comment_date') or datetime.now().date()
-            comment_level = request.form.get('comment_level')
+        return
+    elif 'submit_comment' in request.form:
+        comment_text = request.form.get('comment_text')
+        comment_by = request.form.get('comment_by')
+        comment_date = request.form.get('comment_date') or datetime.now().date()
+        comment_level = request.form.get('comment_level')
 
-            comment = Comment(
-                student_id=student_id,
-                comment_text=comment_text,
-                comment_by=comment_by,
-                comment_date=comment_date,
-                comment_level=comment_level
-            )
-            db.session.add(comment)
-            db.session.commit()
-            flash('Comment added successfully', 'success')
-            return redirect(url_for('students.edit_student', student_id=student_id))
+        comment = Comment(
+            student_id=student_id,
+            comment_text=comment_text,
+            comment_by=comment_by,
+            comment_date=comment_date,
+            comment_level=comment_level
+        )
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comment added successfully', 'success')
+        return redirect(url_for('students.edit_student', student_id=student_id))
  
     genders = Gender.query.all()
     levels = Level.query.all()
@@ -79,9 +80,8 @@ def edit_student(student_id):
     campus = Campus.query.all()
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
-    dorms = Dorm.query.all()
         
-    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms)
+    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity )
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):
@@ -164,9 +164,3 @@ def create_student():
     
     return render_template('students/create_student.html', genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)
 
-@students_bp.route('/get_rooms')
-def get_rooms():
-    dorm_id = request.args.get('dorm_id', type=int)
-    rooms = DormRoom.query.filter_by(dorm_id=dorm_id).all()
-    room_list = [{'droom_id': room.droom_id, 'droom_number': room.droom_number} for room in rooms]
-    return jsonify(room_list)

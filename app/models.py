@@ -83,7 +83,6 @@ class Student(db.Model):
     student_campus_id = db.Column(db.Integer, db.ForeignKey('tbl_campus.campus_id'), nullable=True)
     student_nationality_id = db.Column(db.Integer, db.ForeignKey('tbl_nationality.nationality_id'), nullable=True)
     student_ethnicity_id = db.Column(db.Integer, db.ForeignKey('tbl_ethnicity.ethnicity_id'), nullable=True)
-    dorm_room_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'))
     
 
     gender = db.relationship('Gender', backref='students')
@@ -95,9 +94,7 @@ class Student(db.Model):
     suffix = db.relationship('Suffix', backref='students')
     divisions = db.relationship('Divisions', backref='students')
     comments = db.relationship('Comment', backref='student', lazy=True)
-    housing = db.relationship('Housing', backref='student', lazy='select')
-    dorm_room_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'), unique=True)
-    dorm_room = db.relationship('DormRoom', backref='dorm_room_student', uselist=False, foreign_keys=[dorm_room_id])
+   
     
     
 
@@ -139,43 +136,6 @@ class Comment(db.Model):
     comment_date = db.Column(db.Date)
     comment_level = db.Column(db.String(45))
 
-class Dorm(db.Model):
-    __tablename__ = 'tbl_dorms'
-
-    dorm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    dorm_name = db.Column(db.String(45))
-    dorm_phone = db.Column(db.String(45))
-    dorm_capacity = db.Column(db.String(45))
-    dm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_managers.dm_id'))
-
-    dorm_manager = db.relationship('DormManager', backref='dorms')
-
-
-class DormManager(db.Model):
-    __tablename__ = 'tbl_dorm_managers'
-
-    dm_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    dm_name = db.Column(db.String(45))
-    dm_phone = db.Column(db.String(45))
-
-class DormRoom(db.Model):
-        __tablename__ = 'tbl_dorm_rooms'
-    
-        droom_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-        droom_number = db.Column(db.Integer)
-        droom_capacity = db.Column(db.Integer)
-        droom_notes = db.Column(db.String(500))
-        droom_phone = db.Column(db.String(12))
-        droom_floor = db.Column(db.String(12))
-        droom_unit = db.Column(db.String(12))
-        dorm_id = db.Column(db.Integer, db.ForeignKey('tbl_dorms.dorm_id'))
-        student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))  # Add this line
-    
-        dorm = db.relationship('Dorm', backref='rooms')
-        students = db.relationship('Student', backref='dorm_room2', foreign_keys='Student.dorm_room_id')
-    
-    
-
 class User(db.Model):
     __tablename__ = 'tbl_users'
 
@@ -199,13 +159,7 @@ class User(db.Model):
     acc_status_id = db.Column(db.Integer, db.ForeignKey('tbl_account_statuses.acc_status_id'))
     registration_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
 
-class Housing(db.Model):
-    __tablename__ = 'tbl_housing'
-    
-    housing_id = db.Column(db.Integer, primary_key=True)
-    droom_id = db.Column(db.Integer, db.ForeignKey('tbl_dorm_rooms.droom_id'))
-    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'))
-    
+
 
 class Role(db.Model):
     __tablename__ = 'tbl_role'

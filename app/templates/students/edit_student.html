@@ -16,9 +16,6 @@
 
             <input type="radio" id="comments-tab" name="tab-group">
             <label for="comments-tab">Comments</label>
-
-            <input type="radio" id="housing-tab" name="tab-group">
-            <label for="housing-tab">Assign Housing</label>
             
             <!-- Tab content for editing student details -->
             <div class="tab-content" id="edit">
@@ -159,54 +156,9 @@
                     <p>No comments found for this student.</p>
                     {% endfor %}
                 </div>           
-            </div>
-                <h2>Assign Housing</h2> 
-                <!-- New tab content for housing assignment -->
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <div class="tab-content" id="housing">
-                    <h2>Assign Housing</h2>
-                    <form id="dorm-selection-form" method="POST">
-                        <label for="dorm_id">Dormitory:</label>
-                        <select id="dorm_id" name="dorm_id">
-                            {% for dorm in dorms %}
-                            <option value="{{ dorm.dorm_id }}">{{ dorm.dorm_name }}</option>  <!-- Replace 'name' with the actual attribute name for the dormitory name -->
-                            {% endfor %}
-                        </select>
-                        <input type="submit" value="Select Dormitory">
-                    </form>
-                    <div id="room-selection-form">
-                        <!-- This will be filled in dynamically based on the selected dormitory -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function() {
-    $('#dorm-selection-form').submit(function(event) {
-        event.preventDefault();
-        var dorm_id = $('#dorm_id').val();
-        $.ajax({
-            url: '/get_rooms',
-            data: { 'dorm_id': dorm_id },
-            type: 'GET',
-            success: function(response) {
-                var roomSelect = $('<select>').attr('id', 'room_id').attr('name', 'room_id');
-                $.each(response, function(index, room) {
-                    roomSelect.append(new Option(room.droom_number, room.droom_id));
-                });
-                $('#room-selection-form').empty().append(roomSelect).append('<input type="submit" value="Assign Room">');
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-    });
-});
-</script>
-
-{% endblock %}
+            </div>           
+            
+            {% block scripts %}
+            
+            {% endblock %}
+        {% endblock %}
