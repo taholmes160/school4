@@ -83,8 +83,7 @@ class Student(db.Model):
     student_campus_id = db.Column(db.Integer, db.ForeignKey('tbl_campus.campus_id'), nullable=True)
     student_nationality_id = db.Column(db.Integer, db.ForeignKey('tbl_nationality.nationality_id'), nullable=True)
     student_ethnicity_id = db.Column(db.Integer, db.ForeignKey('tbl_ethnicity.ethnicity_id'), nullable=True)
-    
-
+   
     gender = db.relationship('Gender', backref='students')
     level = db.relationship('Level', backref='students')
     campus = db.relationship('Campus', backref='students')
@@ -93,10 +92,7 @@ class Student(db.Model):
     ethnicity = db.relationship('Ethnicity', backref='students')
     suffix = db.relationship('Suffix', backref='students')
     divisions = db.relationship('Divisions', backref='students')
-    comments = db.relationship('Comment', backref='student', lazy=True)
-    rooms = db.relationship('Room', secondary='tbl_student_room_assignment', backref='students', lazy='dynamic')
-    
-    
+    comments = db.relationship('Comment', backref='student', lazy=True)   
 
 class Faculty(db.Model):
     __tablename__ = 'faculty'
@@ -135,7 +131,6 @@ class Comment(db.Model):
     comment_by = db.Column(db.String(45))
     comment_date = db.Column(db.Date)
     comment_level = db.Column(db.String(45))
-
 class User(db.Model):
     __tablename__ = 'tbl_users'
 
@@ -158,9 +153,7 @@ class User(db.Model):
     profile_picture = db.Column(db.String(255))
     acc_status_id = db.Column(db.Integer, db.ForeignKey('tbl_account_statuses.acc_status_id'))
     registration_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
-
-
-
+    
 class Role(db.Model):
     __tablename__ = 'tbl_role'
 
@@ -172,38 +165,3 @@ class Account_status(db.Model):
     
     acc_status_id = db.Column(db.Integer, primary_key=True)
     acc_status_name = db.Column(db.String(45))
-    
-class DormManager(db.Model):
-    __tablename__ = 'tbl_dorm_manager'
-
-    manager_id = db.Column(db.Integer, primary_key=True)
-    manager_name = db.Column(db.String(100), nullable=False)
-    dormitory_id = db.Column(db.Integer, db.ForeignKey('tbl_dormitory.dormitory_id'), nullable=False)
-    # Add other manager fields
-
-class Dormitory(db.Model):
-    __tablename__ = 'tbl_dormitory'
-
-    dormitory_id = db.Column(db.Integer, primary_key=True)
-    dormitory_name = db.Column(db.String(100), nullable=False)
-    # Add other dormitory fields
-
-    rooms = db.relationship('Room', backref='dormitory', lazy=True)
-
-class Room(db.Model):
-    __tablename__ = 'tbl_room'
-
-    room_id = db.Column(db.Integer, primary_key=True)
-    room_number = db.Column(db.String(20), nullable=False)
-    dormitory_id = db.Column(db.Integer, db.ForeignKey('tbl_dormitory.dormitory_id'), nullable=False)
-    # Add other room fields
-
-    students = db.relationship('Student', secondary='tbl_student_room_assignment', backref='rooms', lazy='dynamic')
-
-class StudentRoomAssignment(db.Model):
-    __tablename__ = 'tbl_student_room_assignment'
-
-    id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey('tbl_student.student_id'), nullable=False)
-    room_id = db.Column(db.Integer, db.ForeignKey('tbl_room.room_id'), nullable=False)
-    # You can add more fields specific to this relationship if needed
