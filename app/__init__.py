@@ -5,6 +5,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 import os
 
+
 # Load environment variables from .env file
 load_dotenv()
 
