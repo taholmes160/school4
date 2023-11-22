@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
 import os
-
+from app import models
 
 # Load environment variables from .env file
 load_dotenv()
