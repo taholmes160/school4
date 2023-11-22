@@ -1,5 +1,7 @@
 from app import db
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
@@ -173,3 +175,20 @@ class DormManager(db.Model):
 
     def __repr__(self):
         return f"<DormManager {self.manager_name}>"
+    
+    class Dorm(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        dorm_name = db.Column(db.String(100), nullable=False)
+        address = db.Column(db.String(255))
+        city = db.Column(db.String(100))
+        state = db.Column(db.String(100))
+        zip_code = db.Column(db.String(20))
+        phone_number = db.Column(db.String(20))
+        num_rooms = db.Column(db.Integer)
+        
+        # Reference to DormManager
+        manager_id = db.Column(db.Integer, db.ForeignKey('dorm_manager.id'))
+        manager = relationship('DormManager')
+
+        def __repr__(self):
+            return f"<Dorm {self.dorm_name}>"

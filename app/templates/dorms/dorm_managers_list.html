@@ -5,7 +5,14 @@
     <!-- Display dorm managers -->
     <ul>
         {% for manager in dorm_managers %}
-            <li>{{ manager.manager_name }}</li>
+            <li>
+                {{ manager.manager_name }}
+                <form action="{{ url_for('dorms.edit_dorm_manager', manager_id=manager.id) }}" method="get" style="display: inline;">
+                    <!-- CSRF Protection (optional) -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="submit" value="Edit">
+                </form>
+            </li>
             <!-- Display other manager details if needed -->
         {% endfor %}
     </ul>

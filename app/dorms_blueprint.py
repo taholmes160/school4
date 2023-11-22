@@ -1,6 +1,6 @@
 # dorms_blueprint.py
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import db
+from app.models import db, DormManager
 
 
 
