@@ -165,3 +165,11 @@ class Account_status(db.Model):
     
     acc_status_id = db.Column(db.Integer, primary_key=True)
     acc_status_name = db.Column(db.String(45))
+    
+class DormManager(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    manager_name = db.Column(db.String(100), nullable=False)
+    # Add more fields as needed
+
+    def __repr__(self):
+        return f"<DormManager {self.manager_name}>"

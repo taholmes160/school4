@@ -1,12 +1,17 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h2>Add Dorm Manager</h2>
+    <h1>Add Dorm Manager</h1>
     <form action="{{ url_for('dorms.add_dorm_manager') }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <!-- CSRF Protection -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+        <!-- Add form fields for adding a dorm manager -->
         <label for="manager_name">Manager Name:</label>
-        <input type="text" id="manager_name" name="manager_name" required>
-        <button type="submit">Add Manager</button>
+        <input type="text" id="manager_name" name="manager_name">
+        
+        <!-- Add other form fields if needed -->
+        
+        <input type="submit" value="Add Manager">
     </form>
 {% endblock %}
-

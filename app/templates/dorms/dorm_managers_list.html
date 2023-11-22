@@ -1,18 +1,12 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h2>Dorm Managers</h2>
+    <h1>Dorm Managers List</h1>
+    <!-- Display dorm managers -->
     <ul>
         {% for manager in dorm_managers %}
-            <li>{{ manager.manager_name }} 
-                <a href="{{ url_for('dorms.edit_dorm_manager', manager_id=manager.id) }}">Edit</a>
-                <form action="{{ url_for('dorms.delete_dorm_manager', manager_id=manager.id) }}" method="post">
-                    {{ form.csrf_token }}
-                    <button type="submit">Delete</button>
-                </form>
-            </li>
+            <li>{{ manager.manager_name }}</li>
+            <!-- Display other manager details if needed -->
         {% endfor %}
     </ul>
-    
-    <a href="{{ url_for('dorms.add_dorm_manager') }}">Add New Dorm Manager</a>
 {% endblock %}

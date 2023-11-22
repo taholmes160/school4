@@ -1,11 +1,17 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <h2>Edit Dorm Manager</h2>
+    <h1>Edit Dorm Manager</h1>
     <form action="{{ url_for('dorms.edit_dorm_manager', manager_id=manager.id) }}" method="post">
-        {{ form.csrf_token }}
+        <!-- CSRF Protection -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+        <!-- Display current manager details for editing -->
         <label for="manager_name">Manager Name:</label>
-        <input type="text" id="manager_name" name="manager_name" value="{{ manager.manager_name }}" required>
-        <button type="submit">Update Manager</button>
+        <input type="text" id="manager_name" name="manager_name" value="{{ manager.manager_name }}">
+        
+        <!-- Add other form fields if needed -->
+        
+        <input type="submit" value="Update Manager">
     </form>
 {% endblock %}
