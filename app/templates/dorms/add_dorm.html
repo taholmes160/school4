@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Add Dorm</h1>
+    <form action="{{ url_for('dorms.add_dorm') }}" method="post">
+        <!-- CSRF Protection (optional) -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+        <!-- Add form fields for adding a dorm -->
+        <label for="dorm_name">Dorm Name:</label>
+        <input type="text" id="dorm_name" name="dorm_name">
+        
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address">
+        
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city">
+        
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state">
+        
+        <label for="zip_code">Zip Code:</label>
+        <input type="text" id="zip_code" name="zip_code">
+        
+        <label for="phone_number">Phone Number:</label>
+        <input type="text" id="phone_number" name="phone_number">
+        
+        <label for="num_rooms">Number of Rooms:</label>
+        <input type="text" id="num_rooms" name="num_rooms">
+        
+        <label for="manager_id">Select Dorm Manager:</label>
+        <select id="manager_id" name="manager_id">
+            {% for manager in dorm_managers %}
+                <option value="{{ manager.id }}">{{ manager.manager_name }}</option>
+            {% endfor %}
+        </select>
+        
+        <!-- Add other form fields if needed -->
+        
+        <input type="submit" value="Add Dorm">
+    </form>
+{% endblock %}

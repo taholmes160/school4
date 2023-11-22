@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Dorms List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Dorm Name</th>
+                <th>Phone Number</th>
+                <th>Number of Rooms</th>
+                <th>Manager Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dorm in dorms %}
+                <tr>
+                    <td>{{ dorm.id }}</td>
+                    <td>{{ dorm.dorm_name }}</td>
+                    <td>{{ dorm.phone_number }}</td>
+                    <td>{{ dorm.num_rooms }}</td>
+                    <td>{{ dorm.manager.manager_name if dorm.manager else '-' }}</td>
+                    <td>
+                        <a href="{{ url_for('dorms.edit_dorm', dorm_id=dorm.id) }}" class="btn btn-primary">Edit  </a>
+                        <a href="{{ url_for('dorms.delete_dorm', dorm_id=dorm.id) }}" onclick="return confirm('Are you sure you want to delete this dorm?')">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

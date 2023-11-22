@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Edit Dorm</h1>
+    <form action="{{ url_for('dorms.edit_dorm', dorm_id=dorm.id) }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="text" name="dorm_name" value="{{ dorm.dorm_name }}">
+        <input type="text" name="address" value="{{ dorm.address }}">
+        <!-- Add other fields for editing -->
+        <button type="submit">Update Dorm</button>
+    </form>
+{% endblock %}
