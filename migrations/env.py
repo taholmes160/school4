@@ -2,6 +2,7 @@ import logging
 from logging.config import fileConfig
 from flask import current_app
 from alembic import context
+from app.models import Gender, Level, Campus, Status, State, Nationality, Ethnicity, Suffix, Divisions, Prefix, Student, Faculty, Staff, Comment, User, Role, Account_status, DormManager, Dormitory, Room, StudentRoomAssignment
 
 
 
