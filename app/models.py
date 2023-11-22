@@ -94,7 +94,7 @@ class Student(db.Model):
     suffix = db.relationship('Suffix', backref='students')
     divisions = db.relationship('Divisions', backref='students')
     comments = db.relationship('Comment', backref='student', lazy=True)
-   
+    rooms = db.relationship('Room', secondary='tbl_student_room_assignment', backref='students', lazy='dynamic')
     
     
 
@@ -198,7 +198,7 @@ class Room(db.Model):
     dormitory_id = db.Column(db.Integer, db.ForeignKey('tbl_dormitory.dormitory_id'), nullable=False)
     # Add other room fields
 
-    students = db.relationship('Student', backref='room', lazy=True)
+    students = db.relationship('Student', secondary='tbl_student_room_assignment', backref='rooms', lazy='dynamic')
 
 class StudentRoomAssignment(db.Model):
     __tablename__ = 'tbl_student_room_assignment'

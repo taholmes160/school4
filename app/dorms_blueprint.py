@@ -1,8 +1,10 @@
 # dorms_blueprint.py
-
-from flask import render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from app.models import DormManager, db
-from app.dorms_blueprint import dorms_bp
+
+
+
+dorms_bp = Blueprint('dorms', __name__, template_folder='templates/dorms')
 
 @dorms_bp.route('/managers', methods=['GET'])
 def list_dorm_managers():

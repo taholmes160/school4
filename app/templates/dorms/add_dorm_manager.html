@@ -3,9 +3,10 @@
 {% block content %}
     <h2>Add Dorm Manager</h2>
     <form action="{{ url_for('dorms.add_dorm_manager') }}" method="post">
-        {{ form.csrf_token }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
         <label for="manager_name">Manager Name:</label>
         <input type="text" id="manager_name" name="manager_name" required>
         <button type="submit">Add Manager</button>
     </form>
 {% endblock %}
+
