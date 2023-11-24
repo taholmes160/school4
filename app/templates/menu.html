@@ -14,13 +14,22 @@
         </div>
         
         <div class="button-group button-group-small">
-            <h3>Dorm Managers</h3>
+            <h3>Dorms</h3>
             <div class="button-row">
                 <a href="{{ url_for('dorms.list_dorm_managers') }}" class="small-button">List Dorm Managers</a>
                 <a href="{{ url_for('dorms.add_dorm_manager') }}" class="small-button">Add Dorm Manager</a>
+            </div>
+            <div class="button-row"></div>
                 <a href="{{ url_for('dorms.add_dorm') }}" class="small-button">Add Dorm</a>
-                <a href="{{ url_for('dorms.list_dorms') }}" class="small-button">List Dorms</a>
-                
+                <a href="{{ url_for('dorms.list_dorms') }}" class="small-button">List Dorms</a> 
+            </div>
+            <div class="button-row"></div>
+                <a href="{{ url_for('dorms.edit_dorm_room') }}" class="small-button">Edit Rooms</a>
+                <a href="{{ url_for('dorms.delete_dorm_room') }}" class="small-button">Delete Rooms</a> 
+            </div>
+            <div class="button-row"></div>
+                <a href="{{ url_for('dorms.list_dorm_rooms') }}" class="small-button">List Rooms</a>
+                <a href="{{ url_for('dorms.new_dorm_room') }}" class="small-button">Add Rooms</a> 
             </div>
         </div>
     </div>
