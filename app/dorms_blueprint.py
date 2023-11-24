@@ -1,6 +1,6 @@
 # dorms_blueprint.py
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import db, DormManager, Dorm
+from app.models import db, DormManager, Dorm, DormRoom
 
  
 
@@ -96,3 +96,36 @@ def delete_dorm(dorm_id):
     flash('Dorm deleted successfully', 'success')
     return redirect(url_for('dorms.list_dorms'))
 
+@dorms_bp.route('/dorms/<int:dorm_id>/rooms/new', methods=['GET', 'POST'])
+def new_dorm_room(dorm_id):
+    dorm = Dorm.query.get(dorm_id)
+    if request.method == 'POST':
+        room_number = request.form['room_number']
+        capacity = request.form['capacity']
+        room = DormRoom(room_number=room_number, capacity=capacity, dorm_id=dorm_id)
+        db.session.add(room)
+        db.session.commit()
+        flash('Dorm room created successfully.')
+        return redirect(url_for('dorm_detail', dorm_id=dorm_id))
+    return render_template('new_dorm_room.html', dorm=dorm)
+
+@dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/edit', methods=['GET', 'POST'])
+def edit_dorm_room(dorm_id, room_id):
+    dorm = Dorm.query.get(dorm_id)
+    room = DormRoom.query.get(room_id)
+    if request.method == 'POST':
+        room.room_number = request.form['room_number']
+        room.capacity = request.form['capacity']
+        db.session.commit()
+        flash('Dorm room updated successfully.')
+        return redirect(url_for('dorm_detail', dorm_id=dorm_id))
+    return render_template('edit_dorm_room.html', dorm=dorm, room=room)
+
+@dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/delete', methods=['POST'])
+def delete_dorm_room(dorm_id, room_id):
+    dorm = Dorm.query.get(dorm_id)
+    room = DormRoom.query.get(room_id)
+    db.session.delete(room)
+    db.session.commit()
+    flash('Dorm room deleted successfully.')
+    return redirect(url_for('dorm_detail', dorm_id=dorm_id))

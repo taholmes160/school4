@@ -192,3 +192,14 @@ class Dorm(db.Model):
 
     def __repr__(self):
         return f"<Dorm {self.dorm_name}>"
+    
+    class DormRoom(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        room_number = db.Column(db.String(10), nullable=False)
+        capacity = db.Column(db.Integer, nullable=False)
+        dorm_id = db.Column(db.Integer, db.ForeignKey('dorm.id'), nullable=False)
+        students = db.relationship('Student', backref='room', lazy=True)
+    
+        def __repr__(self):
+            return f"<DormRoom {self.room_number}>"
+    

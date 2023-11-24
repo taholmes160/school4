@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Delete Dorm Room</h1>
+  <p>Are you sure you want to delete the dorm room "{{ room.room_number }}"?</p>
+  <form method="POST" action="{{ url_for('delete_dorm_room', dorm_id=dorm.id, room_id=room.id) }}">
+    <input type="submit" value="Yes">
+    <button type="button" onclick="window.location.href='{{ url_for('dorm_rooms', dorm_id=dorm.id) }}';">No</button>
+  </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>New Dorm Room</h1>
+  <form method="POST" action="{{ url_for('new_dorm_room', dorm_id=dorm.id) }}">
+    <label for="room_number">Room Number:</label>
+    <input type="text" name="room_number" id="room_number" required>
+    <br>
+    <label for="capacity">Capacity:</label>
+    <input type="number" name="capacity" id="capacity" required>
+    <br>
+    <input type="submit" value="Create Room">
+  </form>
+{% endblock %}
