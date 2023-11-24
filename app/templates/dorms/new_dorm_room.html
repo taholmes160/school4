@@ -2,7 +2,8 @@
 
 {% block content %}
   <h1>New Dorm Room</h1>
-  <form method="POST" action="{{ url_for('new_dorm_room', dorm_id=dorm.id) }}">
+  <form method="POST" action="{{ url_for('dorms.new_dorm_room', dorm_id=dorm.id) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
     <label for="room_number">Room Number:</label>
     <input type="text" name="room_number" id="room_number" required>
     <br>

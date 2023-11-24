@@ -24,6 +24,10 @@
                         <a href="{{ url_for('dorms.edit_dorm', dorm_id=dorm.id) }}" class="btn btn-primary">Edit  </a>
                         <a href="{{ url_for('dorms.delete_dorm', dorm_id=dorm.id) }}" onclick="return confirm('Are you sure you want to delete this dorm?')">Delete</a>
                     </td>
+                    <td>
+                        <a href="{{ url_for('dorms.new_dorm_room', dorm_id=dorm.id) }}" class="btn btn-primary">Add Room</a>
+                        <a href="{{ url_for('dorms.list_dorm_rooms', dorm_id=dorm.id) }}" class="btn btn-primary">List Rooms</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

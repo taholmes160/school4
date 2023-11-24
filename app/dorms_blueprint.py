@@ -106,8 +106,8 @@ def new_dorm_room(dorm_id):
         db.session.add(room)
         db.session.commit()
         flash('Dorm room created successfully.')
-        return redirect(url_for('list_dorm_rooms', dorm_id=dorm_id))
-    return render_template('new_dorm_room.html', dorm=dorm)
+        return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
+    return render_template('dorms/new_dorm_room.html', dorm=dorm)
 
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/edit', methods=['GET', 'POST'])
 def edit_dorm_room(dorm_id, room_id):
@@ -118,12 +118,12 @@ def edit_dorm_room(dorm_id, room_id):
         room.capacity = request.form['capacity']
         db.session.commit()
         flash('Dorm room updated successfully.')
-        return redirect(url_for('list_dorm_rooms', dorm_id=dorm_id))
-    return render_template('edit_dorm_room.html', dorm=dorm, room=room)
+        return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
+    return render_template('dorms.edit_dorm_rooms.html', dorm=dorm, room=room)
 
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/delete', methods=['POST'])
 def delete_dorm_room(dorm_id, room_id):
-    dorm = Dorm.query.get_or_404(dorm_id)
+    dorm= Dorm.query.get_or_404(dorm_id)
     room = DormRoom.query.get_or_404(room_id)
     db.session.delete(room)
     db.session.commit()

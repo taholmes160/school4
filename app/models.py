@@ -85,6 +85,7 @@ class Student(db.Model):
     student_campus_id = db.Column(db.Integer, db.ForeignKey('tbl_campus.campus_id'), nullable=True)
     student_nationality_id = db.Column(db.Integer, db.ForeignKey('tbl_nationality.nationality_id'), nullable=True)
     student_ethnicity_id = db.Column(db.Integer, db.ForeignKey('tbl_ethnicity.ethnicity_id'), nullable=True)
+    dorm_room_id = db.Column(db.Integer, db.ForeignKey('dorm_room.id'), nullable=True)
    
     gender = db.relationship('Gender', backref='students')
     level = db.relationship('Level', backref='students')
