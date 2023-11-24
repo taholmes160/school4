@@ -47,8 +47,8 @@ def add_dorm():
         state = request.form.get('state')
         zip_code = request.form.get('zip_code')
         phone_number = request.form.get('phone_number')
-        num_rooms = request.form.get('num_rooms')
-        manager_id = request.form.get('manager_id')  # Assuming manager_id comes from a dropdown/select box
+        num_rooms = int (request.form.get('num_rooms'))
+        manager_id = int (request.form.get('manager_id'))  # Assuming manager_id comes from a dropdown/select box
 
         new_dorm = Dorm(
             dorm_name=dorm_name,
@@ -98,7 +98,7 @@ def delete_dorm(dorm_id):
 
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms/new', methods=['GET', 'POST'])
 def new_dorm_room(dorm_id):
-    dorm = Dorm.query.get(dorm_id)
+    dorm = Dorm.query.get_or_404(dorm_id)
     if request.method == 'POST':
         room_number = request.form['room_number']
         capacity = request.form['capacity']
@@ -106,26 +106,32 @@ def new_dorm_room(dorm_id):
         db.session.add(room)
         db.session.commit()
         flash('Dorm room created successfully.')
-        return redirect(url_for('dorm_detail', dorm_id=dorm_id))
+        return redirect(url_for('list_dorm_rooms', dorm_id=dorm_id))
     return render_template('new_dorm_room.html', dorm=dorm)
 
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/edit', methods=['GET', 'POST'])
 def edit_dorm_room(dorm_id, room_id):
-    dorm = Dorm.query.get(dorm_id)
-    room = DormRoom.query.get(room_id)
+    dorm = Dorm.query.get_or_404(dorm_id)
+    room = DormRoom.query.get_or_404(room_id)
     if request.method == 'POST':
         room.room_number = request.form['room_number']
         room.capacity = request.form['capacity']
         db.session.commit()
         flash('Dorm room updated successfully.')
-        return redirect(url_for('dorm_detail', dorm_id=dorm_id))
+        return redirect(url_for('list_dorm_rooms', dorm_id=dorm_id))
     return render_template('edit_dorm_room.html', dorm=dorm, room=room)
 
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/delete', methods=['POST'])
 def delete_dorm_room(dorm_id, room_id):
-    dorm = Dorm.query.get(dorm_id)
-    room = DormRoom.query.get(room_id)
+    dorm = Dorm.query.get_or_404(dorm_id)
+    room = DormRoom.query.get_or_404(room_id)
     db.session.delete(room)
     db.session.commit()
     flash('Dorm room deleted successfully.')
-    return redirect(url_for('dorm_detail', dorm_id=dorm_id))
+    return redirect(url_for('list_dorm_rooms', dorm_id=dorm_id))
+
+@dorms_bp.route('/dorms/<int:dorm_id>/rooms', methods=['GET'])
+def list_dorm_rooms(dorm_id):
+    dorm = Dorm.query.get_or_404(dorm_id)
+    rooms = DormRoom.query.filter_by(dorm_id=dorm_id).all()
+    return render_template('list_dorm_rooms.html', dorm=dorm, rooms=rooms)
