@@ -133,29 +133,36 @@ def delete_dorm_room(dorm_id, room_id):
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms', methods=['GET'])
 def list_dorm_rooms(dorm_id):
     dorm = Dorm.query.get_or_404(dorm_id)
-    rooms = DormRoom.query.filter_by(dorm_id=dorm_id).all()
+    rooms = DormRoom.query.filter_by(dorm_id=dorm_id).options(db.joinedload(Student.room)).all()
     return render_template('list_dorm_rooms.html', dorm=dorm, rooms=rooms)
+    
 
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/assign', methods=['GET', 'POST'])
 def assign_student_to_room(dorm_id, room_id):
     dorm = Dorm.query.get_or_404(dorm_id)
     room = DormRoom.query.get_or_404(room_id)
     if request.method == 'POST':
-        student_id = request.form.get('student_id')
-        student = Student.query.get(student_id)
-        if student.gender != dorm.gender:
-            flash('Cannot assign student to this dorm due to gender mismatch.', 'error')
+        student_ids = request.form.getlist('student_ids')
+        if len(student_ids) > room.capacity:
+            flash('Cannot assign more students than room capacity.', 'error')
             return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
-        if room.current_capacity >= room.capacity:
-            flash('Cannot assign student to this room because it is full.', 'error')
-            return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
-        student.dorm_room_id = room.id
-        room.current_capacity += 1
+        new_assignments = 0
+        for student_id in student_ids:
+            student = Student.query.get(student_id)
+            if student.gender != dorm.gender:
+                flash('Cannot assign student to this dorm due to gender mismatch.', 'error')
+                return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
+            if student.dorm_room_id != room.id:
+                student.dorm_room_id = room.id
+                new_assignments += 1
+        room.current_capacity += new_assignments
         db.session.commit()
-        flash('Student assigned to room successfully.')
+        flash('Students assigned to room successfully.')
         return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
     students = Student.query.filter_by(dorm_room_id=None).all()  # Only unassigned students
     return render_template('dorms/assign_student.html', dorm=dorm, room=room, students=students)
+
+
 
 @dorms_bp.route('/dorms/<int:dorm_id>/rooms/<int:room_id>/unassign/<int:student_id>', methods=['POST'])
 def unassign_student_from_room(dorm_id, room_id, student_id):

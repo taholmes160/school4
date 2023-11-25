@@ -7,6 +7,7 @@
       <tr>
         <th>Room Number</th>
         <th>Capacity</th>
+        <th>Assigned Residents</th> <!-- New column for assigned residents -->
         <th>Actions</th>
       </tr>
     </thead>
@@ -15,6 +16,14 @@
         <tr>
           <td>{{ room.room_number }}</td>
           <td>{{ room.capacity }}</td>
+          <td>
+            <!-- Display assigned residents -->
+            {% for student in room.students %}
+              <p>{{ student.student_fname }} {{ student.student_lname }}</p>
+            {% else %}
+              <p>No students assigned</p>
+            {% endfor %}
+          </td>
           <td>
             <a href="{{ url_for('dorms.edit_dorm_room', dorm_id=dorm.id, room_id=room.id) }}">Edit</a>
             <a href="{{ url_for('dorms.delete_dorm_room', dorm_id=dorm.id, room_id=room.id) }}">Delete</a>
@@ -27,3 +36,4 @@
   <a href="{{ url_for('dorms.new_dorm_room', dorm_id=dorm.id) }}">Add New Room</a>
   
 {% endblock %}
+

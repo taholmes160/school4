@@ -4,25 +4,12 @@
 <h1>Assign Students to Room {{ room.room_number }}</h1>
 
 <form method="POST">
-    {% for i in range(room.capacity) %}
-        <div>
-            {% if room.current_capacity is not none and i < room.current_capacity %}
-                <!-- If the spot is taken, display the student's name and an "Unassign" button -->
-                <p>{{ room.students[i].student_fname }} {{ room.students[i].student_lname }}</p>
-                <form method="POST" action="{{ url_for('dorms.unassign_student_from_room', dorm_id=dorm.id, room_id=room.id, student_id=room.students[i].student_id) }}">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <button type="submit">Unassign</button>
-                </form>
-            {% else %}
-                <!-- If the spot is free, display a dropdown box -->
-                <select name="student_id">
-                    {% for student in students %}
-                        <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} - {{ student.level.level_name }}</option>
-                    {% endfor %}
-                </select>
-            {% endif %}
-        </div>
-    {% endfor %}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <select name="student_ids" multiple>
+        {% for student in students %}
+            <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} - {{ student.level.level_name }}</option>
+        {% endfor %}
+    </select>
     <button type="submit">Assign Students</button>
 </form>
 
