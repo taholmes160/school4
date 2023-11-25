@@ -186,6 +186,7 @@ class Dorm(db.Model):
     zip_code = db.Column(db.String(20))
     phone_number = db.Column(db.String(20))
     num_rooms = db.Column(db.Integer)
+    gender = db.Column(db.String(10), nullable=False)
     
     # Reference to DormManager
     manager_id = db.Column(db.Integer, db.ForeignKey('dorm_manager.id'))
@@ -198,6 +199,7 @@ class DormRoom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_number = db.Column(db.String(10), nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
+    current_capacity = db.Column(db.Integer, default=0)
     dorm_id = db.Column(db.Integer, db.ForeignKey('dorm.id'), nullable=False)
     students = db.relationship('Student', backref='room', lazy=True)
 
