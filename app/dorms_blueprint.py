@@ -142,12 +142,13 @@ def assign_room():
     form = FlaskForm()  # Create an instance of FlaskForm to generate a CSRF token
     dorm_id = request.args.get('dorm_id', None)
     room_id = request.args.get('room_id', None)
+    dorm = Dorm.query.get(dorm_id) if dorm_id else None  # Query the dorm
+    room = DormRoom.query.get(room_id) if room_id else None  # Query the room
+    students = Student.query.all()  # Query all students
+    dorms = Dorm.query.all()  # Query all dorms
+
     if request.method == 'POST':
         student_ids = request.form.getlist('student')  # Get list of student ids
-        dorm_id = request.form['dorm']
-        room_id = request.form['room']
-
-        room = DormRoom.query.get(room_id)
 
         if len(student_ids) > room.capacity:
             flash('Cannot assign more students than room capacity.')
@@ -170,6 +171,4 @@ def assign_room():
         flash('Successfully assigned students to room.')
         return redirect(url_for('assign_room'))
 
-    students = Student.query.all()
-    dorms = Dorm.query.all()
-    return render_template('assign_room.html', form=form, students=students, dorms=dorms, dorm_id=dorm_id, room_id=room_id)
+    return render_template('assign_room.html', form=form, students=students, dorms=dorms, dorm_id=dorm_id, room_id=room_id, room=room, dorm=dorm)  # Pass the dorm to the template

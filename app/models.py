@@ -190,7 +190,10 @@ class Dorm(db.Model):
     
     # Reference to DormManager
     manager_id = db.Column(db.Integer, db.ForeignKey('dorm_manager.id'))
-    manager = relationship('DormManager')
+    manager = db.relationship('DormManager')
+
+    # Reference to DormRoom
+    rooms = db.relationship('DormRoom', backref='dorm', lazy=True)
 
     def __repr__(self):
         return f"<Dorm {self.dorm_name}>"

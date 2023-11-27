@@ -1,29 +1,26 @@
-<form method="post">
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Assign Room</h1>
+  <form method="post">
     <!-- CSRF Protection -->
     <input type="hidden" name="csrf_token" value="{{ form.csrf_token._value() }}">
 
-    <label for="dorm">Dorm:</label>
-    <select id="dorm" name="dorm" onchange="updateRooms()">
-        <option value="">Select a dorm</option>
-        {% for dorm in dorms %}
-        <option value="{{ dorm.id }}" {% if dorm.id == dorm_id %}selected{% endif %}>{{ dorm.dorm_name }}</option>
-        {% endfor %}
-    </select>
-
-    <label for="room">Room:</label>
-    <select id="room" name="room">
-        <!-- Rooms will be populated by JavaScript -->
-    </select>
+    <p>Dorm: {{ dorm.dorm_name }}</p>
+    <p>Room: {{ room.room_number }}</p>
 
     <!-- Add multiple student select boxes -->
-    {% for i in range(room.capacity) %}
-    <label for="student{{ i }}">Student {{ i + 1 }}:</label>
-    <select id="student{{ i }}" name="student">
-        {% for student in students %}
-        <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} ({{ student.level.level_abbrev }})</option>
-        {% endfor %}
-    </select>
-    {% endfor %}
+    {% if room %}
+      {% for i in range(room.capacity) %}
+      <label for="student{{ i }}">Student {{ i + 1 }}:</label>
+      <select id="student{{ i }}" name="student">
+          {% for student in students %}
+          <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} ({{ student.level.level_abbrev }})</option>
+          {% endfor %}
+      </select>
+      {% endfor %}
+    {% endif %}
 
     <input type="submit" value="Assign Room">
-</form>
+  </form>
+{% endblock %}
