@@ -27,7 +27,7 @@
           <td>
             <a href="{{ url_for('dorms.edit_dorm_room', dorm_id=dorm.id, room_id=room.id) }}">Edit</a>
             <a href="{{ url_for('dorms.delete_dorm_room', dorm_id=dorm.id, room_id=room.id) }}">Delete</a>
-            <a href="{{ url_for('dorms.assign_student_to_room', dorm_id=dorm.id, room_id=room.id) }}">Assign Students</a>
+            <a href="{{ url_for('dorms.assign_room', dorm_id=dorm.id, room_id=room.id) }}">Assign Students</a>
           </td>
         </tr>
       {% endfor %}

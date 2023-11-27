@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Assign Student to Room</h1>
+
+<form method="post">
+    <label for="student">Student:</label>
+    <select id="student" name="student">
+        {% for student in students %}
+        <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} ({{ student.student_level_id }})</option>
+        {% endfor %}
+    </select>
+
+    <label for="dorm">Dorm:</label>
+    <select id="dorm" name="dorm" onchange="updateRooms()">
+        <option value="">Select a dorm</option>
+        {% for dorm in dorms %}
+        <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="room">Room:</label>
+    <select id="room" name="room">
+        <!-- Rooms will be populated by JavaScript -->
+    </select>
+
+    <input type="submit" value="Assign Room">
+</form>
+
+<script>
+function updateRooms() {
+    var dormId = document.getElementById('dorm').value;
+    var roomSelect = document.getElementById('room');
+
+    // Clear the room select
+    while (roomSelect.firstChild) {
+        roomSelect.removeChild(roomSelect.firstChild);
+    }
+
+    // Fetch the rooms for the selected dorm
+    fetch('/get_rooms/' + dormId)
+        .then(response => response.json())
+        .then(rooms => {
+            // Add an option for each room
+            rooms.forEach(room => {
+                var option = document.createElement('option');
+                option.value = room.id;
+                option.text = room.number;
+                roomSelect.appendChild(option);
+            });
+        });
+}
+
+</script>
+{% endblock %}
+
