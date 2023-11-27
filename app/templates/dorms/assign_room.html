@@ -1,21 +1,12 @@
-{% extends "base.html" %}
-
-{% block content %}
-<h1>Assign Student to Room</h1>
-
 <form method="post">
-    <label for="student">Student:</label>
-    <select id="student" name="student">
-        {% for student in students %}
-        <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} ({{ student.student_level_id }})</option>
-        {% endfor %}
-    </select>
+    <!-- CSRF Protection -->
+    <input type="hidden" name="csrf_token" value="{{ form.csrf_token._value() }}">
 
     <label for="dorm">Dorm:</label>
     <select id="dorm" name="dorm" onchange="updateRooms()">
         <option value="">Select a dorm</option>
         {% for dorm in dorms %}
-        <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
+        <option value="{{ dorm.id }}" {% if dorm.id == dorm_id %}selected{% endif %}>{{ dorm.dorm_name }}</option>
         {% endfor %}
     </select>
 
@@ -24,33 +15,15 @@
         <!-- Rooms will be populated by JavaScript -->
     </select>
 
+    <!-- Add multiple student select boxes -->
+    {% for i in range(room.capacity) %}
+    <label for="student{{ i }}">Student {{ i + 1 }}:</label>
+    <select id="student{{ i }}" name="student">
+        {% for student in students %}
+        <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} ({{ student.level.level_abbrev }})</option>
+        {% endfor %}
+    </select>
+    {% endfor %}
+
     <input type="submit" value="Assign Room">
 </form>
-
-<script>
-function updateRooms() {
-    var dormId = document.getElementById('dorm').value;
-    var roomSelect = document.getElementById('room');
-
-    // Clear the room select
-    while (roomSelect.firstChild) {
-        roomSelect.removeChild(roomSelect.firstChild);
-    }
-
-    // Fetch the rooms for the selected dorm
-    fetch('/get_rooms/' + dormId)
-        .then(response => response.json())
-        .then(rooms => {
-            // Add an option for each room
-            rooms.forEach(room => {
-                var option = document.createElement('option');
-                option.value = room.id;
-                option.text = room.number;
-                roomSelect.appendChild(option);
-            });
-        });
-}
-
-</script>
-{% endblock %}
-

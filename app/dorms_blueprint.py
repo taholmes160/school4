@@ -1,6 +1,7 @@
 # dorms_blueprint.py
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from app.models import db, DormManager, Dorm, DormRoom, Student
+from flask_wtf import FlaskForm
 
  
 
@@ -138,39 +139,37 @@ def list_dorm_rooms(dorm_id):
     
 @dorms_bp.route('/assign_room', methods=['GET', 'POST'])
 def assign_room():
+    form = FlaskForm()  # Create an instance of FlaskForm to generate a CSRF token
+    dorm_id = request.args.get('dorm_id', None)
+    room_id = request.args.get('room_id', None)
     if request.method == 'POST':
-        student_id = request.form['student']
+        student_ids = request.form.getlist('student')  # Get list of student ids
         dorm_id = request.form['dorm']
         room_id = request.form['room']
 
-        student = Student.query.get(student_id)
         room = DormRoom.query.get(room_id)
 
-        if room.dorm.gender != student.gender:
-            flash('Cannot assign a student to a room in a dorm of the wrong gender.')
+        if len(student_ids) > room.capacity:
+            flash('Cannot assign more students than room capacity.')
             return redirect(url_for('assign_room'))
 
-        if room.current_capacity >= room.capacity:
-            flash('Cannot assign a student to a full room.')
-            return redirect(url_for('assign_room'))
+        for student_id in student_ids:
+            student = Student.query.get(student_id)
+            if room.dorm.gender != student.gender:
+                flash('Cannot assign a student to a room in a dorm of the wrong gender.')
+                return redirect(url_for('assign_room'))
 
-        if student.room:
-            student.room.current_capacity -= 1
+            if student.room:
+                student.room.current_capacity -= 1
 
-        student.room = room
-        room.current_capacity += 1
+            student.room = room
+            room.current_capacity += 1
 
         db.session.commit()
 
-        flash('Successfully assigned student to room.')
+        flash('Successfully assigned students to room.')
         return redirect(url_for('assign_room'))
 
     students = Student.query.all()
     dorms = Dorm.query.all()
-    return render_template('assign_room.html', students=students, dorms=dorms)
-
-@dorms_bp.route('/get_rooms/<int:dorm_id>')
-def get_rooms(dorm_id):
-    dorm = Dorm.query.get(dorm_id)
-    rooms = [{'id': room.id, 'number': room.room_number} for room in dorm.rooms]
-    return jsonify(rooms)
+    return render_template('assign_room.html', form=form, students=students, dorms=dorms, dorm_id=dorm_id, room_id=room_id)
