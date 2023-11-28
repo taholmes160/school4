@@ -160,18 +160,21 @@ def assign_room():
                 flash('Cannot assign a student to a room in a dorm of the wrong gender.')
                 return redirect(url_for('dorms.assign_room'))
         
-            if student.room:
-                student.room.current_capacity -= 1
-                db.session.add(student.room)  # Add the room to the session
+            # Remove the student from their current room, if they have one
+            if student.rooms:
+                for old_room in student.rooms:
+                    old_room.current_capacity -= 1
+                    db.session.add(old_room)
+                student.rooms = []
         
-            student.room = room
+            # Assign the student to the new room
+            student.rooms.append(room)
             room.current_capacity += 1
             db.session.add(room)  # Add the room to the session
             db.session.add(student)  # Add the student to the session
         
         db.session.commit()
         
-
         flash('Successfully assigned students to room.')
         return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
 

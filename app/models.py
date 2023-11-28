@@ -5,6 +5,11 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+# Association table
+student_room = db.Table('student_room',
+    db.Column('student_id', db.Integer, db.ForeignKey('tbl_student.student_id')),
+    db.Column('room_id', db.Integer, db.ForeignKey('dorm_room.id'))
+)
 class Gender(db.Model):
     __tablename__ = 'tbl_gender'
     gender_id = db.Column(db.Integer, primary_key=True)
@@ -85,8 +90,8 @@ class Student(db.Model):
     student_campus_id = db.Column(db.Integer, db.ForeignKey('tbl_campus.campus_id'), nullable=True)
     student_nationality_id = db.Column(db.Integer, db.ForeignKey('tbl_nationality.nationality_id'), nullable=True)
     student_ethnicity_id = db.Column(db.Integer, db.ForeignKey('tbl_ethnicity.ethnicity_id'), nullable=True)
-    dorm_room_id = db.Column(db.Integer, db.ForeignKey('dorm_room.id'), nullable=True)
-   
+          
+    rooms = db.relationship('DormRoom', secondary=student_room, backref=db.backref('students', lazy='dynamic'))
     gender = db.relationship('Gender', backref='students')
     level = db.relationship('Level', backref='students')
     campus = db.relationship('Campus', backref='students')
@@ -197,15 +202,15 @@ class Dorm(db.Model):
 
     def __repr__(self):
         return f"<Dorm {self.dorm_name}>"
-    
+
 class DormRoom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_number = db.Column(db.String(10), nullable=False)
     capacity = db.Column(db.Integer, nullable=False)
     current_capacity = db.Column(db.Integer, default=0)
     dorm_id = db.Column(db.Integer, db.ForeignKey('dorm.id'), nullable=False)
-    students = db.relationship('Student', backref='dorm_room', lazy=True)
+    # Use the student_room association table for the students relationship
+    students = db.relationship('Student', secondary=student_room, backref=db.backref('rooms', lazy='dynamic'))
 
     def __repr__(self):
         return f"<DormRoom {self.room_number}>"
-    

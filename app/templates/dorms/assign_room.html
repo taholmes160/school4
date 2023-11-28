@@ -1,26 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Assign Room</h1>
-  <form method="post">
-    <!-- CSRF Protection -->
-    <input type="hidden" name="csrf_token" value="{{ form.csrf_token._value() }}">
-
-    <p>Dorm: {{ dorm.dorm_name }}</p>
-    <p>Room: {{ room.room_number }}</p>
-
-    <!-- Add multiple student select boxes -->
-    {% if room %}
-      {% for i in range(room.capacity) %}
-      <label for="student{{ i }}">Student {{ i + 1 }}:</label>
-      <select id="student{{ i }}" name="student">
-          {% for student in students %}
-          <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }} ({{ student.level.level_abbrev }})</option>
-          {% endfor %}
-      </select>
-      {% endfor %}
-    {% endif %}
-
-    <input type="submit" value="Assign Room">
-  </form>
+    <h1>Assign Student to Room</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}  <!-- Include CSRF token -->
+        <div>
+            <label for="student">Student:</label>
+            <select name="student" id="student">
+                {% for student in students %}
+                    <option value="{{ student.student_id }}">{{ student.student_fname }} {{ student.student_lname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="dorm">Dorm:</label>
+            <select name="dorm" id="dorm">
+                {% for dorm in dorms %}
+                    <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="room">Room:</label>
+            <select name="room" id="room">
+                {% for room in rooms %}
+                    <option value="{{ room.id }}">{{ room.room_number }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit">Assign</button>
+    </form>
 {% endblock %}
+
