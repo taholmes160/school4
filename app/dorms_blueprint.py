@@ -141,9 +141,10 @@ def list_dorm_rooms(dorm_id):
 def assign_room():
     form = FlaskForm()  # Create an instance of FlaskForm to generate a CSRF token
     dorm_id = request.args.get('dorm_id', None)
-    room_id = request.args.get('room_id', None)
+    room_id = request.form.get('room')
     dorm = Dorm.query.get(dorm_id) if dorm_id else None  # Query the dorm
-    room = DormRoom.query.get(room_id) if room_id else None  # Query the room
+    print("Room ID:", room_id)
+    room = DormRoom.query.get(int(room_id)) if room_id else None  # Query the room
     students = Student.query.all()  # Query all students
     dorms = Dorm.query.all()  # Query all dorms
     rooms = DormRoom.query.all()  # Query all rooms
@@ -151,6 +152,10 @@ def assign_room():
     if request.method == 'POST':
         student_ids = request.form.getlist('student')  # Get list of student ids
 
+        if room is None:
+            flash('Invalid room selected.')
+            return redirect(url_for('dorms.assign_room'))
+        
         if len(student_ids) > room.capacity:
             flash('Cannot assign more students than room capacity.')
             return redirect(url_for('assign_room'))
