@@ -161,14 +161,14 @@ def assign_room():
                 return redirect(url_for('dorms.assign_room'))
         
             # Remove the student from their current room, if they have one
-            if student.rooms:
-                for old_room in student.rooms:
+            if student.assigned_rooms:
+                for old_room in student.assigned_rooms:
                     old_room.current_capacity -= 1
                     db.session.add(old_room)
-                student.rooms = []
+                student.assigned_rooms = []
         
             # Assign the student to the new room
-            student.rooms.append(room)
+            student.assigned_rooms.append(room)
             room.current_capacity += 1
             db.session.add(room)  # Add the room to the session
             db.session.add(student)  # Add the student to the session
