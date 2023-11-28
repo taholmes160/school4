@@ -14,7 +14,7 @@
         </div>
         <div>
             <label for="dorm">Dorm:</label>
-            <select name="dorm" id="dorm">
+            <select name="dorm" id="dorm-select">
                 {% for dorm in dorms %}
                     <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
                 {% endfor %}
@@ -22,13 +22,28 @@
         </div>
         <div>
             <label for="room">Room:</label>
-            <select name="room" id="room">
+            <select name="room" id="room-select">
                 {% for room in rooms %}
-                    <option value="{{ room.id }}">{{ room.room_number }}</option>
+                    <option value="{{ room.id }}" data-dorm="{{ room.dorm_id }}">{{ room.room_number }}</option>
                 {% endfor %}
             </select>
         </div>
         <button type="submit">Assign</button>
     </form>
-{% endblock %}
 
+    <script>
+    document.getElementById('dorm-select').addEventListener('change', function() {
+        var selectedDorm = this.value;
+        var roomOptions = document.getElementById('room-select').options;
+
+        for (var i = 0; i < roomOptions.length; i++) {
+            var roomOption = roomOptions[i];
+            if (roomOption.dataset.dorm === selectedDorm) {
+                roomOption.style.display = 'block';
+            } else {
+                roomOption.style.display = 'none';
+            }
+        }
+    });
+    </script>
+{% endblock %}

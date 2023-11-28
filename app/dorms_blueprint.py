@@ -146,6 +146,7 @@ def assign_room():
     room = DormRoom.query.get(room_id) if room_id else None  # Query the room
     students = Student.query.all()  # Query all students
     dorms = Dorm.query.all()  # Query all dorms
+    rooms = DormRoom.query.all()  # Query all rooms
 
     if request.method == 'POST':
         student_ids = request.form.getlist('student')  # Get list of student ids
@@ -178,4 +179,4 @@ def assign_room():
         flash('Successfully assigned students to room.')
         return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
 
-    return render_template('assign_room.html', form=form, students=students, dorms=dorms, dorm_id=dorm_id, room_id=room_id, room=room, dorm=dorm)  # Pass the dorm to the template
+    return render_template('assign_room.html', form=form, students=students, dorms=dorms, rooms=rooms, dorm_id=dorm_id, room_id=room_id, room=room, dorm=dorm)  # Pass the dorm to the template
