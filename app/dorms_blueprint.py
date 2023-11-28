@@ -158,17 +158,21 @@ def assign_room():
             student = Student.query.get(student_id)
             if room.dorm.gender != student.gender:
                 flash('Cannot assign a student to a room in a dorm of the wrong gender.')
-                return redirect(url_for('assign_room'))
-
+                return redirect(url_for('dorms.assign_room'))
+        
             if student.room:
                 student.room.current_capacity -= 1
-
+                db.session.add(student.room)  # Add the room to the session
+        
             student.room = room
             room.current_capacity += 1
-
+            db.session.add(room)  # Add the room to the session
+            db.session.add(student)  # Add the student to the session
+        
         db.session.commit()
+        
 
         flash('Successfully assigned students to room.')
-        return redirect(url_for('assign_room'))
+        return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
 
     return render_template('assign_room.html', form=form, students=students, dorms=dorms, dorm_id=dorm_id, room_id=room_id, room=room, dorm=dorm)  # Pass the dorm to the template

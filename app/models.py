@@ -204,7 +204,7 @@ class DormRoom(db.Model):
     capacity = db.Column(db.Integer, nullable=False)
     current_capacity = db.Column(db.Integer, default=0)
     dorm_id = db.Column(db.Integer, db.ForeignKey('dorm.id'), nullable=False)
-    students = db.relationship('Student', backref='room', lazy=True)
+    students = db.relationship('Student', backref='dorm_room', lazy=True)
 
     def __repr__(self):
         return f"<DormRoom {self.room_number}>"
