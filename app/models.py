@@ -90,7 +90,7 @@ class Student(db.Model):
     student_campus_id = db.Column(db.Integer, db.ForeignKey('tbl_campus.campus_id'), nullable=True)
     student_nationality_id = db.Column(db.Integer, db.ForeignKey('tbl_nationality.nationality_id'), nullable=True)
     student_ethnicity_id = db.Column(db.Integer, db.ForeignKey('tbl_ethnicity.ethnicity_id'), nullable=True)
-          
+    
     rooms = db.relationship('DormRoom', secondary=student_room, backref=db.backref('assigned_students', lazy='dynamic'))
     gender = db.relationship('Gender', backref='students')
     level = db.relationship('Level', backref='students')
@@ -211,7 +211,7 @@ class DormRoom(db.Model):
     current_capacity = db.Column(db.Integer, default=0)
     dorm_id = db.Column(db.Integer, db.ForeignKey('dorm.id'), nullable=False)
     # Use the student_room association table for the students relationship
-    students = db.relationship('Student', secondary=student_room, backref=db.backref('assigned_students', lazy='dynamic'))
+    students = db.relationship('Student', secondary=student_room, backref=db.backref('assigned_students', lazy='dynamic', overlaps="assigned_students,rooms"))
 
     def __repr__(self):
         return f"<DormRoom {self.room_number}>"
