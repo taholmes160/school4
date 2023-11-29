@@ -91,7 +91,7 @@ class Student(db.Model):
     student_nationality_id = db.Column(db.Integer, db.ForeignKey('tbl_nationality.nationality_id'), nullable=True)
     student_ethnicity_id = db.Column(db.Integer, db.ForeignKey('tbl_ethnicity.ethnicity_id'), nullable=True)
           
-    rooms = db.relationship('DormRoom', secondary=student_room, backref=db.backref('assigned_rooms', lazy='dynamic'))
+    rooms = db.relationship('DormRoom', secondary=student_room, backref=db.backref('assigned_students', lazy='dynamic'))
     gender = db.relationship('Gender', backref='students')
     level = db.relationship('Level', backref='students')
     campus = db.relationship('Campus', backref='students')
@@ -191,7 +191,7 @@ class Dorm(db.Model):
     zip_code = db.Column(db.String(20))
     phone_number = db.Column(db.String(20))
     num_rooms = db.Column(db.Integer)
-    gender = db.Column(db.String(10), nullable=False)
+    gender = db.Column(db.Integer, nullable=False)
     
     # Reference to DormManager
     manager_id = db.Column(db.Integer, db.ForeignKey('dorm_manager.id'))
@@ -199,6 +199,7 @@ class Dorm(db.Model):
 
     # Reference to DormRoom
     rooms = db.relationship('DormRoom', backref='dorm', lazy=True)
+    
 
     def __repr__(self):
         return f"<Dorm {self.dorm_name}>"

@@ -142,9 +142,9 @@ def assign_room():
     form = FlaskForm()  # Create an instance of FlaskForm to generate a CSRF token
     dorm_id = request.args.get('dorm_id', None)
     room_id = request.form.get('room')
-    dorm = Dorm.query.get(dorm_id) if dorm_id else None  # Query the dorm
+    dorm = Dorm.query.get_or_404(dorm_id) if dorm_id else None  # Query the dorm
     print("Room ID:", room_id)
-    room = DormRoom.query.get(int(room_id)) if room_id else None  # Query the room
+    room = DormRoom.query.get_or_404(int(room_id)) if room_id else None  # Query the room
     students = Student.query.all()  # Query all students
     dorms = Dorm.query.all()  # Query all dorms
     rooms = DormRoom.query.all()  # Query all rooms
@@ -153,17 +153,17 @@ def assign_room():
         student_ids = request.form.getlist('student')  # Get list of student ids
 
         if room is None:
-            flash('Invalid room selected.')
+            flash('Invalid room selected.', 'error')
             return redirect(url_for('dorms.assign_room'))
         
         if len(student_ids) > room.capacity:
-            flash('Cannot assign more students than room capacity.')
-            return redirect(url_for('assign_room'))
+            flash('Cannot assign more students than room capacity.', 'error')
+            return redirect(url_for('dorms.assign_room'))
 
         for student_id in student_ids:
             student = Student.query.get(student_id)
-            if room.dorm.gender != student.gender:
-                flash('Cannot assign a student to a room in a dorm of the wrong gender.')
+            if room.dorm.gender != student.gender.gender_id:
+                flash('Cannot assign a student to a room in a dorm of the wrong gender.', 'error')
                 return redirect(url_for('dorms.assign_room'))
         
             # Remove the student from their current room, if they have one
@@ -178,10 +178,10 @@ def assign_room():
             room.current_capacity += 1
             db.session.add(room)  # Add the room to the session
             db.session.add(student)  # Add the student to the session
-        
+            
         db.session.commit()
         
-        flash('Successfully assigned students to room.')
+        flash('Successfully assigned students to room.', 'success')
         return redirect(url_for('dorms.list_dorm_rooms', dorm_id=dorm_id))
 
     return render_template('assign_room.html', form=form, students=students, dorms=dorms, rooms=rooms, dorm_id=dorm_id, room_id=room_id, room=room, dorm=dorm)  # Pass the dorm to the template
