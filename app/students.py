@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment
+from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment, Dorm, DormRoom
 from app import db
 from datetime import datetime
 
@@ -20,6 +20,7 @@ def list_students():
     else:
         students = Student.query.order_by(sort_by).paginate(page=page, per_page=per_page)
     return render_template('students/list_students.html', students=students, search_query=search_query, sort_by=sort_by)
+
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
 def edit_student(student_id):
@@ -49,6 +50,8 @@ def edit_student(student_id):
             student.student_campus_id = request.form.get('campus_id')
             student.student_nationality_id = request.form.get('nationality_id')
             student.student_ethnicity_id = request.form.get('ethnicity_id')
+            student.dorm_id = request.form.get('dorm_id')
+            student.room_id = request.form.get('room_id')
 
             db.session.commit()
             flash('Student details updated successfully', 'success')
@@ -71,7 +74,7 @@ def edit_student(student_id):
         db.session.commit()
         flash('Comment added successfully', 'success')
         return redirect(url_for('students.edit_student', student_id=student_id))
- 
+
     genders = Gender.query.all()
     levels = Level.query.all()
     divisions = Divisions.query.all()
@@ -80,8 +83,10 @@ def edit_student(student_id):
     campus = Campus.query.all()
     nationality = Nationality.query.all()
     ethnicity = Ethnicity.query.all()
-        
-    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity )
+    dorms = Dorm.query.all()
+    rooms = DormRoom.query.all()
+
+    return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms, rooms=rooms)
 
 @students_bp.route('/students/<int:student_id>/comments/add', methods=['POST'])
 def add_comment(student_id):
@@ -91,12 +96,18 @@ def add_comment(student_id):
     comment_date = datetime.now().date()
     comment_level = 'Student'  # You can adjust this based on your requirements
 
-    comment = comment(student_id=student_id, comment_text=comment_text, comment_date=comment_date, comment_level=comment_level)
-    db.session.add(comment)
+    new_comment = Comment(
+        student_id=student_id,
+        comment_text=comment_text,
+        comment_date=comment_date,
+        comment_level=comment_level
+    )
+    db.session.add(new_comment)
     db.session.commit()
 
     flash('Comment added successfully', 'success')
     return redirect(url_for('students.edit_student', student_id=student_id))
+    
 
 @students_bp.route('/students/create', methods=['GET', 'POST'])
 def create_student():

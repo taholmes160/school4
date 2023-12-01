@@ -90,6 +90,9 @@ class Student(db.Model):
 
     dorm = db.relationship('Dorm', backref='students')
     room = db.relationship('DormRoom', backref='students')
+    gender = db.relationship('Gender', backref='students')
+    level = db.relationship('Level', backref='students')
+    
 
     def __repr__(self):
         return f"<Student {self.student_fname} {self.student_lname}>"
@@ -173,7 +176,7 @@ class DormManager(db.Model):
 
     def __repr__(self):
         return f"<DormManager {self.manager_name}>"
-    
+
 class Dorm(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     dorm_name = db.Column(db.String(100), nullable=False)
@@ -189,10 +192,6 @@ class Dorm(db.Model):
     manager_id = db.Column(db.Integer, db.ForeignKey('dorm_manager.id'))
     manager = db.relationship('DormManager')
 
-    # Reference to DormRoom
-    rooms = db.relationship('DormRoom', backref='dorm', lazy=True)
-    
-
     def __repr__(self):
         return f"<Dorm {self.dorm_name}>"
 
@@ -202,9 +201,6 @@ class DormRoom(db.Model):
     capacity = db.Column(db.Integer, nullable=False)
     current_capacity = db.Column(db.Integer, default=0)
     dorm_id = db.Column(db.Integer, db.ForeignKey('dorm.id'), nullable=False)
-    dorm = db.relationship('Dorm', backref='rooms')
 
     def __repr__(self):
         return f"<DormRoom {self.room_number}>"
-        
-
