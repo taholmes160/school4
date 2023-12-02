@@ -9,42 +9,43 @@
   <input type="submit" value="Search">
 </form>
 
-<table>
-  <thead>
-    <tr>
-      <th><a href="{{ url_for('students.list_students', sort='student_id') }}">ID</a></th>
-      <th><a href="{{ url_for('students.list_students', sort='student_fname') }}">First / </a> <a href="{{ url_for('students.list_students', sort='student_lname') }}">Last Name</a></th>
-      <th><a href="{{ url_for('students.list_students', sort='gender.gender_name') }}">Gender</a></th>
-      <th><a href="{{ url_for('students.list_students', sort='level.level_name') }}">Level</a></th>
-      <th><a href="{{ url_for('students.list_students', sort='student_age') }}">Age</a></th>
-      <th>Edit</th>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td>
-        <select name="gender_filter">
-          <option value="">All</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-      </td>
-      <td>
-        <select name="level_filter">
-          <option value="">All</option>
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
-        </select>
-      </td>
-      <td>
-        <input type="number" name="age_filter" placeholder="Age">
-      </td>
-      <td></td>
-    </tr>
-  </thead>
-  <tbody>
-    {% for student in students.items %}
+<form action="{{ url_for('students.list_students') }}" method="GET">
+  <table>
+    <thead>
+      <tr>
+        <th><a href="{{ url_for('students.list_students', sort='student_id') }}">ID</a></th>
+        <th><a href="{{ url_for('students.list_students', sort='student_fname') }}">First / </a> <a href="{{ url_for('students.list_students', sort='student_lname') }}">Last Name</a></th>
+        <th><a href="{{ url_for('students.list_students', sort='gender.gender_name') }}">Gender</a></th>
+        <th><a href="{{ url_for('students.list_students', sort='level.level_name') }}">Level</a></th>
+        <th><a href="{{ url_for('students.list_students', sort='student_age') }}">Age</a></th>
+        <th>Edit</th>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <select name="gender_filter">
+            <option value="">All</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </td>
+        <td>
+          <select name="level_filter">
+            <option value="">All</option>
+            {% for level in levels %}
+              <option value="{{ level.level_name }}">{{ level.level_name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+        <td>
+          <input type="number" name="age_filter" placeholder="Age">
+        </td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students.items %}
       {% if search_query and (search_query.lower() in student.student_fname.lower() or search_query.lower() in student.student_lname.lower()) %}
         <tr>
           <td>{{ student.student_id }}</td>
@@ -65,27 +66,46 @@
         </tr>
       {% endif %}
     {% endfor %}
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</form>
 
-<div class="pagination">
-  {% if students.has_prev %}
-    <a href="{{ url_for('students.list_students', page=students.prev_num, search=search_query, sort=sort_by, gender_filter=gender_filter, level_filter=level_filter, age_filter=age_filter) }}">Previous</a>
-  {% endif %}
-  {% for num in students.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-    {% if num %}
-      {% if students.page == num %}
-        <strong>{{ num }}</strong>
-      {% else %}
-        <a href="{{ url_for('students.list_students', page=num, search=search_query, sort=sort_by, gender_filter=gender_filter, level_filter=level_filter, age_filter=age_filter) }}">{{ num }}</a>
-      {% endif %}
+<!-- Pagination -->
+{% if students.pages > 1 %}
+<ul class="pagination">
+    {% if students.has_prev %}
+    <li><a href="{{ url_for('students.list_students', page=students.prev_num) }}">«</a></li>
     {% else %}
-      ...
+    <li class="disabled"><span>«</span></li>
     {% endif %}
-  {% endfor %}
-  {% if students.has_next %}
-    <a href="{{ url_for('students.list_students', page=students.next_num, search=search_query, sort=sort_by, gender_filter=gender_filter, level_filter=level_filter, age_filter=age_filter) }}">Next</a>
-  {% endif %}
-</div>
+    {% for page_num in students.iter_pages() %}
+    {% if page_num %}
+    {% if page_num != students.page %}
+    <li><a href="{{ url_for('students.list_students', page=page_num) }}">{{ page_num }}</a></li>
+    {% else %}
+    <li class="active"><span>{{ page_num }}</span></li>
+    {% endif %}
+    {% else %}
+    <li class="disabled"><span>…</span></li>
+    {% endif %}
+    {% endfor %}
+    {% if students.has_next %}
+    <li><a href="{{ url_for('students.list_students', page=students.next_num) }}">»</a></li>
+    {% else %}
+    <li class="disabled"><span>»</span></li>
+    {% endif %}
+</ul>
+{% endif %}
+
+<script>
+window.onload = function() {
+  var filters = document.querySelectorAll('select[name="gender_filter"], select[name="level_filter"], input[name="age_filter"]');
+  filters.forEach(function(filter) {
+    filter.addEventListener('change', function() {
+      this.form.submit();
+    });
+  });
+};
+</script>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from app.models import Student, Level, Gender, State, Campus, Nationality, Ethnicity, Suffix, Divisions, Comment, Dorm, DormRoom
 from app import db
 from datetime import datetime
@@ -8,18 +8,29 @@ students_bp = Blueprint('students', __name__)
 @students_bp.route('/students', methods=['GET'])
 def list_students():
     page = request.args.get('page', 1, type=int)
-    per_page = 18  # Number of students per page
+    per_page = 15  # Number of students per page
 
     search_query = request.args.get('search', '')
     sort_by = request.args.get('sort', 'student_id')
+    level_filter = request.args.get('level_filter', '')
+
+    # Query the levels
+    levels = Level.query.all()
+
+    query = Student.query
+
+    if level_filter:
+        query = query.filter(Student.level.has(Level.level_name == level_filter))
 
     if sort_by == 'gender.gender_name':
-        students = Student.query.join(Student.gender).order_by(Gender.gender_name).paginate(page=page, per_page=per_page)
+        students = query.join(Student.gender).order_by(Gender.gender_name).paginate(page=page, per_page=per_page)
     elif sort_by == 'level.level_name':
-        students = Student.query.join(Student.level).order_by(Level.level_name).paginate(page=page, per_page=per_page)
+        students = query.join(Student.level).order_by(Level.level_name).paginate(page=page, per_page=per_page)
     else:
-        students = Student.query.order_by(sort_by).paginate(page=page, per_page=per_page)
-    return render_template('students/list_students.html', students=students, search_query=search_query, sort_by=sort_by)
+        students = query.order_by(sort_by).paginate(page=page, per_page=per_page)
+
+    # Pass the levels to the template
+    return render_template('students/list_students.html', students=students, search_query=search_query, sort_by=sort_by, levels=levels)
 
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
@@ -206,5 +217,6 @@ def assign_room(student_id):
 def get_rooms(dorm_id):
     rooms = DormRoom.query.filter_by(dorm_id=dorm_id).all()
     rooms_list = [{'id': room.id, 'name': room.room_name} for room in rooms]
+    print(rooms_list)  # Debugging: print the rooms list to the console
     return jsonify(rooms_list)
 

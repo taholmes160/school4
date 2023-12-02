@@ -26,7 +26,7 @@
 /* When the radio button is checked, display the corresponding tab content */
 #edit-tab:checked ~ #edit,
 #comments-tab:checked ~ #comments,
-#housing-tab:checked ~ #housing {
+#dorm-tab:checked ~ #dorm {
   display: block;
 }
 

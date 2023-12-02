@@ -202,6 +202,7 @@
                     url: "{{ url_for('students.get_rooms', dorm_id=0) }}".replace('0', dorm_id),
                     method: 'GET',
                     success: function(data) {
+                        console.log(data);  // Add this line to log the response data to the console
                         $('#room_id').empty();
                         $.each(data, function(key, value) {
                             $('#room_id').append($('<option>', {
