@@ -190,33 +190,34 @@
             </div>
         </div>
     </div>      
-{% endblock %}            
-            {% block scripts %}
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-            <script>
-            $(document).ready(function() {
-                $('#dorm_id').change(function() {
-                    var dorm_id = $(this).val();
-                    if (dorm_id) {
-                        $.ajax({
-                            url: "{{ url_for('students.get_rooms', dorm_id='') }}" + dorm_id,
-                            method: 'GET',
-                            success: function(data) {
-                                $('#room_id').empty();
-                                $.each(data, function(key, value) {
-                                    $('#room_id').append($('<option>', {
-                                        value: value.id,
-                                        text: value.name
-                                    }));
-                                });
-                            }
-                        });
-                    } else {
+         
+    {% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#dorm_id').change(function() {
+            var dorm_id = $(this).val();
+            if (dorm_id) {
+                $.ajax({
+                    url: "{{ url_for('students.get_rooms', dorm_id=0) }}".replace('0', dorm_id),
+                    method: 'GET',
+                    success: function(data) {
                         $('#room_id').empty();
+                        $.each(data, function(key, value) {
+                            $('#room_id').append($('<option>', {
+                                value: value.id,
+                                text: value.name
+                            }));
+                        });
                     }
                 });
-            });
-            </script>
-        </div>
-    </div>  
+            } else {
+                $('#room_id').empty();
+            }
+        });
+    });
+    </script>
+    
+    {% endblock %}
+ 
 {% endblock %}
