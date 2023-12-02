@@ -92,6 +92,13 @@ class Student(db.Model):
     room = db.relationship('DormRoom', backref='students')
     gender = db.relationship('Gender', backref='students')
     level = db.relationship('Level', backref='students')
+    suffix = db.relationship('Suffix', backref='students')
+    division = db.relationship('Divisions', backref='students')
+    state = db.relationship('State', backref='students')
+    campus = db.relationship('Campus', backref='students')
+    nationality = db.relationship('Nationality', backref='students')
+    ethnicity = db.relationship('Ethnicity', backref='students')
+    
     
 
     def __repr__(self):

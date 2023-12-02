@@ -50,8 +50,6 @@ def edit_student(student_id):
             student.student_campus_id = request.form.get('campus_id')
             student.student_nationality_id = request.form.get('nationality_id')
             student.student_ethnicity_id = request.form.get('ethnicity_id')
-            student.dorm_id = request.form.get('dorm_id')
-            student.room_id = request.form.get('room_id')
 
             db.session.commit()
             flash('Student details updated successfully', 'success')
@@ -85,6 +83,12 @@ def edit_student(student_id):
     ethnicity = Ethnicity.query.all()
     dorms = Dorm.query.all()
     rooms = DormRoom.query.all()
+
+      # If the student has been assigned a dorm, fetch the rooms in that dorm
+    if student.dorm_id is not None:
+        rooms = DormRoom.query.filter_by(dorm_id=student.dorm_id).all()
+    else:
+        rooms = []
 
     return render_template('students/edit_student.html', student=student, student_comments=student_comments, today=datetime.now().date(), genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity, dorms=dorms, rooms=rooms)
 
@@ -174,4 +178,33 @@ def create_student():
     ethnicity = Ethnicity.query.all()
     
     return render_template('students/create_student.html', genders=genders, levels=levels, divisions=divisions, suffixes=suffixes, states=states, campus=campus, nationality=nationality, ethnicity=ethnicity)
+
+@students_bp.route('/students/<int:student_id>/assign_dorm', methods=['POST'])
+def assign_dorm(student_id):
+    student = Student.query.get_or_404(student_id)
+    dorm_id = request.form.get('dorm_id')
+
+    student.dorm_id = dorm_id
+    db.session.commit()
+
+    flash('Student assigned to dorm successfully', 'success')
+    return redirect(url_for('students.edit_student', student_id=student_id))
+
+
+@students_bp.route('/students/<int:student_id>/assign_room', methods=['POST'])
+def assign_room(student_id):
+    student = Student.query.get_or_404(student_id)
+    room_id = request.form.get('room_id')
+
+    student.room_id = room_id
+    db.session.commit()
+
+    flash('Student assigned to room successfully', 'success')
+    return redirect(url_for('students.edit_student', student_id=student_id))
+
+@students_bp.route('/get_rooms/<int:dorm_id>')
+def get_rooms(dorm_id):
+    rooms = DormRoom.query.filter_by(dorm_id=dorm_id).all()
+    rooms_list = [{'id': room.id, 'name': room.room_name} for room in rooms]
+    return jsonify(rooms_list)
 

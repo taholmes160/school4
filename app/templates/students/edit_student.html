@@ -16,6 +16,9 @@
 
             <input type="radio" id="comments-tab" name="tab-group">
             <label for="comments-tab">Comments</label>
+
+            <input type="radio" id="dorm-tab" name="tab-group">
+            <label for="dorm-tab">Assign Dorm and Room</label>
             
             <!-- Tab content for editing student details -->
             <div class="tab-content" id="edit">
@@ -156,9 +159,64 @@
                     <p>No comments found for this student.</p>
                     {% endfor %}
                 </div>           
-            </div>           
-            
+            </div>     
+            <div class="tab-content" id="dorm">
+                <h2>Assign Dorm and Room</h2>
+                <form method="POST" action="{{ url_for('students.assign_dorm', student_id=student.student_id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    
+                    <label for="dorm_id">Dorm:</label>
+                    <select id="dorm_id" name="dorm_id">
+                        {% for dorm in dorms %}
+                        <option value="{{ dorm.id }}" {% if student.dorm_id == dorm.id %}selected{% endif %}>{{ dorm.dorm_name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="submit" value="Assign Dorm">
+                </form>
+
+                <form method="POST" action="{{ url_for('students.assign_room', student_id=student.student_id) }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    
+                    <label for="room_id">Room:</label>
+                    <select id="room_id" name="room_id">
+                        {% for room in rooms %}
+                        <option value="{{ room.id }}" {% if student.room_id == room.id %}selected{% endif %}>{{ room.room_name }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <input type="submit" value="Assign Room">
+                </form>
+            </div>
+        </div>
+    </div>      
+{% endblock %}            
             {% block scripts %}
-            
-            {% endblock %}
-        {% endblock %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+            $(document).ready(function() {
+                $('#dorm_id').change(function() {
+                    var dorm_id = $(this).val();
+                    if (dorm_id) {
+                        $.ajax({
+                            url: "{{ url_for('students.get_rooms', dorm_id='') }}" + dorm_id,
+                            method: 'GET',
+                            success: function(data) {
+                                $('#room_id').empty();
+                                $.each(data, function(key, value) {
+                                    $('#room_id').append($('<option>', {
+                                        value: value.id,
+                                        text: value.name
+                                    }));
+                                });
+                            }
+                        });
+                    } else {
+                        $('#room_id').empty();
+                    }
+                });
+            });
+            </script>
+        </div>
+    </div>  
+{% endblock %}
