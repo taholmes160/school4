@@ -18,6 +18,9 @@
         <th><a href="{{ url_for('students.list_students', sort='gender.gender_name') }}">Gender</a></th>
         <th><a href="{{ url_for('students.list_students', sort='level.level_name') }}">Level</a></th>
         <th><a href="{{ url_for('students.list_students', sort='student_age') }}">Age</a></th>
+        <th>Dorm</th>
+        <th>Room</th>
+        <th>Roommate(s)</th>
         <th>Edit</th>
       </tr>
       <tr>
@@ -42,30 +45,33 @@
           <input type="number" name="age_filter" placeholder="Age">
         </td>
         <td></td>
+        <td></td>
+        <td></td>
       </tr>
     </thead>
     <tbody>
       {% for student in students.items %}
-      {% if search_query and (search_query.lower() in student.student_fname.lower() or search_query.lower() in student.student_lname.lower()) %}
         <tr>
           <td>{{ student.student_id }}</td>
           <td>{{ student.student_fname }} {{ student.student_lname }}</td>
           <td>{{ student.gender.gender_name }}</td>
           <td>{{ student.level.level_name }}</td>
           <td>{{ student.student_age }}</td>
+          <td>{{ student.dorm.dorm_name if student.dorm else 'N/A' }}</td>
+          <td>{{ student.room.room_number if student.room else 'N/A' }}</td>
+          <td>
+            {% if student.room %}
+              {% set roommates = get_roommates(student.room_id, student.student_id) %}
+              {% for roommate in roommates %}
+                {{ roommate.student_fname }} {{ roommate.student_lname }}{% if not loop.last %}, {% endif %}
+              {% endfor %}
+            {% else %}
+              None
+            {% endif %}
+          </td>
           <td><a href="{{ url_for('students.edit_student', student_id=student.student_id) }}">Edit</a></td>
         </tr>
-      {% elif not search_query and (not gender_filter or student.gender.gender_name == gender_filter) and (not level_filter or student.level.level_name == level_filter) and (not age_filter or student.student_age == age_filter) %}
-        <tr>
-          <td>{{ student.student_id }}</td>
-          <td>{{ student.student_fname }} {{ student.student_lname }}</td>
-          <td>{{ student.gender.gender_name }}</td>
-          <td>{{ student.level.level_name }}</td>
-          <td>{{ student.student_age }}</td>
-          <td><a href="{{ url_for('students.edit_student', student_id=student.student_id) }}">Edit</a></td>
-        </tr>
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
     </tbody>
   </table>
 </form>

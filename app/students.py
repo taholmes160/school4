@@ -5,6 +5,13 @@ from datetime import datetime
 
 students_bp = Blueprint('students', __name__)
 
+def get_roommates(room_id, exclude_student_id=None):
+    roommates_query = Student.query.filter(Student.room_id == room_id)
+    if exclude_student_id:
+        roommates_query = roommates_query.filter(Student.student_id != exclude_student_id)
+    return roommates_query.all()
+
+
 @students_bp.route('/students', methods=['GET'])
 def list_students():
     page = request.args.get('page', 1, type=int)
@@ -30,7 +37,14 @@ def list_students():
         students = query.order_by(sort_by).paginate(page=page, per_page=per_page)
 
     # Pass the levels to the template
-    return render_template('students/list_students.html', students=students, search_query=search_query, sort_by=sort_by, levels=levels)
+    return render_template(
+        'students/list_students.html',
+        students=students,
+        search_query=search_query,
+        sort_by=sort_by,
+        levels=levels,
+        get_roommates=get_roommates  # Add this line
+    )
 
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
