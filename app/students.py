@@ -216,7 +216,8 @@ def assign_room(student_id):
 @students_bp.route('/get_rooms/<int:dorm_id>')
 def get_rooms(dorm_id):
     rooms = DormRoom.query.filter_by(dorm_id=dorm_id).all()
-    rooms_list = [{'id': room.id, 'name': room.room_name} for room in rooms]
+    rooms_list = [{'id': room.id, 'name': room.room_number} for room in rooms]  # Use room.room_number here
     print(rooms_list)  # Debugging: print the rooms list to the console
     return jsonify(rooms_list)
+
 

@@ -196,6 +196,7 @@
     <script>
     $(document).ready(function() {
         $('#dorm_id').change(function() {
+            console.log('dorm select changed');
             var dorm_id = $(this).val();
             if (dorm_id) {
                 $.ajax({
