@@ -17,35 +17,60 @@ def list_students():
     page = request.args.get('page', 1, type=int)
     per_page = 15  # Number of students per page
 
-    search_query = request.args.get('search', '')
+    search_query = request.args.get('search_query', '')
     sort_by = request.args.get('sort', 'student_id')
     level_filter = request.args.get('level_filter', '')
+    gender_filter = request.args.get('gender_filter', '')
+    age_filter = request.args.get('age_filter', '')
 
     # Query the levels
     levels = Level.query.all()
 
     query = Student.query
 
+    # Apply search query if present
+    if search_query:
+        search = f"%{search_query}%"
+        query = query.filter(db.or_(
+            Student.student_fname.like(search),
+            Student.student_lname.like(search)
+        ))
+
+    # Apply level filter if present
     if level_filter:
         query = query.filter(Student.level.has(Level.level_name == level_filter))
 
-    if sort_by == 'gender.gender_name':
-        students = query.join(Student.gender).order_by(Gender.gender_name).paginate(page=page, per_page=per_page)
-    elif sort_by == 'level.level_name':
-        students = query.join(Student.level).order_by(Level.level_name).paginate(page=page, per_page=per_page)
-    else:
-        students = query.order_by(sort_by).paginate(page=page, per_page=per_page)
+    # Apply gender filter if present
+    if gender_filter:
+        query = query.filter(Student.gender.has(Gender.gender_name == gender_filter))
 
-    # Pass the levels to the template
+    # Apply age filter if present
+    if age_filter:
+        query = query.filter(Student.student_age == age_filter)
+
+    # Apply sorting
+    if sort_by == 'gender.gender_name':
+        query = query.join(Student.gender).order_by(Gender.gender_name)
+    elif sort_by == 'level.level_name':
+        query = query.join(Student.level).order_by(Level.level_name)
+    else:
+        query = query.order_by(sort_by)
+
+    # Paginate the query
+    students = query.paginate(page=page, per_page=per_page)
+
+    # Pass the levels and current filters to the template
     return render_template(
         'students/list_students.html',
         students=students,
         search_query=search_query,
         sort_by=sort_by,
+        level_filter=level_filter,
+        gender_filter=gender_filter,
+        age_filter=age_filter,
         levels=levels,
-        get_roommates=get_roommates  # Add this line
+        get_roommates=get_roommates  # Assuming you have a utility function for this
     )
-
 
 @students_bp.route('/students/<int:student_id>/edit', methods=['GET', 'POST'])
 def edit_student(student_id):
@@ -79,24 +104,23 @@ def edit_student(student_id):
             db.session.commit()
             flash('Student details updated successfully', 'success')
             return redirect(url_for('students.edit_student', student_id=student_id))
-        return
-    elif 'submit_comment' in request.form:
-        comment_text = request.form.get('comment_text')
-        comment_by = request.form.get('comment_by')
-        comment_date = request.form.get('comment_date') or datetime.now().date()
-        comment_level = request.form.get('comment_level')
+        elif 'submit_comment' in request.form:
+            comment_text = request.form.get('comment_text')
+            comment_by = request.form.get('comment_by')
+            comment_date = request.form.get('comment_date') or datetime.now().date()
+            comment_level = request.form.get('comment_level')
 
-        comment = Comment(
-            student_id=student_id,
-            comment_text=comment_text,
-            comment_by=comment_by,
-            comment_date=comment_date,
-            comment_level=comment_level
-        )
-        db.session.add(comment)
-        db.session.commit()
-        flash('Comment added successfully', 'success')
-        return redirect(url_for('students.edit_student', student_id=student_id))
+            comment = Comment(
+                student_id=student_id,
+                comment_text=comment_text,
+                comment_by=comment_by,
+                comment_date=comment_date,
+                comment_level=comment_level
+            )
+            db.session.add(comment)
+            db.session.commit()
+            flash('Comment added successfully', 'success')
+            return redirect(url_for('students.edit_student', student_id=student_id))
 
     genders = Gender.query.all()
     levels = Level.query.all()

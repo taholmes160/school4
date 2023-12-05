@@ -72,7 +72,7 @@ class Student(db.Model):
     student_gender_id = db.Column(db.Integer, db.ForeignKey('tbl_gender.gender_id'), nullable=True)
     student_level_id = db.Column(db.Integer, db.ForeignKey('tbl_levels.level_id'), nullable=True)
     student_division_id = db.Column(db.Integer, db.ForeignKey('tbl_divisions.division_id'), nullable=True)
-    student_age = db.Column(db.String(45), nullable=True)
+    student_age = db.Column(db.Integer, nullable=True)
     student_birthday = db.Column(db.Date, nullable=True)
     student_address = db.Column(db.String(45), nullable=True)
     student_address2 = db.Column(db.String(45), nullable=True)
