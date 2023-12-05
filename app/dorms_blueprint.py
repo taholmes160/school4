@@ -9,8 +9,10 @@ dorms_bp = Blueprint('dorms', __name__, template_folder='templates/dorms')
 
 @dorms_bp.route('/managers', methods=['GET'])
 def list_dorm_managers():
-    dorm_managers = DormManager.query.all()
+    # Join DormManager with Dorm to get the dorm name for each manager
+    dorm_managers = db.session.query(DormManager, Dorm.dorm_name).join(Dorm, DormManager.id == Dorm.manager_id).all()
     return render_template('dorm_managers_list.html', dorm_managers=dorm_managers)
+
 
 @dorms_bp.route('/managers/add', methods=['GET', 'POST'])
 def add_dorm_manager():
