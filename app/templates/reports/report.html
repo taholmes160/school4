@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Roster</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Student Roster</h2>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Level</th>
+            <th>Division</th>
+            <th>Age</th>
+        </tr>
+        {% for student in students %}
+        <tr>
+            <td>{{ student.student_fname }}</td>
+            <td>{{ student.student_lname }}</td>
+            <td>{{ student.level.level_name }}</td>
+            <td>{{ student.division.division_name }}</td>
+            <td>{{ student.student_age }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

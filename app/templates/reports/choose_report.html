@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Choose a Report</h2>
+
+<form method="POST" action="{{ url_for('reports_bp.custom_roster') }}">
+    <label for="level">Level:</label>
+    <select name="level" id="level">
+        {% for level in levels %}
+        <option value="{{ level.id }}">{{ level.level_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="division">Division:</label>
+    <select name="division" id="division">
+        {% for division in divisions %}
+        <option value="{{ division.id }}">{{ division.division_name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="age">Age:</label>
+    <select name="age" id="age">
+        {% for age in range(3, 19) %}
+        <option value="{{ age }}">{{ age }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="submit" value="Generate Report">
+</form>
+{% endblock %}
