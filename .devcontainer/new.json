@@ -1,7 +1,7 @@
 {
-    "image": "mcr.microsoft.com/devcontainers/universal:2",
+    "image": "mcr.microsoft.com/devcontainers/base:jammy",
     "hostRequirements": {
-      "cpus": 4
+      "cpus": 2
     },
     "waitFor": "onCreateCommand",
     "updateContentCommand": "pip install -r requirements.txt",
@@ -17,8 +17,6 @@
     },
     "customizations": {
       "codespaces": {
-        "openFiles": [
-          "templates/index.html"
         ]
       },
       "vscode": {
