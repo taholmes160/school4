@@ -10,7 +10,7 @@ sudo apt-get autoremove -y
 # Install mariadb-server and configure
 sudo apt-get install -y mariadb-server
 sudo service mariadb start
-sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'T3t0npack@160';"
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'T3t0npack';"
 
 # Install PHP, Adminer, and configure Apache
 sudo apt-get install -y php php-mysql
