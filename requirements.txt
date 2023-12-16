@@ -2,7 +2,6 @@ alembic==1.12.1
 blinker==1.6.3
 click==8.1.7
 dominate==2.8.0
-dotenv==0.0.5
 Flask==3.0.0
 Flask-Alembic==2.0.1
 Flask-Bootstrap==3.3.7.1

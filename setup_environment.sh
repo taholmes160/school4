@@ -28,4 +28,5 @@ sudo apt-get install -y libmysqlclient-dev
 sudo apt-get install -y python3-dev
 
 # Install Python dependencies from requirements.txt
+pip install git+https://github.com/theskumar/python-dotenv.git
 pip3 install -r requirements.txt
