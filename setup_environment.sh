@@ -20,10 +20,12 @@ sudo sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
 sudo service apache2 restart
 
 # Install Python environment
-sudo apt install python3.10-venv -y
+sudo apt-get install python3.10-venv -y
 python3 -m venv venv
 source venv/bin/activate
 sudo apt-get install -y python3-pip pkg-config
+sudo apt-get install -y libmysqlclient-dev
+sudo apt-get install -y python3-dev
 
 # Install Python dependencies from requirements.txt
 pip3 install -r requirements.txt
