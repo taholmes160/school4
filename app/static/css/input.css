@@ -1,5 +1,5 @@
 /* Input Styles */
-input[type="text"] {
+input[type="text"] { 
     width: 95%;
     padding: 10px;
     margin-bottom: 10px;
@@ -52,27 +52,27 @@ input[type="text"] {
 
 .select-box {
     width: 100%;
-    height: 35px; /* Adjust the height value as needed */
+    height: 25px; /* Adjust the height value as needed */
 }
 
 input[type="date"] {
     width: 100%;
-    height: 35px; /* Adjust the height value as needed */
+    height: 25px; /* Adjust the height value as needed */
 }
 
 input[type="password"] {
     width: 100%;
-    height: 35px; /* Adjust the height value as needed */
+    height: 25px; /* Adjust the height value as needed */
 }
 
 input[type="email"] {
     width: 100%;
-    height: 35px; /* Adjust the height value as needed */
+    height: 25px; /* Adjust the height value as needed */
 }
 
 .select-field {
     width: 100%;
-    height: 35px; /* Adjust the height value as needed */
+    height: 25px; /* Adjust the height value as needed */
 }
 
 .input-search {
